@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -13,11 +15,11 @@ public class Passenger {
     private StringProperty name;
     private IntegerProperty seat_no;
 
-    public Passenger(IntegerProperty id, IntegerProperty age, StringProperty name, IntegerProperty seat_no) {
-        this.id = id;
-        this.age = age;
-        this.name = name;
-        this.seat_no = seat_no;
+    public Passenger(int id, int age, String name, int seat_no) {
+        this.id = new SimpleIntegerProperty(id);
+        this.age = new SimpleIntegerProperty(age);
+        this.name = new SimpleStringProperty(name);
+        this.seat_no = new SimpleIntegerProperty(seat_no);
     }
 
     public int getId() {

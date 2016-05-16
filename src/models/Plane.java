@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
@@ -16,16 +18,17 @@ public class Plane {
     private IntegerProperty in_use;
     private ArrayList<ClassType> class_list;
 
-    public Plane(IntegerProperty reg_no, StringProperty model, IntegerProperty seats, IntegerProperty in_use, ArrayList<ClassType> class_list) {
-        this.reg_no = reg_no;
-        this.model = model;
-        this.seats = seats;
-        this.in_use = in_use;
+    public Plane(int reg_no, String model, int seats, int in_use, ArrayList<ClassType> class_list) {
+        this.reg_no = new SimpleIntegerProperty(reg_no);
+        this.model = new SimpleStringProperty(model);
+        this.seats = new SimpleIntegerProperty(seats);
+        this.in_use = new SimpleIntegerProperty(in_use);
         this.class_list = class_list;
     }
 
-    public void updatePlane() {
-
+    public void updatePlane(int in_use, ArrayList<ClassType> class_list) {
+        setIn_use(in_use);
+        setClass_list(class_list);
     }
 
     public int getReg_no() {

@@ -1,8 +1,6 @@
 package models;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
@@ -19,13 +17,13 @@ public class Reservation {
     private IntegerProperty customer_id;
     private ArrayList<Passenger> passenger_list;
 
-    public Reservation(Flight flight, DoubleProperty price, ClassType selected_class, ArrayList<Integer> seats_id, StringProperty status, IntegerProperty customer_id, ArrayList<Passenger> passenger_list) {
+    public Reservation(Flight flight, double price, ClassType selected_class, ArrayList<Integer> seats_id, String status, int customer_id, ArrayList<Passenger> passenger_list) {
         this.flight = flight;
-        this.price = price;
+        this.price = new SimpleDoubleProperty(price);
         this.selected_class = selected_class;
         this.seats_id = seats_id;
-        this.status = status;
-        this.customer_id = customer_id;
+        this.status = new SimpleStringProperty(status);
+        this.customer_id = new SimpleIntegerProperty(customer_id);
         this.passenger_list = passenger_list;
     }
 

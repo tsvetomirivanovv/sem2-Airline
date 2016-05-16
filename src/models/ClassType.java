@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -14,12 +16,12 @@ public class ClassType {
     private IntegerProperty to_seat;
     private IntegerProperty class_id;
 
-    public ClassType(StringProperty name, IntegerProperty refund_percentage, IntegerProperty from_seat, IntegerProperty to_seat, IntegerProperty class_id) {
-        this.name = name;
-        this.refund_percentage = refund_percentage;
-        this.from_seat = from_seat;
-        this.to_seat = to_seat;
-        this.class_id = class_id;
+    public ClassType(String name, int refund_percentage, int from_seat, int to_seat, int class_id) {
+        this.name = new SimpleStringProperty(name);
+        this.refund_percentage = new SimpleIntegerProperty(refund_percentage);
+        this.from_seat = new SimpleIntegerProperty(from_seat);
+        this.to_seat = new SimpleIntegerProperty(to_seat);
+        this.class_id = new SimpleIntegerProperty(class_id);
     }
 
     public String getName() {

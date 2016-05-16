@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -15,13 +17,13 @@ public class Customer extends Account{
     private IntegerProperty phone;
     private Payment payment;
 
-    public Customer(StringProperty role, IntegerProperty id, StringProperty email, StringProperty password ,StringProperty name, StringProperty address, StringProperty country, StringProperty city, IntegerProperty phone, Payment payment) {
+    public Customer(String role, int id, String email, String password ,String name, String address, String country, String city, int phone, Payment payment) {
         super(role, id, email, password);
-        this.name = name;
-        this.address = address;
-        this.country = country;
-        this.city = city;
-        this.phone = phone;
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.country = new SimpleStringProperty(country);
+        this.city = new SimpleStringProperty(city);
+        this.phone = new SimpleIntegerProperty(phone);
         this.payment = payment;
     }
 

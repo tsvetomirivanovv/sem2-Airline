@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -11,10 +13,10 @@ public class Airport {
     private StringProperty city;
     private IntegerProperty airport_code;
 
-    public Airport(StringProperty name, StringProperty city, IntegerProperty airport_code) {
-        this.name = name;
-        this.city = city;
-        this.airport_code = airport_code;
+    public Airport(String name, String city, int airport_code) {
+        this.name = new SimpleStringProperty(name);
+        this.city = new SimpleStringProperty(city);
+        this.airport_code = new SimpleIntegerProperty(airport_code);
     }
 
     public String getName() {

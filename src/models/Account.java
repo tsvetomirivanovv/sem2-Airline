@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -13,11 +15,11 @@ public class Account {
     private StringProperty email;
     private StringProperty password;
 
-    public Account(StringProperty role, IntegerProperty id, StringProperty email, StringProperty password) {
-        this.role = role;
-        this.id = id;
-        this.email = email;
-        this.password = password;
+    public Account(String role, int id, String email, String password) {
+        this.role = new SimpleStringProperty(role);
+        this.id = new SimpleIntegerProperty(id);
+        this.email = new SimpleStringProperty(email);
+        this.password = new SimpleStringProperty(password);
     }
 
     public String getRole() {

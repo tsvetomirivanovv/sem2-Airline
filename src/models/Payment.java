@@ -1,6 +1,8 @@
 package models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -13,11 +15,11 @@ public class Payment {
     private StringProperty card_expiration;
     private StringProperty cardHolder_name;
 
-    public Payment(StringProperty card_type, IntegerProperty card_no, StringProperty card_expiration, StringProperty cardHolder_name) {
-        this.card_type = card_type;
-        this.card_no = card_no;
-        this.card_expiration = card_expiration;
-        this.cardHolder_name = cardHolder_name;
+    public Payment(String card_type, int card_no, String card_expiration, String cardHolder_name) {
+        this.card_type = new SimpleStringProperty(card_type);
+        this.card_no = new SimpleIntegerProperty(card_no);
+        this.card_expiration = new SimpleStringProperty(card_expiration);
+        this.cardHolder_name = new SimpleStringProperty(cardHolder_name);
     }
 
     public String getCard_type() {
