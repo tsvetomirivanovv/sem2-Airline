@@ -12,6 +12,8 @@
 .idea/
 out/
 *.iml
+
+# Ignore SQL Connection
 src/services/SQLConfig.java
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
