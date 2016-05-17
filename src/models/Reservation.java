@@ -11,16 +11,14 @@ public class Reservation {
 
     private Flight flight;
     private DoubleProperty price;
-    private ClassType selected_class;
     private ArrayList<Integer> seats_id;
     private StringProperty status;
     private IntegerProperty customer_id;
     private ArrayList<Passenger> passenger_list;
 
-    public Reservation(Flight flight, double price, ClassType selected_class, ArrayList<Integer> seats_id, String status, int customer_id, ArrayList<Passenger> passenger_list) {
+    public Reservation(Flight flight, double price,ArrayList<Integer> seats_id, String status, int customer_id, ArrayList<Passenger> passenger_list) {
         this.flight = flight;
         this.price = new SimpleDoubleProperty(price);
-        this.selected_class = selected_class;
         this.seats_id = seats_id;
         this.status = new SimpleStringProperty(status);
         this.customer_id = new SimpleIntegerProperty(customer_id);
@@ -61,14 +59,6 @@ public class Reservation {
         this.price.set(price);
     }
 
-    public ClassType getSelected_class() {
-        return selected_class;
-    }
-
-    public Reservation setSelected_class(ClassType selected_class) {
-        this.selected_class = selected_class;
-        return this;
-    }
 
     public ArrayList<Integer> getSeats_id() {
         return seats_id;
