@@ -30,8 +30,14 @@ public class Plane {
         this.economySeats = new SimpleIntegerProperty(economySeats);
     }
 
-    public void updatePlane(int in_use) {
+    public void updatePlane(int reg_no, String model, int seats, int in_use, int businessSeats, int coachSeats, int economySeats) {
+        setReg_no(reg_no);
+        setModel(model);
+        setSeats(seats);
         setIn_use(in_use);
+        setBusinessSeats(businessSeats);
+        setCoachSeats(coachSeats);
+        setEconomySeats(economySeats);
     }
 
     public int getReg_no() {
