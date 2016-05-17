@@ -16,19 +16,22 @@ public class Plane {
     private StringProperty model;
     private IntegerProperty seats;
     private IntegerProperty in_use;
-    private ArrayList<ClassType> class_list;
+    private IntegerProperty businessSeats;
+    private IntegerProperty coachSeats;
+    private IntegerProperty economySeats;
 
-    public Plane(int reg_no, String model, int seats, int in_use, ArrayList<ClassType> class_list) {
+    public Plane(int reg_no, String model, int seats, int in_use, int businessSeats, int coachSeats, int economySeats) {
         this.reg_no = new SimpleIntegerProperty(reg_no);
         this.model = new SimpleStringProperty(model);
         this.seats = new SimpleIntegerProperty(seats);
         this.in_use = new SimpleIntegerProperty(in_use);
-        this.class_list = class_list;
+        this.businessSeats = new SimpleIntegerProperty(businessSeats);
+        this.coachSeats = new SimpleIntegerProperty(coachSeats);
+        this.economySeats = new SimpleIntegerProperty(economySeats);
     }
 
-    public void updatePlane(int in_use, ArrayList<ClassType> class_list) {
+    public void updatePlane(int in_use) {
         setIn_use(in_use);
-        setClass_list(class_list);
     }
 
     public int getReg_no() {
@@ -79,12 +82,39 @@ public class Plane {
         this.in_use.set(in_use);
     }
 
-    public ArrayList<ClassType> getClass_list() {
-        return class_list;
+    public int getBusinessSeats() {
+        return businessSeats.get();
     }
 
-    public Plane setClass_list(ArrayList<ClassType> class_list) {
-        this.class_list = class_list;
-        return this;
+    public IntegerProperty businessSeatsProperty() {
+        return businessSeats;
+    }
+
+    public void setBusinessSeats(int businessSeats) {
+        this.businessSeats.set(businessSeats);
+    }
+
+    public int getCoachSeats() {
+        return coachSeats.get();
+    }
+
+    public IntegerProperty coachSeatsProperty() {
+        return coachSeats;
+    }
+
+    public void setCoachSeats(int coachSeats) {
+        this.coachSeats.set(coachSeats);
+    }
+
+    public int getEconomySeats() {
+        return economySeats.get();
+    }
+
+    public IntegerProperty economySeatsProperty() {
+        return economySeats;
+    }
+
+    public void setEconomySeats(int economySeats) {
+        this.economySeats.set(economySeats);
     }
 }
