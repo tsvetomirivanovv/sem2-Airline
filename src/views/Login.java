@@ -32,7 +32,7 @@ public class Login extends Application {
         title = new Label("Admin Login");
         title.setId("title");
 
-        username = new Label("Username :");
+        username = new Label("Email :");
         password = new Label("Password: ");
 
         username.setId("username");
@@ -47,7 +47,7 @@ public class Login extends Application {
         closeButton = new Button("Close");
         closeButton.setId("c");
 
-        h1 = new HBox(7);
+        h1 = new HBox(25);
         h1.getChildren().addAll(username, user);
         h1.setAlignment(Pos.CENTER);
 
