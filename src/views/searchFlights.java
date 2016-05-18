@@ -2,6 +2,7 @@ package views;
 
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -26,7 +27,7 @@ public class searchFlights extends Application {
     static DatePicker datePicker1, datePicker2;
     static BorderPane layout;
 
-    public void start (Stage primaryStage) {
+    public void start (Stage primaryStage) throws Exception {
 
         label1 = new Label("Leaving from:");
         label2 = new Label("Going to:");
@@ -98,6 +99,22 @@ public class searchFlights extends Application {
 
         Menu menu2 = new Menu("Manage reservations");
         Menu menu3 = new Menu("Manage Planes");
+
+        MenuItem AddPlane = new MenuItem("Add Plane");
+        AddPlane.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                managePlanes managePlanes = new managePlanes();
+                try {
+                    managePlanes.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        menu3.getItems().add(AddPlane);
 
         //File menu
         Menu loginMenu = new Menu("File");
