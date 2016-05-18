@@ -140,8 +140,4 @@ public class searchResults extends Application {
         primaryStage.setScene(new Scene(layout,600,400));
         primaryStage.show();
     }
-
-    public static void main(String[] args) throws Exception{
-        launch(args);
-    }
 }

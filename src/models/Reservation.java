@@ -11,14 +11,16 @@ public class Reservation {
 
     private Flight flight;
     private DoubleProperty price;
+    private IntegerProperty reservationId;
     private ArrayList<Integer> seats_id;
     private StringProperty status;
     private IntegerProperty customer_id;
     private ArrayList<Passenger> passenger_list;
 
-    public Reservation(Flight flight, double price,ArrayList<Integer> seats_id, String status, int customer_id, ArrayList<Passenger> passenger_list) {
+    public Reservation(Flight flight, double price,int reservationId,ArrayList<Integer> seats_id, String status, int customer_id, ArrayList<Passenger> passenger_list) {
         this.flight = flight;
         this.price = new SimpleDoubleProperty(price);
+        this.reservationId = new SimpleIntegerProperty(reservationId);
         this.seats_id = seats_id;
         this.status = new SimpleStringProperty(status);
         this.customer_id = new SimpleIntegerProperty(customer_id);
@@ -100,5 +102,17 @@ public class Reservation {
     public Reservation setPassenger_list(ArrayList<Passenger> passenger_list) {
         this.passenger_list = passenger_list;
         return this;
+    }
+
+    public int getReservationId() {
+        return reservationId.get();
+    }
+
+    public IntegerProperty reservationIdProperty() {
+        return reservationId;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId.set(reservationId);
     }
 }
