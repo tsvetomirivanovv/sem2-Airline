@@ -80,7 +80,7 @@ public class searchResults extends Application {
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(loginMenu, menu2, menu3);
 
-        while (/*as long as there are flights left in the table*/) {
+        //while (/*as long as there are flights left in the table*/) {
             //region Create a single flight box
             label21111 = new Label("Time");
             label21112 = new Label("Airport");
@@ -127,7 +127,7 @@ public class searchResults extends Application {
             //endregion
 
             list.add(hBox2);
-        }
+      //  }
 
         flights.setItems(list);
 
