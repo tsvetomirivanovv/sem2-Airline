@@ -7,6 +7,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,6 +20,7 @@ import javafx.stage.Stage;
 import models.Airport;
 import models.Flight;
 import models.Plane;
+
 
 import java.util.Date;
 
@@ -25,6 +32,7 @@ public class FlightDetails extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("  Selected flight");
 
+        final
         //GridPane with 10px padding around the edge
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
@@ -126,20 +134,52 @@ public class FlightDetails extends Application {
         h1.getChildren().addAll(v1, v2, v3, v4);
 
         // should be able to add one more hbox
-        HBox h2 = new HBox(10);
-        h2.getChildren().addAll(v1, v2, v3, v4);
+        HBox h2 = h1;
+        //h2.getChildren().addAll(v1, v2, v3, v4);
 
         grid.add(h1, 1, 9);
+        //grid.add(h2, 1, 10);
+
 
         Label info = new Label("Payment info");
         Label infor = new Label("Note: If you leave the fields empty you can still pay the reservation later,");
         Label inform = new Label("but if you don't do it the reservation will be canceled in 2 weeks from now");
 
-        grid.add(h2, 1, 11);
         grid.add(info, 1, 12);
         grid.add(infor, 1, 13);
         grid.add(inform, 1, 14);
 
+        ImageView mastercard = new ImageView(new Image("mastercard.png", 90, 90, false, false));
+        ImageView maestro = new ImageView(new Image("Maestro.png", 90, 90, false, false));
+        ImageView visa = new ImageView(new Image("visa.jpg", 90, 90, false, false));
+        ImageView visa_electron = new ImageView(new Image("visa-electron.png", 90, 90, false, false));
+
+        Button b1 = new Button();
+        Button b2 = new Button();
+        Button b3 = new Button();
+        Button b4 = new Button();
+
+        b1.setId("b1");
+        b2.setId("b2");
+        b3.setId("b3");
+        b4.setId("b4");
+
+        b1.setGraphic(mastercard);
+        b1.setBorder(null);
+
+        b2.setGraphic(maestro);
+        b2.setBorder(null);
+
+        b3.setGraphic(visa);
+        b3.setBorder(null);
+
+        b4.setGraphic(visa_electron);
+        b4.setBorder(null);
+
+        grid.add(b1, 1, 15);
+        grid.add(b2, 2, 15);
+        grid.add(b3, 3, 15);
+        grid.add(b4, 4, 15);
 
 
 
@@ -147,8 +187,10 @@ public class FlightDetails extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
 
-
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }
