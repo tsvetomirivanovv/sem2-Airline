@@ -14,9 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Login extends Application {
+public class Login {
 
     static Label title, username, password;
     static TextField user;
@@ -27,7 +28,9 @@ public class Login extends Application {
     static VBox v1,v2;
 
 
-    public void start (Stage primaryStage) {
+    public void start () {
+        Stage primaryStage = new Stage();
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         title = new Label("Admin Login");
         title.setId("title");
@@ -82,10 +85,14 @@ public class Login extends Application {
             primaryStage.close();
         });
 
+
         Scene scene = new Scene(v1, 400, 300);
+
+
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in as Admin");
-        primaryStage.show();
+        primaryStage.showAndWait();
 
     }
 
