@@ -27,23 +27,6 @@ public class manageReservations extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-
-
-
-        Menu menu3 = new Menu("Manage Planes");
-
-        //File menu
-        Menu loginMenu = new Menu("File");
-        loginMenu.getItems().add(new MenuItem("Login as admin"));
-        loginMenu.getItems().add(new MenuItem("Login as customer"));
-        loginMenu.getItems().add(new SeparatorMenuItem());
-        loginMenu.getItems().add(new MenuItem("Exit..."));
-
-        //Main menu bar
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(loginMenu, menu2, menu3);
-
         status = new TableColumn<>("Status");
         status.setMinWidth(50);
         status.setCellValueFactory(c -> c.getValue().statusProperty());
