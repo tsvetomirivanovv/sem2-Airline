@@ -159,10 +159,6 @@ public class FlightDetails extends Application {
         Button b3 = new Button();
         Button b4 = new Button();
 
-        b1.setId("b1");
-        b2.setId("b2");
-        b3.setId("b3");
-        b4.setId("b4");
 
         b1.setGraphic(mastercard);
         b1.setBorder(null);
@@ -176,10 +172,10 @@ public class FlightDetails extends Application {
         b4.setGraphic(visa_electron);
         b4.setBorder(null);
 
-        grid.add(b1, 1, 15);
-        grid.add(b2, 2, 15);
-        grid.add(b3, 3, 15);
-        grid.add(b4, 4, 15);
+        HBox hbox = new HBox(20);
+        hbox.getChildren().addAll(b1,b2,b3,b4);
+
+        grid.add(hbox, 1, 15);
 
 
 
