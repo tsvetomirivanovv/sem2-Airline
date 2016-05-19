@@ -8,16 +8,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import models.Plane;
+import services.DataController;
 
 public class managePlanes extends Application{
-    static Button addPlane, deletePlane,close;
+   // DataController dataController = new DataController();
 
-    ObservableList<Plane> planes = FXCollections.observableArrayList(
+    public  Button addPlane, deletePlane,close;
+    public TableView<Plane> mainPlanesTable = new TableView<>();
+    public  ObservableList<Plane> planes = FXCollections.observableArrayList(
             new Plane(359,"Boing", 20, 1, 5, 5, 10)
     );
     @Override
@@ -30,7 +35,7 @@ public class managePlanes extends Application{
 
 
         //tableView declaration and moving the ArrayList called <drinks> into the table
-        TableView<Plane> mainPlanesTable = new TableView<>();
+
         mainPlanesTable.itemsProperty().setValue(planes);
         mainPlanesTable.setEditable(true);
         mainPlanesTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); // DESTRIBURE THE SIZE OF THE COLLUMS
@@ -98,12 +103,23 @@ public class managePlanes extends Application{
             ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setEconomySeats(event.getNewValue());
         });
 
+        Button addButton = new Button("Create ");
+        Button deleteButton = new Button("Delete ");
 
+        deleteButton.setOnAction(event -> {
+
+        });
+
+
+
+        VBox hBox1 = new VBox();
+        hBox1.getChildren().addAll(addButton,deleteButton);
 
         BorderPane layout = new BorderPane();
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(mainPlanesTable);
+        layout.setBottom(hBox1);
 
 
         Scene scene = new Scene(layout, 1000, 600);

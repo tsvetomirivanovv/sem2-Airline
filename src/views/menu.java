@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 public class menu {
 
     public MenuBar display(Stage primaryStage){
-        Menu menu1 = new Menu("File");
-        Menu menu2 = new Menu("Manage reservations");
-        Menu menu3 = new Menu("Manage Planes");
+        Menu filemenu = new Menu("File");
+        Menu reservationsMenu = new Menu("Manage reservations");
+        Menu planesMenus = new Menu("Manage Planes");
 
         MenuItem login = new MenuItem("Login as Admin");
         login.setOnAction(e->{
@@ -20,8 +20,8 @@ public class menu {
             login1.start();
         });
 
-        MenuItem AddPlane = new MenuItem("Add Plane");
-        AddPlane.setOnAction(e->{
+        MenuItem addPlane = new MenuItem("Add Plane");
+        addPlane.setOnAction(e->{
             managePlanes managePlanes = new managePlanes();
 
             managePlanes.start(primaryStage);
@@ -30,13 +30,13 @@ public class menu {
 
 
 
-        menu1.getItems().addAll(login);
-
+        filemenu.getItems().addAll(login);
+        planesMenus.getItems().addAll(addPlane);
 
 
         //Main menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(menu1, menu2, menu3);
+        menuBar.getMenus().addAll(filemenu,reservationsMenu,planesMenus);
         return menuBar;
 
     }

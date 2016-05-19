@@ -17,26 +17,26 @@ import javafx.stage.Stage;
 public class searchResults extends Application {
 
     //List of flights
-    static Button button221, button222;
-    static ImageView imageView1, imageView2;
-    static Label label22, label21111, label21112, label21121, label21122, label21221, label21222, label21211, label21212;
-    static VBox vBox21, vBox22, vBox2111, vBox2112, vBox2121, vBox2122;
-    static HBox hBox2, hBox211,hBox212;
-    static ObservableList<HBox> list = FXCollections.observableArrayList();
-    static ListView flights = new ListView();
+     Button button221, button222;
+     ImageView imageView1, imageView2;
+    Label label22, label21111, label21112, label21121, label21122, label21221, label21222, label21211, label21212;
+     VBox vBox21, vBox22, vBox2111, vBox2112, vBox2121, vBox2122;
+     HBox hBox2, hBox211,hBox212;
+     ObservableList<HBox> list = FXCollections.observableArrayList();
+    ListView flights = new ListView();
 
     // The filter
-    static Label empty = new Label();
-    static Label label1 = new Label("You are searching for:");
-    static VBox box1, box12, box11;
-    static HBox hBox1;
-    static Label label111, label112, label113, label114, label115, label116;
-    static Label label121, label122, label123, label124, label125;
-    static RadioButton radio11, radio12;
-    static CheckBox check12;
+    Label empty = new Label();
+     Label label1 = new Label("You are searching for:");
+     VBox box1, box12, box11;
+     HBox hBox1;
+     Label label111, label112, label113, label114, label115, label116;
+     Label label121, label122, label123, label124, label125;
+     RadioButton radio11, radio12;
+     CheckBox check12;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage)  {
 
         label111 = new Label("Departure:");
         label112 = new Label("Arrival:");
@@ -129,7 +129,7 @@ public class searchResults extends Application {
             list.add(hBox2);
       //  }
 
-        flights.setItems(list);
+
 
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);

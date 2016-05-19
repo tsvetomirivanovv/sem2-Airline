@@ -94,35 +94,15 @@ public class searchFlights extends Application {
         h2.setSpacing(20);
 
         v3 = new VBox(50);
-        v3.getChildren().addAll(h1, h2, searchButton);
+        //v3.getChildren().addAll(h1, h2, searchButton);
         v3.setAlignment(Pos.CENTER);
 
-        Menu menu2 = new Menu("Manage reservations");
-        Menu menu3 = new Menu("Manage Planes");
-
-        MenuItem AddPlane = new MenuItem("Add Plane");
-        AddPlane.setOnAction(e->{
-            managePlanes managePlanes = new managePlanes();
-
-            managePlanes.start(primaryStage);
-        });
-
-
-        menu3.getItems().add(AddPlane);
-
-        //File menu
-        Menu loginMenu = new Menu("File");
-        loginMenu.getItems().add(new MenuItem("Login as admin"));
-        loginMenu.getItems().add(new MenuItem("Login as customer"));
-        loginMenu.getItems().add(new SeparatorMenuItem());
-        loginMenu.getItems().add(new MenuItem("Exit..."));
-
-        //Main menu bar
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(loginMenu, menu2, menu3);
 
         layout = new BorderPane();
-        layout.setTop(menuBar);
+
+        menu menu1 = new menu(); // CREATING THE MENU OBJECT
+
+        layout.setTop(menu1.display(primaryStage));
         layout.setCenter(v3);
 
 

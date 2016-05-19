@@ -3,10 +3,12 @@ package views;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Reservation;
@@ -15,17 +17,20 @@ import models.Reservation;
  * Created by Caseru on 5/18/2016.
  */
 public class manageReservations extends Application {
-
-    TextField search = new TextField();
-    HBox buttons = new HBox(20);
-    Button viewDetails, cancel, confirm;
-    TableView<Reservation> tableView = new TableView<>();
+    ObservableList<Reservation> list = FXCollections.observableArrayList(); Menu menu2 = new Menu("Manage reservations");
     TableColumn<Reservation,String> status;
     TableColumn<Reservation,Integer> reservationId, customerId, passengerNo;
-    ObservableList<Reservation> list = FXCollections.observableArrayList();
+    Button viewDetails, cancel, confirm;
+    TableView<Reservation> tableView = new TableView<>();
+    TextField search = new TextField();
+    HBox buttons = new HBox(20);
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Menu menu2 = new Menu("Manage reservations");
+
+
+
+
+
         Menu menu3 = new Menu("Manage Planes");
 
         //File menu
@@ -67,11 +72,21 @@ public class manageReservations extends Application {
         tableView.setEditable(true);
         tableView.setItems(list);
 
-        buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
+        //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
+
+        VBox hBox1 = new VBox();
+
 
         BorderPane layout = new BorderPane();
-        layout.setTop(menuBar);
+        menu menu1 = new menu();
+        layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
-        layout.setBottom(buttons);
+        layout.setBottom(hBox1);
+
+
+        Scene scene = new Scene(layout, 1000, 600);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Log in as Admin");
+        primaryStage.show();
     }
 }
