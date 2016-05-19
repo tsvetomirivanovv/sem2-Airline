@@ -5,10 +5,9 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -21,7 +20,7 @@ public class managePlanes extends Application{
             new Plane(359,"Boing", 20, 1, 5, 5, 10)
     );
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage)  {
 
 
 
@@ -99,7 +98,32 @@ public class managePlanes extends Application{
         });
 
 
-        Scene scene = new Scene(mainPlanesTable, 1000, 600);
+        Menu menu2 = new Menu("Manage reservations");
+        Menu menu3 = new Menu("Manage Planes");
+
+        MenuItem AddPlane = new MenuItem("Add Plane");
+        AddPlane.setOnAction(e->{
+            managePlanes managePlanes = new managePlanes();
+
+            managePlanes.start(primaryStage);
+        });
+
+        Menu loginMenu = new Menu("File");
+        loginMenu.getItems().add(new MenuItem("Login as admin"));
+        loginMenu.getItems().add(new MenuItem("Login as customer"));
+        loginMenu.getItems().add(new SeparatorMenuItem());
+        loginMenu.getItems().add(new MenuItem("Exit..."));
+
+        //Main menu bar
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(loginMenu, menu2, menu3);
+
+        BorderPane layout = new BorderPane();
+        layout.setTop(menuBar);
+        layout.setCenter(mainPlanesTable);
+
+
+        Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in as Admin");
         primaryStage.show();

@@ -101,16 +101,10 @@ public class searchFlights extends Application {
         Menu menu3 = new Menu("Manage Planes");
 
         MenuItem AddPlane = new MenuItem("Add Plane");
-        AddPlane.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                managePlanes managePlanes = new managePlanes();
-                try {
-                    managePlanes.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        AddPlane.setOnAction(e->{
+            managePlanes managePlanes = new managePlanes();
+
+            managePlanes.start(primaryStage);
         });
 
 
