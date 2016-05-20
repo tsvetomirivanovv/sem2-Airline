@@ -25,8 +25,11 @@ public class manageReservations extends Application {
     TextField search = new TextField();
     HBox buttons = new HBox(20);
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
+
+
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         status = new TableColumn<>("Status");
         status.setMinWidth(50);
         status.setCellValueFactory(c -> c.getValue().statusProperty());
@@ -57,14 +60,27 @@ public class manageReservations extends Application {
 
         //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
-        VBox hBox1 = new VBox();
+
+
+        Button addButton = new Button("Create ");
+        Button deleteButton = new Button("Delete ");
+
+        deleteButton.setOnAction(event -> {
+
+        });
+
+
+
+        VBox vBox1 = new VBox();
+        vBox1.getChildren().addAll(addButton,deleteButton);
+
 
 
         BorderPane layout = new BorderPane();
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
-        layout.setBottom(hBox1);
+        layout.setBottom(vBox1);
 
 
         Scene scene = new Scene(layout, 1000, 600);
