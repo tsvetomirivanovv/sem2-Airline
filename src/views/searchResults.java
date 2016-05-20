@@ -11,9 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * Created by Caseru on 5/18/2016.
- */
 public class searchResults extends Application {
 
     //List of flights
@@ -65,20 +62,6 @@ public class searchResults extends Application {
 
         box1 = new VBox(20);
         box1.getChildren().addAll(label1,hBox1);
-
-        Menu menu2 = new Menu("Manage reservations");
-        Menu menu3 = new Menu("Manage Planes");
-
-        //File menu
-        Menu loginMenu = new Menu("File");
-        loginMenu.getItems().add(new MenuItem("Login as admin"));
-        loginMenu.getItems().add(new MenuItem("Login as customer"));
-        loginMenu.getItems().add(new SeparatorMenuItem());
-        loginMenu.getItems().add(new MenuItem("Exit..."));
-
-        //Main menu bar
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(loginMenu, menu2, menu3);
 
         //while (/*as long as there are flights left in the table*/) {
             //region Create a single flight box
@@ -134,7 +117,9 @@ public class searchResults extends Application {
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);
         layout.setLeft(box1);
-        layout.setTop(menuBar);
+
+        menu menu1 = new menu(); // CREATING THE MENU OBJECT
+        layout.setTop(menu1.display(primaryStage));
 
         primaryStage.setTitle("Search Results");
         primaryStage.setScene(new Scene(layout,600,400));
