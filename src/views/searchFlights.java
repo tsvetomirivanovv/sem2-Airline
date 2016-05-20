@@ -94,7 +94,7 @@ public class searchFlights extends Application {
         h2.setSpacing(20);
 
         v3 = new VBox(50);
-        //v3.getChildren().addAll(h1, h2, searchButton);
+        v3.getChildren().addAll(h1, h2, searchButton);
         v3.setAlignment(Pos.CENTER);
 
 
