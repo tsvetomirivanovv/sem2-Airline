@@ -110,35 +110,67 @@ public class FlightDetails extends Application {
 
         Label name = new Label("Passenger name");
         TextField tfname = new TextField();
+
         Label birth = new Label("Birth date");
         DatePicker dpbirth = new DatePicker();
+
         Label seat = new Label("Seat");
         TextField tfseat = new TextField();
+
         Label luggage = new Label("Checked luggage");
         ChoiceBox cbluggage = new ChoiceBox();
         cbluggage.getItems().addAll("None - 0 DKK", "Baggage, Max 15 Kg - 50 DKK", "Baggage, Max 20 Kg - 90 DKK");
 
-        VBox v1 = new VBox(2);
-        v1.getChildren().addAll(name, tfname);
+        Label detail1 = new Label("Passenger(s) details");
+        grid.add(detail1, 1, 8);
 
-        VBox v2 = new VBox(2);
-        v2.getChildren().addAll(birth, dpbirth);
+        Label name1 = new Label("Passenger name");
+        TextField tfname1 = new TextField();
 
-        VBox v3 = new VBox(2);
-        v3.getChildren().addAll(seat, tfseat);
+        Label birth1 = new Label("Birth date");
+        DatePicker dpbirth1 = new DatePicker();
 
-        VBox v4 = new VBox(2);
-        v4.getChildren().addAll(luggage, cbluggage);
+        Label seat1 = new Label("Seat");
+        TextField tfseat1 = new TextField();
+
+        Label luggage1 = new Label("Checked luggage");
+        ChoiceBox cbluggage1 = new ChoiceBox();
+        cbluggage1.getItems().addAll("None - 0 DKK", "Baggage, Max 15 Kg - 50 DKK", "Baggage, Max 20 Kg - 90 DKK");
+
+        VBox v11 = new VBox(2);
+        v11.getChildren().addAll(name1, tfname1);
+
+        VBox v12 = new VBox(2);
+        v12.getChildren().addAll(birth1, dpbirth1);
+
+        VBox v13 = new VBox(2);
+        v13.getChildren().addAll(seat1, tfseat1);
+
+        VBox v14 = new VBox(2);
+        v14.getChildren().addAll(luggage1, cbluggage1);
+
+        VBox v21 = new VBox(2);
+        v21.getChildren().addAll(name, tfname);
+
+        VBox v22 = new VBox(2);
+        v22.getChildren().addAll(birth, dpbirth);
+
+        VBox v23 = new VBox(2);
+        v23.getChildren().addAll(seat, tfseat);
+
+        VBox v24 = new VBox(2);
+        v24.getChildren().addAll(luggage, cbluggage);
 
         HBox h1 = new HBox(10);
-        h1.getChildren().addAll(v1, v2, v3, v4);
+        h1.getChildren().addAll(v11, v12, v13, v14);
 
         // should be able to add one more hbox
-        HBox h2 = h1;
-        //h2.getChildren().addAll(v1, v2, v3, v4);
+        HBox h2 = new HBox(10);
+        h2.getChildren().addAll(v21, v22, v23, v24);
 
-        grid.add(h1, 1, 9);
-        //grid.add(h2, 1, 10);
+        VBox vBox= new VBox(20);
+        vBox.getChildren().addAll(h1,h2);
+        grid.add(vBox, 1, 9);
 
 
         Label info = new Label("Payment info");
