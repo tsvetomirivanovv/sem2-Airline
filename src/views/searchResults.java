@@ -32,6 +32,10 @@ public class searchResults extends Application {
      RadioButton radio11, radio12;
      CheckBox check12;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage)  {
 
@@ -111,6 +115,8 @@ public class searchResults extends Application {
 
             list.add(hBox2);
       //  }
+
+        flights.setItems(list);
 
 
 
