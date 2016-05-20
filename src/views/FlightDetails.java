@@ -191,6 +191,17 @@ public class FlightDetails extends Application {
         Button b3 = new Button();
         Button b4 = new Button();
 
+        b4.setMaxWidth(1024);
+        b4.setMaxHeight(640);
+
+        b3.setMaxWidth(240);
+        b3.setMaxHeight(139);
+
+        b2.setMaxWidth(640);
+        b2.setMaxHeight(381);
+
+        b1.setMaxWidth(1456);
+        b1.setMaxHeight(1033);
 
         b1.setGraphic(mastercard);
         b1.setBorder(null);
