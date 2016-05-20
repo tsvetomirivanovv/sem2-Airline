@@ -48,7 +48,7 @@ public class searchResultsOld extends Application {
         label116 = new Label("To:");
 
         box11 = new VBox(20);
-        box11.getChildren().addAll(label111,label112,empty,label113,label114,radio11,empty,label115,label116);
+        box11.getChildren().addAll(label111,label112,label113,label114,radio11,label115,label116);
 
         label121 = new Label("Airport");
         label122 = new Label("Airport");
@@ -59,7 +59,7 @@ public class searchResultsOld extends Application {
         label125 = new Label("Date");
 
         box12 = new VBox(20);
-        box12.getChildren().addAll(label121,label122,empty,label123,check12,radio12,empty,label124,label125);
+        box12.getChildren().addAll(label121,label122,label123,check12,radio12,label124,label125);
 
         hBox1 = new HBox(20);
         hBox1.getChildren().addAll(box11,box12);
@@ -106,6 +106,7 @@ public class searchResultsOld extends Application {
             button222 = new Button("See details");
             button221 = new Button("Select flight");
             vBox22 = new VBox(20);
+            label22 = new Label("pulapulapula");
             vBox22.getChildren().addAll(label22,button221,button222);
 
 
