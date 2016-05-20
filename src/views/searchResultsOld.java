@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class searchResults extends Application {
+public class searchResultsOld extends Application {
 
     //List of flights
      Button button221, button222;
