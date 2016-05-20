@@ -106,6 +106,11 @@ public class managePlanes extends Application{
         Button addButton = new Button("Create ");
         Button deleteButton = new Button("Delete ");
 
+        addButton.setOnAction(event -> {
+            addPlane addPlane = new addPlane();
+            addPlane.start();
+        });
+
         deleteButton.setOnAction(event -> {
 
         });
