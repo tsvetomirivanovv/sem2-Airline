@@ -11,13 +11,15 @@ import javafx.beans.property.StringProperty;
 public class Passenger {
 
     private IntegerProperty id;
-    private IntegerProperty age;
+    private IntegerProperty baggage;
+    private IntegerProperty birth_date;
     private StringProperty name;
     private IntegerProperty seat_no;
 
-    public Passenger(int id, int age, String name, int seat_no) {
+    public Passenger(int id, int baggage, int birth_date, String name, int seat_no) {
         this.id = new SimpleIntegerProperty(id);
-        this.age = new SimpleIntegerProperty(age);
+        this.baggage = new SimpleIntegerProperty(baggage);
+        this.birth_date = new SimpleIntegerProperty(birth_date);
         this.name = new SimpleStringProperty(name);
         this.seat_no = new SimpleIntegerProperty(seat_no);
     }
@@ -34,16 +36,28 @@ public class Passenger {
         this.id.set(id);
     }
 
-    public int getAge() {
-        return age.get();
+    public int getBaggage() {
+        return baggage.get();
     }
 
-    public IntegerProperty ageProperty() {
-        return age;
+    public IntegerProperty baggageProperty() {
+        return baggage;
     }
 
-    public void setAge(int age) {
-        this.age.set(age);
+    public void setBaggage(int baggage) {
+        this.baggage.set(baggage);
+    }
+
+    public int getBirth_date() {
+        return birth_date.get();
+    }
+
+    public IntegerProperty birth_dateProperty() {
+        return birth_date;
+    }
+
+    public void setBirth_date(int birth_date) {
+        this.birth_date.set(birth_date);
     }
 
     public String getName() {
