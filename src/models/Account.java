@@ -1,36 +1,33 @@
 package models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 /**
  * Created by Caseru on 5/16/2016.
  */
 public class Account {
 
-    private StringProperty role;
+    private BooleanProperty role;
     private IntegerProperty id;
     private StringProperty email;
     private StringProperty password;
 
-    public Account(String role, int id, String email, String password) {
-        this.role = new SimpleStringProperty(role);
+    public Account(boolean role, int id, String email, String password) {
+        this.role = new SimpleBooleanProperty(role);
         this.id = new SimpleIntegerProperty(id);
         this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
     }
 
-    public String getRole() {
+    public boolean getRole() {
         return role.get();
     }
 
-    public StringProperty roleProperty() {
+    public BooleanProperty roleProperty() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Boolean role) {
         this.role.set(role);
     }
 
