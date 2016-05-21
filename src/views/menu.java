@@ -15,9 +15,15 @@ public class menu {
         Menu planesMenus = new Menu("Manage Planes");
 
         //MENU ITEMS
-        MenuItem login = new MenuItem("Login as Admin");
+        MenuItem login = new MenuItem("Log in as Admin");
+        MenuItem loginCustomer = new MenuItem("Log in as Customer");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
+
+        loginCustomer.setOnAction(event -> {
+            loginAsCustomer login2 = new loginAsCustomer();
+            login2.start();
+        });
 
         login.setOnAction(e->{
             Login login1 = new Login();
@@ -37,7 +43,7 @@ public class menu {
         });
 
 
-        filemenu.getItems().addAll(login);
+        filemenu.getItems().addAll(login,loginCustomer);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
 
