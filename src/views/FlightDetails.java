@@ -22,15 +22,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import models.Airport;
-import models.Flight;
-import models.Plane;
-import models.Reservation;
+import models.*;
 
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -52,24 +50,25 @@ public class FlightDetails extends Application {
 
         Date d1 = new Date(2015-12-12);
         Date d2 = new Date(2016-01-02);
+        ArrayList<Interval> use = new ArrayList<>();
         ObservableValue<Date> d3 = new ReadOnlyObjectWrapper<>(d2);
         ObservableValue<Date> d4 = new ReadOnlyObjectWrapper<>(d1);
 
 
-        Plane p1 = new Plane(222, "Boeing 837", 650, 1, 200, 200, 250);
-        Plane p2 = new Plane(539, "Boeing 777", 550, 0, 100, 100, 350);
-        Plane p3 = new Plane(345, "Boeing 455", 300, 0, 50, 50, 200);
-        Plane p4 = new Plane(175, "Boeing 399", 700, 1, 200, 200, 300);
+        Plane p1 = new Plane(222, "Boeing 837", 650, use, 200, 200, 250, 25, 25, 25);
+        Plane p2 = new Plane(539, "Boeing 777", 550, use, 100, 100, 350, 25, 25, 25);
+        Plane p3 = new Plane(345, "Boeing 455", 300, use, 50, 50, 200, 25, 25, 25);
+        Plane p4 = new Plane(175, "Boeing 399", 700, use, 200, 200, 300, 25, 25, 25);
 
         Airport a1 = new Airport("Baneasa","Bucuresti", 233);
         Airport a2 = new Airport("Otopeni","Otopeni", 355);
         Airport a3 = new Airport("Henri Coanda", "Bucuresti", 500);
 
         ObservableList<Flight> flights_list = FXCollections.observableArrayList(
-                new Flight(p1, a1, d4, a2, d3),
-                new Flight(p2, a3, d3, a1, d4),
-                new Flight(p3, a2, d4, a3, d3),
-                new Flight(p4, a2, d3, a1, d4)
+                new Flight(1, p1, a1, d4, a2, d3),
+                new Flight(1, p2, a3, d3, a1, d4),
+                new Flight(1, p3, a2, d4, a3, d3),
+                new Flight(1, p4, a2, d3, a1, d4)
         );
 
         Label titleLabel = new Label("We just need a few more details. Who is travelling?");
