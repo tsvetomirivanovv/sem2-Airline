@@ -5,9 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Created by PULA on 5/16/2016.
- */
 public class Airport {
     private StringProperty name;
     private StringProperty city;
