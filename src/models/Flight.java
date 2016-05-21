@@ -1,5 +1,7 @@
 package models;
 
+import javafx.beans.value.ObservableValue;
+
 import java.util.Date;
 
 /**
@@ -9,11 +11,11 @@ public class Flight {
 
     private Plane plane;
     private Airport departure_loc;
-    private Date departure_time;
+    private ObservableValue<Date> departure_time;
     private Airport arrival_loc;
-    private Date arrival_time;
+    private ObservableValue<Date> arrival_time;
 
-    public Flight(Plane plane, Airport departure_loc, Date departure_time, Airport arrival_loc, Date arrival_time) {
+    public Flight(Plane plane, Airport departure_loc, ObservableValue<Date> departure_time, Airport arrival_loc, ObservableValue<Date> arrival_time) {
         this.plane = plane;
         this.departure_loc = departure_loc;
         this.departure_time = departure_time;
@@ -40,12 +42,11 @@ public class Flight {
     }
 
     public Date getDeparture_time() {
-        return departure_time;
+        return departure_time.getValue();
     }
 
-    public Flight setDeparture_time(Date departure_time) {
-        this.departure_time = departure_time;
-        return this;
+    public ObservableValue<Date> departure_timeProperty() {
+        return departure_time;
     }
 
     public Airport getArrival_loc() {
@@ -58,11 +59,10 @@ public class Flight {
     }
 
     public Date getArrival_time() {
-        return arrival_time;
+        return arrival_time.getValue();
     }
 
-    public Flight setArrival_time(Date arrival_time) {
-        this.arrival_time = arrival_time;
-        return this;
+    public ObservableValue<Date> arrival_timeProperty() {
+        return arrival_time;
     }
 }

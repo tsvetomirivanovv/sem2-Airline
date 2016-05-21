@@ -38,7 +38,7 @@ public class managePlanes extends Application{
 
         mainPlanesTable.itemsProperty().setValue(planes);
         mainPlanesTable.setEditable(true);
-        mainPlanesTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY); // DESTRIBURE THE SIZE OF THE COLLUMS
+        mainPlanesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // DESTRIBURE THE SIZE OF THE COLLUMS
 
 
         // SETTING THE COLLUMS AND ADDING THEM TO THE TABLEVIEW
@@ -106,20 +106,25 @@ public class managePlanes extends Application{
         Button addButton = new Button("Create ");
         Button deleteButton = new Button("Delete ");
 
+        addButton.setOnAction(event -> {
+            addPlane addPlane = new addPlane();
+            addPlane.start();
+        });
+
         deleteButton.setOnAction(event -> {
 
         });
 
 
 
-        VBox hBox1 = new VBox();
-        hBox1.getChildren().addAll(addButton,deleteButton);
+        VBox vBox1 = new VBox();
+        vBox1.getChildren().addAll(addButton,deleteButton);
 
         BorderPane layout = new BorderPane();
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(mainPlanesTable);
-        layout.setBottom(hBox1);
+        layout.setBottom(vBox1);
 
 
         Scene scene = new Scene(layout, 1000, 600);

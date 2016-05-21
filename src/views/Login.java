@@ -19,60 +19,40 @@ import javafx.stage.Stage;
 
 public class Login {
 
-    static Label title, username, password;
-    static TextField user;
-    static PasswordField pass;
-    static Button loginButton, closeButton;
-
-    static HBox h1,h2,h3,h4;
-    static VBox v1,v2;
-
 
     public void start () {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
-        title = new Label("Admin Login");
-        title.setId("title");
+        Label title = new Label("Log in as Admin");
 
-        username = new Label("Email :");
-        password = new Label("Password: ");
+        Label emailLabel = new Label("Email: ");
+        emailLabel.setAlignment(Pos.CENTER_LEFT);
+        emailLabel.setMaxWidth(220);
 
-        username.setId("username");
-        password.setId("password");
+        Label passwordLabel = new Label("Password:");
+        passwordLabel.setAlignment(Pos.CENTER_LEFT);
+        passwordLabel.setMaxWidth(220);
 
-        user = new TextField(); // Username
-        pass = new PasswordField(); // Password
+        TextField email = new TextField();
+        email.setMaxWidth(220);
 
-        loginButton = new Button("Login");
-        loginButton.setId("b");
+        PasswordField password = new PasswordField();
+        password.setMaxWidth(220);
 
-        closeButton = new Button("Close");
-        closeButton.setId("c");
+        VBox vBox1 = new VBox();
+        vBox1.getChildren().addAll(emailLabel,email);
+        vBox1.setAlignment(Pos.CENTER);
 
-        h1 = new HBox(25);
-        h1.getChildren().addAll(username, user);
-        h1.setAlignment(Pos.CENTER);
+        VBox vBox2 = new VBox();
+        vBox1.getChildren().addAll(passwordLabel,password);
+        vBox1.setAlignment(Pos.CENTER);
 
-        h2 = new HBox(7);
-        h2.getChildren().addAll(password, pass);
-        h2.setAlignment(Pos.CENTER);
-
-        h4 = new HBox();
-        h4.getChildren().add(title);
-        h4.setAlignment(Pos.TOP_CENTER);
-
-
-        h3 = new HBox(10);
-        h3.getChildren().addAll(loginButton,closeButton);
-        h3.setAlignment(Pos.CENTER);
-
-        v1 = new VBox(10);
-        v1.getChildren().addAll(h1, h2, h3);
-        v1.setAlignment(Pos.CENTER);
-        v1.setPadding(new Insets(20, 20, 20, 20));
-
-        v1.setSpacing(20);
+        HBox ButtonHbox = new HBox(25);
+        Button loginButton = new Button("Log In");
+        Button closeButton = new Button("Close");
+        ButtonHbox.setAlignment(Pos.CENTER);
+        ButtonHbox.getChildren().addAll(loginButton,closeButton);
 
         loginButton.setOnAction(e -> {
            // Menu menu = new Menu();
@@ -86,10 +66,12 @@ public class Login {
         });
 
 
-        Scene scene = new Scene(v1, 400, 300);
+        VBox mainVbox =  new VBox(15);
+        mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
+        mainVbox.setMaxWidth(240);
+        mainVbox.setAlignment(Pos.CENTER);
 
-
-
+        Scene scene = new Scene(mainVbox, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Log in as Admin");
         primaryStage.showAndWait();

@@ -1,6 +1,10 @@
 package views;
 
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +20,17 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Airport;
 import models.Flight;
 import models.Plane;
+import models.Reservation;
 
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -32,6 +41,8 @@ public class FlightDetails extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("  Selected flight");
 
+        DateTimeFormatter myDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
         final
         //GridPane with 10px padding around the edge
         GridPane grid = new GridPane();
@@ -41,6 +52,9 @@ public class FlightDetails extends Application {
 
         Date d1 = new Date(2015-12-12);
         Date d2 = new Date(2016-01-02);
+        ObservableValue<Date> d3 = new ReadOnlyObjectWrapper<>(d2);
+        ObservableValue<Date> d4 = new ReadOnlyObjectWrapper<>(d1);
+
 
         Plane p1 = new Plane(222, "Boeing 837", 650, 1, 200, 200, 250);
         Plane p2 = new Plane(539, "Boeing 777", 550, 0, 100, 100, 350);
@@ -52,10 +66,10 @@ public class FlightDetails extends Application {
         Airport a3 = new Airport("Henri Coanda", "Bucuresti", 500);
 
         ObservableList<Flight> flights_list = FXCollections.observableArrayList(
-                new Flight(p1, a1, d1, a2, d2),
-                new Flight(p2, a3, d2, a1, d1),
-                new Flight(p3, a2, d1, a3, d2),
-                new Flight(p4, a2, d2, a1, d1)
+                new Flight(p1, a1, d4, a2, d3),
+                new Flight(p2, a3, d3, a1, d4),
+                new Flight(p3, a2, d4, a3, d3),
+                new Flight(p4, a2, d3, a1, d4)
         );
 
         Label titleLabel = new Label("We just need a few more details. Who is travelling?");
@@ -69,18 +83,25 @@ public class FlightDetails extends Application {
 
         flights1.itemsProperty().setValue(flights_list);
 
-        TableColumn<Flight, String> column1 = new TableColumn<>("Flight/Plane");
-        TableColumn<Flight, String> column2 = new TableColumn<>("Date & Time");
-        TableColumn<Flight, String> column3 = new TableColumn<>("From -> To");
-        TableColumn<Flight, String> column4 = new TableColumn<>("Duration");
-        TableColumn<Flight, Date> column5 = new TableColumn<>("Arrival");
-        TableColumn<Flight, Integer> column6 = new TableColumn<>("Price");
+        TableColumn<Flight, Integer> column1 = new TableColumn<>("Flight/Plane");
+        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
+
+        TableColumn<Flight, Date> column2 = new TableColumn<>("Date & Time");
+        column2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
+
+        TableColumn<Flight, String> column3 = new TableColumn<>("From");
+        column3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
+
+        TableColumn<Flight, String> column4 = new TableColumn<>("-> To");
+        column4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
+
+        TableColumn<Flight, String> column5 = new TableColumn<>("Duration");
+
+        TableColumn<Flight, Date> column6 = new TableColumn<>("Arrival");
+        column6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
 
         flights1.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        //column1.setCellValueFactory(e -> e.getValue().getPlane().modelProperty());
-        //column2.setCellValueFactory(e -> e.getValue().toString()):
-        //column3.setCellValueFactory(e -> e.getValue().getDeparture_loc());
 
         flights1.getColumns().addAll(column1, column2, column3, column4, column5, column6);
 
@@ -90,12 +111,22 @@ public class FlightDetails extends Application {
 
         flights2.itemsProperty().setValue(flights_list);
 
-        TableColumn<Flight, String> columne1 = new TableColumn<>("Flight/Plane");
-        TableColumn<Flight, String> columne2 = new TableColumn<>("Date & Time");
-        TableColumn<Flight, String> columne3 = new TableColumn<>("From -> To");
-        TableColumn<Flight, String> columne4 = new TableColumn<>("Duration");
-        TableColumn<Flight, Date> columne5 = new TableColumn<>("Arrival");
-        TableColumn<Flight, Integer> columne6 = new TableColumn<>("Price");
+        TableColumn<Flight, Integer> columne1 = new TableColumn<>("Flight/Plane");
+        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
+
+        TableColumn<Flight, Date> columne2 = new TableColumn<>("Date & Time");
+        column2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
+
+        TableColumn<Flight, String> columne3 = new TableColumn<>("From");
+        column3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
+
+        TableColumn<Flight, String> columne4 = new TableColumn<>("-> To");
+        column4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
+
+        TableColumn<Flight, String> columne5 = new TableColumn<>("Duration");
+
+        TableColumn<Flight, Date> columne6 = new TableColumn<>("Arrival");
+        column6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
 
         flights2.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         flights2.getColumns().addAll(columne1, columne2, columne3, columne4, columne5, columne6);
@@ -181,10 +212,17 @@ public class FlightDetails extends Application {
         grid.add(infor, 1, 13);
         grid.add(inform, 1, 14);
 
+<<<<<<< HEAD
         ImageView mastercard = new ImageView(new Image("assets/images/mastercard.png", 80, 80, false, false));
         ImageView maestro = new ImageView(new Image("assets/images/Maestro.png", 80, 80, false, false));
         ImageView visa = new ImageView(new Image("assets/images/visa.jpg", 80, 80, false, false));
         ImageView visa_electron = new ImageView(new Image("assets/images/visa-electron.png", 80, 80, false, false));
+=======
+        ImageView mastercard = new ImageView(new Image("assets/images/mastercard.png", 90, 90, false, false));
+        ImageView maestro = new ImageView(new Image("assets/images/Maestro.png", 90, 90, false, false));
+        ImageView visa = new ImageView(new Image("assets/images/visa.jpg", 90, 90, false, false));
+        ImageView visa_electron = new ImageView(new Image("assets/images/visa-electron.png", 90, 90, false, false));
+>>>>>>> 42f151b9d4cd4ae3b62fe437e1cc8ffd75d493ad
 
         Button b1 = new Button();
         Button b2 = new Button();
