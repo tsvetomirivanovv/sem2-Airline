@@ -120,21 +120,21 @@ public class FlightDetails extends Application {
         flights2.itemsProperty().setValue(flights_list);
 
         TableColumn<Flight, Integer> columne1 = new TableColumn<>("Flight/Plane");
-        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
+        columne1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
 
         TableColumn<Flight, Date> columne2 = new TableColumn<>("Date & Time");
-        column2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
+        columne2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
 
         TableColumn<Flight, String> columne3 = new TableColumn<>("From");
-        column3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
+        columne3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
 
         TableColumn<Flight, String> columne4 = new TableColumn<>("-> To");
-        column4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
+        columne4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
 
         TableColumn<Flight, String> columne5 = new TableColumn<>("Duration");
 
         TableColumn<Flight, Date> columne6 = new TableColumn<>("Arrival");
-        column6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
+        columne6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
 
         flights2.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         flights2.getColumns().addAll(columne1, columne2, columne3, columne4, columne5, columne6);
