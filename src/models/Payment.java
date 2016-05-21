@@ -10,16 +10,30 @@ import javafx.beans.property.StringProperty;
  */
 public class Payment {
 
+    private IntegerProperty payment_id;
     private StringProperty card_type;
     private IntegerProperty card_no;
     private StringProperty card_expiration;
     private StringProperty cardHolder_name;
 
-    public Payment(String card_type, int card_no, String card_expiration, String cardHolder_name) {
+    public Payment(int payment_id, String card_type, int card_no, String card_expiration, String cardHolder_name) {
+        this.payment_id = new SimpleIntegerProperty(payment_id);
         this.card_type = new SimpleStringProperty(card_type);
         this.card_no = new SimpleIntegerProperty(card_no);
         this.card_expiration = new SimpleStringProperty(card_expiration);
         this.cardHolder_name = new SimpleStringProperty(cardHolder_name);
+    }
+
+    public int getPayment_id() {
+        return payment_id.get();
+    }
+
+    public IntegerProperty payment_idProperty() {
+        return payment_id;
+    }
+
+    public void setPayment_id(int payment_id) {
+        this.payment_id.set(payment_id);
     }
 
     public String getCard_type() {
