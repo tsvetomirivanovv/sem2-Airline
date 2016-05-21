@@ -212,17 +212,10 @@ public class FlightDetails extends Application {
         grid.add(infor, 1, 13);
         grid.add(inform, 1, 14);
 
-<<<<<<< HEAD
         ImageView mastercard = new ImageView(new Image("assets/images/mastercard.png", 80, 80, false, false));
         ImageView maestro = new ImageView(new Image("assets/images/Maestro.png", 80, 80, false, false));
         ImageView visa = new ImageView(new Image("assets/images/visa.jpg", 80, 80, false, false));
         ImageView visa_electron = new ImageView(new Image("assets/images/visa-electron.png", 80, 80, false, false));
-=======
-        ImageView mastercard = new ImageView(new Image("assets/images/mastercard.png", 90, 90, false, false));
-        ImageView maestro = new ImageView(new Image("assets/images/Maestro.png", 90, 90, false, false));
-        ImageView visa = new ImageView(new Image("assets/images/visa.jpg", 90, 90, false, false));
-        ImageView visa_electron = new ImageView(new Image("assets/images/visa-electron.png", 90, 90, false, false));
->>>>>>> 42f151b9d4cd4ae3b62fe437e1cc8ffd75d493ad
 
         Button b1 = new Button();
         Button b2 = new Button();
