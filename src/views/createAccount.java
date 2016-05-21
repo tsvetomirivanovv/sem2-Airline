@@ -130,7 +130,9 @@ public class createAccount  {
 
         Button close = new Button("Close");
 
-
+        close.setOnAction(event -> {
+            primaryStage.close();
+        });
 
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(addFlight,close);

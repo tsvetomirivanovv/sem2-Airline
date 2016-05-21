@@ -64,6 +64,15 @@ public class searchFlights extends Application {
         searchButton = new Button("Seach");
         searchButton.setId("b");
 
+        searchButton.setOnAction(event -> {
+            searchResults results = new searchResults();
+            try {
+                results.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         v1 = new VBox(7);
         v1.getChildren().addAll(label1, comboBox1);
         v1.setAlignment(Pos.CENTER);

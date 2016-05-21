@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 import models.*;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +50,14 @@ public class FlightDetails extends Application {
         grid.setVgap(8);
         grid.setHgap(10);
 
-        Date d1 = new Date(2015-12-12);
+        String s = new String("2000-01-01 00:00:00");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date d1 = null;
+        try {
+            d1 = sdf.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Date d2 = new Date(2016-01-02);
         ArrayList<Interval> use = new ArrayList<>();
         ObservableValue<Date> d3 = new ReadOnlyObjectWrapper<>(d2);
