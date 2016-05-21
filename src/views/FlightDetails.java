@@ -60,9 +60,9 @@ public class FlightDetails extends Application {
         Plane p3 = new Plane(345, "Boeing 455", 300, use, 50, 50, 200, 25, 25, 25);
         Plane p4 = new Plane(175, "Boeing 399", 700, use, 200, 200, 300, 25, 25, 25);
 
-        Airport a1 = new Airport("Baneasa","Bucuresti", 233);
-        Airport a2 = new Airport("Otopeni","Otopeni", 355);
-        Airport a3 = new Airport("Henri Coanda", "Bucuresti", 500);
+        Airport a1 = new Airport("Baneasa","Bucuresti", "BNS");
+        Airport a2 = new Airport("Otopeni","Otopeni", "OTP");
+        Airport a3 = new Airport("Henri Coanda", "Bucuresti", "HNC");
 
         ObservableList<Flight> flights_list = FXCollections.observableArrayList(
                 new Flight(1, p1, a1, d4, a2, d3),
