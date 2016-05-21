@@ -23,7 +23,7 @@ public class managePlanes extends Application{
     public  Button addPlane, deletePlane,close;
     public TableView<Plane> mainPlanesTable = new TableView<>();
     public  ObservableList<Plane> planes = FXCollections.observableArrayList(
-            new Plane(359,"Boing", 20, 1, 5, 5, 10)
+//            new Plane(359,"Boing", 20, 1, 5, 5, 10)
     );
     @Override
     public void start(Stage primaryStage)  {
@@ -58,7 +58,7 @@ public class managePlanes extends Application{
         reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty().asObject());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
-        inUse.setCellValueFactory(e -> e.getValue().in_useProperty().asObject());
+//        inUse.setCellValueFactory(e -> e.getValue().in_useProperty().asObject());
         businessSeats.setCellValueFactory(e -> e.getValue().businessSeatsProperty().asObject());
         coachSeats.setCellValueFactory(e -> e.getValue().coachSeatsProperty().asObject());
         economicSeats.setCellValueFactory(e -> e.getValue().economySeatsProperty().asObject());
@@ -87,9 +87,9 @@ public class managePlanes extends Application{
             ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setSeats(event.getNewValue());
         });
 
-        inUse.setOnEditCommit((TableColumn.CellEditEvent<Plane, Integer> event) -> {
-            ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setIn_use(event.getNewValue());
-        });
+//        inUse.setOnEditCommit((TableColumn.CellEditEvent<Plane, Integer> event) -> {
+//            ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setIn_use(event.getNewValue());
+//        });
 
         businessSeats.setOnEditCommit((TableColumn.CellEditEvent<Plane, Integer> event) -> {
             ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setBusinessSeats(event.getNewValue());
