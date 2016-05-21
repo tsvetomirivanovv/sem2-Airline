@@ -251,8 +251,6 @@ public class FlightDetails extends Application {
 
         grid.add(hbox, 1, 15);
 
-
-
         Scene scene = new Scene(grid, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
