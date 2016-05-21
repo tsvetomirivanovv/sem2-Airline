@@ -1,5 +1,7 @@
 package models;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 
 import java.util.Date;
@@ -10,17 +12,31 @@ import java.util.Date;
 public class Flight {
 
     private Plane plane;
+    private IntegerProperty flight_id;
     private Airport departure_loc;
     private ObservableValue<Date> departure_time;
     private Airport arrival_loc;
     private ObservableValue<Date> arrival_time;
 
-    public Flight(Plane plane, Airport departure_loc, ObservableValue<Date> departure_time, Airport arrival_loc, ObservableValue<Date> arrival_time) {
+    public Flight(int flight_id, Plane plane, Airport departure_loc, ObservableValue<Date> departure_time, Airport arrival_loc, ObservableValue<Date> arrival_time) {
+        this.flight_id = new SimpleIntegerProperty(flight_id);
         this.plane = plane;
         this.departure_loc = departure_loc;
         this.departure_time = departure_time;
         this.arrival_loc = arrival_loc;
         this.arrival_time = arrival_time;
+    }
+
+    public int getFlight_id() {
+        return flight_id.get();
+    }
+
+    public IntegerProperty flight_idProperty() {
+        return flight_id;
+    }
+
+    public void setFlight_id(int flight_id) {
+        this.flight_id.set(flight_id);
     }
 
     public Plane getPlane() {
