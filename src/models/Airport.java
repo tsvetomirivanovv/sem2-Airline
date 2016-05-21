@@ -11,12 +11,12 @@ import javafx.beans.property.StringProperty;
 public class Airport {
     private StringProperty name;
     private StringProperty city;
-    private IntegerProperty airport_code;
+    private StringProperty airport_code;
 
-    public Airport(String name, String city, int airport_code) {
+    public Airport(String name, String city, String airport_code) {
         this.name = new SimpleStringProperty(name);
         this.city = new SimpleStringProperty(city);
-        this.airport_code = new SimpleIntegerProperty(airport_code);
+        this.airport_code = new SimpleStringProperty(airport_code);
     }
 
     public String getName() {
@@ -43,15 +43,15 @@ public class Airport {
         this.city.set(city);
     }
 
-    public int getAirport_code() {
+    public String getAirport_code() {
         return airport_code.get();
     }
 
-    public IntegerProperty airport_codeProperty() {
+    public StringProperty airport_codeProperty() {
         return airport_code;
     }
 
-    public void setAirport_code(int airport_code) {
+    public void setAirport_code(String airport_code) {
         this.airport_code.set(airport_code);
     }
 }
