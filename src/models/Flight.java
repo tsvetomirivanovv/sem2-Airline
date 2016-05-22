@@ -1,6 +1,8 @@
 package models;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -16,14 +18,16 @@ public class Flight {
     private Airport arrival_loc;
     private java.sql.Timestamp departure_time;
     private java.sql.Timestamp arrival_time;
+    private DoubleProperty flight_price;
 
-    public Flight(int flight_id, Plane plane, Airport departure_loc, java.sql.Timestamp departure_time, Airport arrival_loc, java.sql.Timestamp arrival_time) {
+    public Flight(int flight_id, Plane plane, Airport departure_loc, java.sql.Timestamp departure_time, Airport arrival_loc, java.sql.Timestamp arrival_time, double flight_price) {
         this.flight_id = new SimpleIntegerProperty(flight_id);
         this.plane = plane;
         this.departure_loc = departure_loc;
         this.departure_time = departure_time;
         this.arrival_loc = arrival_loc;
         this.arrival_time = arrival_time;
+        this.flight_price = new SimpleDoubleProperty(flight_price);
     }
 
     public int getFlight_id() {
@@ -45,6 +49,18 @@ public class Flight {
     public Flight setPlane(Plane plane) {
         this.plane = plane;
         return this;
+    }
+
+    public double getFlight_price() {
+        return flight_price.get();
+    }
+
+    public DoubleProperty flight_priceProperty() {
+        return flight_price;
+    }
+
+    public void setFlight_price(double flight_price) {
+        this.flight_price.set(flight_price);
     }
 
     public Airport getDeparture_loc() {
