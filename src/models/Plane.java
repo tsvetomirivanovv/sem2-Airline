@@ -4,12 +4,10 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-/**
- * Created by Caseru on 5/16/2016.
- */
 public class Plane {
 
-    private IntegerProperty reg_no;
+    private IntegerProperty plane_id;
+    private StringProperty reg_no;
     private StringProperty model;
     private IntegerProperty seats;
     private ArrayList<Interval> in_use;
@@ -18,10 +16,10 @@ public class Plane {
     private IntegerProperty economySeats;
     private DoubleProperty businessPrice;
     private DoubleProperty coachPrice;
-    private DoubleProperty economyPrice;
 
-    public Plane(int reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice, double economyPrice) {
-        this.reg_no = new SimpleIntegerProperty(reg_no);
+    public Plane(int plane_id, String reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice) {
+        this.plane_id = new SimpleIntegerProperty(plane_id);
+        this.reg_no = new SimpleStringProperty(reg_no);
         this.model = new SimpleStringProperty(model);
         this.seats = new SimpleIntegerProperty(seats);
         this.in_use = in_use;
@@ -30,10 +28,21 @@ public class Plane {
         this.economySeats = new SimpleIntegerProperty(economySeats);
         this.businessPrice = new SimpleDoubleProperty(businessPrice);
         this.coachPrice = new SimpleDoubleProperty(coachPrice);
-        this.economyPrice = new SimpleDoubleProperty(economyPrice);
     }
 
-    public void updatePlane(int reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats) {
+    public Plane(int plane_id, String reg_no, String model, int seats, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice) {
+        this.plane_id = new SimpleIntegerProperty(plane_id);
+        this.reg_no = new SimpleStringProperty(reg_no);
+        this.model = new SimpleStringProperty(model);
+        this.seats = new SimpleIntegerProperty(seats);
+        this.businessSeats = new SimpleIntegerProperty(businessSeats);
+        this.coachSeats = new SimpleIntegerProperty(coachSeats);
+        this.economySeats = new SimpleIntegerProperty(economySeats);
+        this.businessPrice = new SimpleDoubleProperty(businessPrice);
+        this.coachPrice = new SimpleDoubleProperty(coachPrice);
+    }
+
+    public void updatePlane(String reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats) {
         setReg_no(reg_no);
         setModel(model);
         setSeats(seats);
@@ -43,15 +52,27 @@ public class Plane {
         setEconomySeats(economySeats);
     }
 
-    public int getReg_no() {
+    public int getPlane_id() {
+        return plane_id.get();
+    }
+
+    public IntegerProperty plane_idProperty() {
+        return plane_id;
+    }
+
+    public void setPlane_id(int plane_id) {
+        this.plane_id.set(plane_id);
+    }
+
+    public String getReg_no() {
         return reg_no.get();
     }
 
-    public IntegerProperty reg_noProperty() {
+    public StringProperty reg_noProperty() {
         return reg_no;
     }
 
-    public void setReg_no(int reg_no) {
+    public void setReg_no(String reg_no) {
         this.reg_no.set(reg_no);
     }
 
@@ -146,17 +167,5 @@ public class Plane {
 
     public void setCoachPrice(double coachPrice) {
         this.coachPrice.set(coachPrice);
-    }
-
-    public double getEconomyPrice() {
-        return economyPrice.get();
-    }
-
-    public DoubleProperty economyPriceProperty() {
-        return economyPrice;
-    }
-
-    public void setEconomyPrice(double economyPrice) {
-        this.economyPrice.set(economyPrice);
     }
 }
