@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FlightDetails extends Application {
+public class selectedFlight extends Application {
 
     public void start(Stage primaryStage) {
         primaryStage.setTitle("  Selected flight");
@@ -59,11 +59,11 @@ public class FlightDetails extends Application {
         Airport a3 = new Airport("Henri Coanda", "Bucuresti", "HNC");
 
         ObservableList<Flight> flights_list = FXCollections.observableArrayList(
-                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
-                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
-                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
-                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
-                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"))
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"), 800.0),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"), 900.6),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"), 900.0),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"), 768.8),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"), 868.0)
         );
 
         Label titleLabel = new Label("We just need a few more details. Who is travelling?");
