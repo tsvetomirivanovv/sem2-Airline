@@ -5,6 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import services.OscaServices;
 
 
 public class menu {
@@ -13,12 +14,18 @@ public class menu {
         Menu filemenu = new Menu("File");
         Menu reservationsMenu = new Menu("Manage reservations");
         Menu planesMenus = new Menu("Manage Planes");
+        Menu OSCA = new Menu("OSCA");
+        Menu flightsMenu = new Menu("Manage flights");
+
 
         //MENU ITEMS
         MenuItem login = new MenuItem("Log in as Admin");
         MenuItem loginCustomer = new MenuItem("Log in as Customer");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
+        MenuItem flights = new MenuItem("Export flights");
+        MenuItem planes = new MenuItem("Export planes");
+        MenuItem manageFlights = new MenuItem("Manage flights");
 
         loginCustomer.setOnAction(event -> {
             loginAsCustomer login2 = new loginAsCustomer();
@@ -42,14 +49,28 @@ public class menu {
             manageReservations1.start(primaryStage);
         });
 
+        flights.setOnAction(event -> {
+            OscaServices caos = new OscaServices();
+            caos.FlightToCSV();
+        });
+        planes.setOnAction(event -> {
+            OscaServices caos = new OscaServices();
+            caos.PlaneToCSV();
+        });
+
+        manageFlights.setOnAction(event -> {
+            views.manageFlights manageFlights1 = new manageFlights();
+            manageFlights1.start(primaryStage);
+        });
 
         filemenu.getItems().addAll(login,loginCustomer);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
-
+        OSCA.getItems().addAll(flights,planes);
+        flightsMenu.getItems().addAll(manageFlights);
         //Main menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(filemenu,reservationsMenu,planesMenus);
+        menuBar.getMenus().addAll(filemenu,reservationsMenu,planesMenus,flightsMenu,OSCA);
         return menuBar;
 
     }
