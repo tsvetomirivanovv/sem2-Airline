@@ -42,7 +42,7 @@ public class managePlanes extends Application{
 
 
         // SETTING THE COLLUMS AND ADDING THEM TO THE TABLEVIEW
-        TableColumn<Plane, Integer> reg_num = new TableColumn<>("Registration Number");
+        TableColumn<Plane, String> reg_num = new TableColumn<>("Registration Number");
         TableColumn<Plane, String> model = new TableColumn<>("Model");
         TableColumn<Plane, Integer> seats = new TableColumn<>("Total Seats");
         TableColumn<Plane, Integer> inUse = new TableColumn<>("In Use");
@@ -55,7 +55,7 @@ public class managePlanes extends Application{
 
         // ATTACHING ACTION LISTENERS (Displaying the objects into the tableview)
 
-        reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty().asObject());
+        reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
 //        inUse.setCellValueFactory(e -> e.getValue().in_useProperty().asObject());
@@ -66,7 +66,7 @@ public class managePlanes extends Application{
 
 
         //!!!!!!ATTENTION!!!!!
-        reg_num.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        reg_num.setCellFactory(TextFieldTableCell.forTableColumn());
         model.setCellFactory(TextFieldTableCell.forTableColumn());
         seats.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         inUse.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -75,7 +75,7 @@ public class managePlanes extends Application{
         economicSeats.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
 
-        reg_num.setOnEditCommit((TableColumn.CellEditEvent<Plane, Integer> event) -> {
+        reg_num.setOnEditCommit((TableColumn.CellEditEvent<Plane, String> event) -> {
             ((Plane) event.getTableView().getItems().get(event.getTablePosition().getRow())).setReg_no(event.getNewValue());
         });
 
