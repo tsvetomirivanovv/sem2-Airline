@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import services.DataController;
 
 public class searchResultsOld extends Application {
 
@@ -31,6 +32,8 @@ public class searchResultsOld extends Application {
      Label label121, label122, label123, label124, label125;
      RadioButton radio11, radio12;
      CheckBox check12;
+
+    DataController data = new DataController();
 
     public static void main(String[] args) {
         launch(args);
@@ -67,59 +70,55 @@ public class searchResultsOld extends Application {
         box1 = new VBox(20);
         box1.getChildren().addAll(label1,hBox1);
 
-        //while (/*as long as there are flights left in the table*/) {
-            //region Create a single flight box
-            label21111 = new Label("Time");
-            label21112 = new Label("Airport");
-            vBox2111 = new VBox(20);
-            vBox2111.getChildren().addAll(label21111,label21112);
+        //region Create a single flight box
+        label21111 = new Label("Time");
+        label21112 = new Label("Airport");
+        vBox2111 = new VBox(20);
+        vBox2111.getChildren().addAll(label21111,label21112);
 
-            label21121 = new Label("Time");
-            label21122 = new Label("Airport");
-            vBox2112 = new VBox(20);
-            vBox2112.getChildren().addAll(label21121,label21122);
+        label21121 = new Label("Time");
+        label21122 = new Label("Airport");
+        vBox2112 = new VBox(20);
+        vBox2112.getChildren().addAll(label21121,label21122);
 
-            imageView1 = new ImageView();
-            hBox211 = new HBox(20);
-            hBox211.getChildren().addAll(vBox2111,imageView1,vBox2112);
-
-
-            label21211 = new Label("Time");
-            label21212 = new Label("Airport");
-            vBox2121 = new VBox(20);
-            vBox2121.getChildren().addAll(label21211,label21212);
-
-            label21221 = new Label("Time");
-            label21222 = new Label("Airport");
-            vBox2122 = new VBox(20);
-            vBox2122.getChildren().addAll(label21221,label21222);
-
-            imageView2 = new ImageView();
-            hBox212 = new HBox(20);
-            hBox212.getChildren().addAll(vBox2121,imageView2,vBox2122);
+        imageView1 = new ImageView();
+        hBox211 = new HBox(20);
+        hBox211.getChildren().addAll(vBox2111,imageView1,vBox2112);
 
 
-            vBox21 = new VBox(20);
-            vBox21.getChildren().addAll(hBox211,hBox212);
+        label21211 = new Label("Time");
+        label21212 = new Label("Airport");
+        vBox2121 = new VBox(20);
+        vBox2121.getChildren().addAll(label21211,label21212);
+
+        label21221 = new Label("Time");
+        label21222 = new Label("Airport");
+        vBox2122 = new VBox(20);
+        vBox2122.getChildren().addAll(label21221,label21222);
+
+        imageView2 = new ImageView();
+        hBox212 = new HBox(20);
+        hBox212.getChildren().addAll(vBox2121,imageView2,vBox2122);
 
 
-            button222 = new Button("See details");
-            button221 = new Button("Select flight");
-            vBox22 = new VBox(20);
-            label22 = new Label("pulapulapula");
-            vBox22.getChildren().addAll(label22,button221,button222);
+        vBox21 = new VBox(20);
+        vBox21.getChildren().addAll(hBox211,hBox212);
 
 
-            hBox2 = new HBox(20);
-            hBox2.getChildren().addAll(vBox21,vBox22);
-            //endregion
-
-            list.add(hBox2);
-      //  }
-
-        flights.setItems(list);
+        button222 = new Button("See details");
+        button221 = new Button("Select flight");
+        vBox22 = new VBox(20);
+        label22 = new Label("pulapulapula");
+        vBox22.getChildren().addAll(label22,button221,button222);
 
 
+        hBox2 = new HBox(20);
+        hBox2.getChildren().addAll(vBox21,vBox22);
+        //endregion
+
+        list.add(hBox2);
+
+        flights.setItems(data.getFlights());
 
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);
