@@ -12,16 +12,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Reservation;
+import services.DataController;
 
 public class manageReservations extends Application {
-    ObservableList<Reservation> list = FXCollections.observableArrayList();
     Menu menu2 = new Menu("Manage reservations");
-    TableColumn<Reservation,String> status;
-    TableColumn<Reservation,Integer> reservationId, customerId, passengerNo;
+    TableColumn<Reservation,String> status, customerName;
+    TableColumn<Reservation,Integer> reservationId, passengersNo;
     Button viewDetails, cancel, confirm;
     TableView<Reservation> tableView = new TableView<>();
     TextField search = new TextField();
     HBox buttons = new HBox(20);
+    DataController data = new DataController();
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -40,19 +42,24 @@ public class manageReservations extends Application {
         reservationId.setOnEditCommit((TableColumn.CellEditEvent<Reservation,Integer> event) ->{
             (event.getTableView().getItems().get(event.getTablePosition().getRow())).setReservation_id(event.getNewValue());
         });
-        customerId = new TableColumn<>("Customer Id");
-        customerId.setMinWidth(50);
-        customerId.setCellValueFactory(c -> c.getValue().customer_idProperty().asObject());
-        customerId.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        customerId.setOnEditCommit((TableColumn.CellEditEvent<Reservation,Integer> event) ->{
-            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setCustomer_id(event.getNewValue());
+        customerName = new TableColumn<>("Customer name");
+        customerName.setMinWidth(50);
+        customerName.setCellValueFactory(c -> c.getValue().customer_nameProperty());
+        customerName.setCellFactory(TextFieldTableCell.forTableColumn());
+        customerName.setOnEditCommit((TableColumn.CellEditEvent<Reservation,String> event) ->{
+            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setCustomer_name(event.getNewValue());
         });
-        passengerNo = new TableColumn<>("Passenger No");
-        passengerNo.setMinWidth(50);
+        passengersNo = new TableColumn<>("Passenger No");
+        passengersNo.setMinWidth(50);
+        passengersNo.setCellValueFactory(c -> c.getValue().total_passengersProperty().asObject());
+        passengersNo.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        passengersNo.setOnEditCommit((TableColumn.CellEditEvent<Reservation,Integer> event) ->{
+            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setTotal_passengers(event.getNewValue());
+        });
 
-        tableView.getColumns().addAll(customerId, passengerNo, reservationId, status);
-        tableView.setEditable(true);
-        tableView.setItems(list);
+        tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
+        //tableView.setEditable(true);
+        tableView.setItems(data.getReservations());
 
         //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
