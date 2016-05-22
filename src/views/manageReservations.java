@@ -13,11 +13,9 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Reservation;
 
-/**
- * Created by Caseru on 5/18/2016.
- */
 public class manageReservations extends Application {
-    ObservableList<Reservation> list = FXCollections.observableArrayList(); Menu menu2 = new Menu("Manage reservations");
+    ObservableList<Reservation> list = FXCollections.observableArrayList();
+    Menu menu2 = new Menu("Manage reservations");
     TableColumn<Reservation,String> status;
     TableColumn<Reservation,Integer> reservationId, customerId, passengerNo;
     Button viewDetails, cancel, confirm;
@@ -26,8 +24,6 @@ public class manageReservations extends Application {
     HBox buttons = new HBox(20);
     @Override
     public void start(Stage primaryStage) {
-
-
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         status = new TableColumn<>("Status");
@@ -39,10 +35,10 @@ public class manageReservations extends Application {
         });
         reservationId = new TableColumn<>("Reservation Id");
         reservationId.setMinWidth(50);
-        reservationId.setCellValueFactory(c -> c.getValue().reservationIdProperty().asObject());
+        reservationId.setCellValueFactory(c -> c.getValue().reservation_idProperty().asObject());
         reservationId.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         reservationId.setOnEditCommit((TableColumn.CellEditEvent<Reservation,Integer> event) ->{
-            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setReservationId(event.getNewValue());
+            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setReservation_id(event.getNewValue());
         });
         customerId = new TableColumn<>("Customer Id");
         customerId.setMinWidth(50);
@@ -60,8 +56,6 @@ public class manageReservations extends Application {
 
         //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
-
-
         Button addButton = new Button("Create ");
         Button deleteButton = new Button("Delete ");
 
@@ -69,19 +63,14 @@ public class manageReservations extends Application {
 
         });
 
-
-
         VBox vBox1 = new VBox();
         vBox1.getChildren().addAll(addButton,deleteButton);
-
-
 
         BorderPane layout = new BorderPane();
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
         layout.setBottom(vBox1);
-
 
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
