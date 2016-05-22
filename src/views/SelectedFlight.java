@@ -34,7 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class FlightDetails extends Application {
+public class SelectedFlight extends Application {
 
     public void start(Stage primaryStage) {
         primaryStage.setTitle("  Selected flight");
