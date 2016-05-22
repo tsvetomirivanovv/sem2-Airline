@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Flight;
 import models.Plane;
+import services.DataController;
 
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,8 @@ import java.util.Date;
 
 
 public class manageFlights extends Application{
+
+    DataController data = new DataController();
 
     TableView<Flight> mainFlightsTable = new TableView<>();
     TableColumn<Flight,Integer> flightNo;
@@ -54,18 +57,20 @@ public class manageFlights extends Application{
 
             return deptime;
         });
-        arrivalLoc.setCellValueFactory(cellData -> {
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
+        arrivalTime.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getArrival_time());
             ObservableValue<String> artime = new ReadOnlyObjectWrapper<>(timeStamp);
 
             return artime;
         });
 
-       
 
 
 
-        mainFlightsTable.getColumns().addAll(flightNo,planeNo,departureLoc,arrivalLoc,departureTime,arrivalTime);
+
+        mainFlightsTable.getColumns().addAll(flightNo,planeNo,departureLoc,departureTime,arrivalLoc,arrivalTime);
+
+        mainFlightsTable.setItems(DataController.getFlights());
 
         addFlight = new Button("Add Flight");
         deleteFlights = new Button("Delete Flight");
