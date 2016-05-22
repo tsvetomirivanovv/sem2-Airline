@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import models.*;
 
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -33,9 +34,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Andrei on 5/17/2016.
- */
 public class FlightDetails extends Application {
 
     public void start(Stage primaryStage) {
@@ -50,34 +48,21 @@ public class FlightDetails extends Application {
         grid.setVgap(8);
         grid.setHgap(10);
 
-        String s = new String("2000-01-01 00:00:00");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date d1 = null;
-        try {
-            d1 = sdf.parse(s);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date d2 = new Date(2016-01-02);
-        ArrayList<Interval> use = new ArrayList<>();
-        ObservableValue<Date> d3 = new ReadOnlyObjectWrapper<>(d2);
-        ObservableValue<Date> d4 = new ReadOnlyObjectWrapper<>(d1);
-
-
-        Plane p1 = new Plane(222, "Boeing 837", 650, use, 200, 200, 250, 25, 25, 25);
-        Plane p2 = new Plane(539, "Boeing 777", 550, use, 100, 100, 350, 25, 25, 25);
-        Plane p3 = new Plane(345, "Boeing 455", 300, use, 50, 50, 200, 25, 25, 25);
-        Plane p4 = new Plane(175, "Boeing 399", 700, use, 200, 200, 300, 25, 25, 25);
+        Plane p1 = new Plane(1, "222", "Boeing 837", 650, 200, 200, 250, 25, 25);
+        Plane p2 = new Plane(2, "539", "Boeing 777", 550, 100, 100, 350, 25, 25);
+        Plane p3 = new Plane(3, "345", "Boeing 455", 300, 50, 50, 200, 25, 25);
+        Plane p4 = new Plane(4, "175", "Boeing 399", 700, 200, 200, 300, 25, 25);
 
         Airport a1 = new Airport("Baneasa","Bucuresti", "BNS");
         Airport a2 = new Airport("Otopeni","Otopeni", "OTP");
         Airport a3 = new Airport("Henri Coanda", "Bucuresti", "HNC");
 
         ObservableList<Flight> flights_list = FXCollections.observableArrayList(
-                new Flight(1, p1, a1, d4, a2, d3),
-                new Flight(1, p2, a3, d3, a1, d4),
-                new Flight(1, p3, a2, d4, a3, d3),
-                new Flight(1, p4, a2, d3, a1, d4)
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00")),
+                new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:00:00"), a2, Timestamp.valueOf("2000-01-01 00:00:00"))
         );
 
         Label titleLabel = new Label("We just need a few more details. Who is travelling?");
@@ -91,11 +76,18 @@ public class FlightDetails extends Application {
 
         flights1.itemsProperty().setValue(flights_list);
 
-        TableColumn<Flight, Integer> column1 = new TableColumn<>("Flight/Plane");
-        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
+        TableColumn<Flight, String> column1 = new TableColumn<>("Flight/Plane");
+        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty());
 
-        TableColumn<Flight, Date> column2 = new TableColumn<>("Date & Time");
-        column2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
+        TableColumn<Flight, String> column2 = new TableColumn<>("Date & Time");
+        column2.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
+            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return dd;
+        });
+
+
 
         TableColumn<Flight, String> column3 = new TableColumn<>("From");
         column3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
@@ -105,8 +97,13 @@ public class FlightDetails extends Application {
 
         TableColumn<Flight, String> column5 = new TableColumn<>("Duration");
 
-        TableColumn<Flight, Date> column6 = new TableColumn<>("Arrival");
-        column6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
+        TableColumn<Flight, String> column6 = new TableColumn<>("Arrival");
+        column6.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getArrival_time());
+            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return dd;
+        });
 
         flights1.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -119,11 +116,16 @@ public class FlightDetails extends Application {
 
         flights2.itemsProperty().setValue(flights_list);
 
-        TableColumn<Flight, Integer> columne1 = new TableColumn<>("Flight/Plane");
-        columne1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty().asObject());
+        TableColumn<Flight, String> columne1 = new TableColumn<>("Flight/Plane");
+        columne1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty());
 
-        TableColumn<Flight, Date> columne2 = new TableColumn<>("Date & Time");
-        columne2.setCellValueFactory(cellData -> cellData.getValue().departure_timeProperty());
+        TableColumn<Flight, String> columne2 = new TableColumn<>("Date & Time");
+        columne2.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
+            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return dd;
+        });
 
         TableColumn<Flight, String> columne3 = new TableColumn<>("From");
         columne3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
@@ -133,8 +135,13 @@ public class FlightDetails extends Application {
 
         TableColumn<Flight, String> columne5 = new TableColumn<>("Duration");
 
-        TableColumn<Flight, Date> columne6 = new TableColumn<>("Arrival");
-        columne6.setCellValueFactory(cellData -> cellData.getValue().arrival_timeProperty());
+        TableColumn<Flight, String> columne6 = new TableColumn<>("Arrival");
+        columne6.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getArrival_time());
+            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return dd;
+        });
 
         flights2.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         flights2.getColumns().addAll(columne1, columne2, columne3, columne4, columne5, columne6);
