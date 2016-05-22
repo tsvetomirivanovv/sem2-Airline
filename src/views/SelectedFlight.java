@@ -21,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.*;
 
@@ -233,9 +234,13 @@ public class selectedFlight extends Application {
         ImageView visa_electron = new ImageView(new Image("assets/images/visa-electron.png", 80, 80, false, false));
 
         Button b1 = new Button();
+        b1.setId("b1");
         Button b2 = new Button();
+        b2.setId("b2");
         Button b3 = new Button();
+        b3.setId("b3");
         Button b4 = new Button();
+        b4.setId("b4");
 
         b4.setMaxWidth(1024);
         b4.setMaxHeight(640);
@@ -266,7 +271,93 @@ public class selectedFlight extends Application {
 
         grid.add(hbox, 1, 15);
 
-        Scene scene = new Scene(grid, 600, 500);
+        Label cardholder = new Label("Card holder name:");
+        TextField tfcardholder = new TextField();
+        Label cardno = new Label("Card No:");
+        TextField tfcardno = new TextField();
+
+        Label expiration = new Label("Expiration Date");
+        TextField mm = new TextField();
+        mm.setPromptText("MM");
+        Label slash = new Label("  /  ");
+        TextField yyyy = new TextField();
+        yyyy.setPromptText("YYYY");
+        Label security = new Label("Security code:");
+        TextField tfsecurity = new TextField();
+        tfsecurity.setPromptText("CVV");
+
+        tfcardholder.setMaxWidth(80);
+        tfcardno.setMaxWidth(60);
+        mm.setMaxWidth(60);
+        yyyy.setMaxWidth(60);
+        tfsecurity.setMaxWidth(80);
+
+        VBox v1 = new VBox(3);
+        v1.getChildren().addAll(cardholder, tfcardholder);
+        grid.add(v1, 1, 16);
+
+        VBox v2 = new VBox(3);
+        v2.getChildren().addAll(cardno, tfcardno);
+        grid.add(v2, 2, 16);
+
+        HBox he = new HBox(1);
+        he.getChildren().addAll(mm, slash, yyyy);
+
+        VBox v3 = new VBox(3);
+        v3.getChildren().addAll(expiration, he);
+        grid.add(v3, 3, 16);
+
+        VBox v4 = new VBox(3);
+        v4.getChildren().addAll(security, tfsecurity);
+        grid.add(v4, 4, 16);
+
+        Label price = new Label("Price");
+        Label OTP = new Label("OTP - > BUD");
+        Label no1 = new Label("1 X 445 DKK");
+        Label BUD = new Label("BUD - > OTP");
+        Label no2 = new Label("1 X 445 DKK");
+        Label baggage = new Label("Baggage, Max 15 Kg:");
+        Label no3 = new Label("1 X 50 DKK");
+        ImageView dash = new ImageView(new Image("assets/images/dash.png", 80, 80, false, false));
+        Label TotalP = new Label("TOTAL PRICE:  ");
+        Label no4 = new Label("840 DKK");
+
+        grid.add(price, 1, 17);
+
+        HBox hbo = new HBox(20);
+        hbo.getChildren().addAll(OTP, no1);
+        grid.add(hbo, 1, 18);
+
+        HBox hbo2 = new HBox(20);
+        hbo2.getChildren().addAll(BUD, no2);
+        grid.add(hbo2, 1, 19);
+
+        HBox hbo3 = new HBox(20);
+        hbo3.getChildren().addAll(baggage, no3);
+        grid.add(hbo3, 1, 20);
+
+        HBox hbo4 = new HBox(20);
+        hbo4.getChildren().addAll(TotalP, no4);
+        VBox vbo = new VBox(3);
+        vbo.getChildren().addAll(dash, hbo4);
+        // this does not appear in the grid pane, for some reason
+        grid.add(vbo, 2, 21);
+
+        Button Book = new Button("Book reservation");
+        Button close = new Button("Close");
+
+        HBox hbut = new HBox(5);
+        hbut.getChildren().addAll(Book, close);
+        //same thing as the vbox above, does not appear
+        grid.add(hbut, 2, 22);
+
+
+
+        //Inheriting the css and setting the background images in style.css for the buttons does not work
+        //grid.getStylesheets().addAll("assets/styles/style.css");
+        //it expects some kind of an URL, instead of the image's path
+
+        Scene scene = new Scene(grid, 700,700);
         primaryStage.setScene(scene);
         primaryStage.show();
 
