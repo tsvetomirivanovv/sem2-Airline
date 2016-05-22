@@ -4,12 +4,90 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Airport;
 import models.Flight;
+import models.Interval;
 import models.Plane;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataController {
     static Connection conn = SQLConfig.connect();
+
+    public ObservableList<Plane> getPlanes() {
+        ObservableList<Plane> planes = FXCollections.observableArrayList();
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT * FROM Planes p");
+
+            if (rs != null)
+                while (rs.next()) {
+
+                    //Get plane info
+                    int plane_id = rs.getInt("id");
+                    String plane_number = rs.getString("reg_no");
+                    String model = rs.getString("model");
+                    int firstclass_seats = rs.getInt("firstclass_seats");
+                    int coach_seats = rs.getInt("coach_seats");
+                    int economy_seats = rs.getInt("economy_seats");
+                    Double firstclass_price = rs.getDouble("firstclass_price");
+                    Double coach_price = rs.getDouble("coach_price");
+                    int totalSeats = firstclass_seats + coach_seats + economy_seats;
+
+                    // Get intervals for each plane:
+                    ArrayList<Interval> intervals = getIntervals(plane_id);
+
+                    //Create plane object:
+                    Plane plane = new Plane(plane_id, plane_number, model, totalSeats, intervals, firstclass_seats, coach_seats, economy_seats, firstclass_price, coach_price);
+
+                    planes.add(plane);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return planes;
+    }
+
+    public static ArrayList<Interval> getIntervals(int planeId) {
+        ArrayList<Interval> intervals = new ArrayList<>();
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT f.departure_time, f.arrival_time FROM Planes p, Flights f WHERE f.plane_id = '" + planeId + "'");
+
+            if (rs != null) {
+                while (rs.next()) {
+                    java.sql.Timestamp departure_time = rs.getTimestamp("departure_time");
+                    java.sql.Timestamp arrival_time = rs.getTimestamp("arrival_time");
+
+                    Interval interval = new Interval(departure_time, arrival_time);
+                    intervals.add(interval);
+
+
+                }
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return intervals;
+    }
+
 
     public static ObservableList<Flight> getFlights() {
         ObservableList<Flight> flights = FXCollections.observableArrayList();
