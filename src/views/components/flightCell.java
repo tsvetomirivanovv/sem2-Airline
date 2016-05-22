@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Flight;
-import views.selectedFlight;
+import views.SelectedFlight;
 import java.text.SimpleDateFormat;
 
 public class flightCell extends ListCell<Flight> {
@@ -78,7 +78,7 @@ public class flightCell extends ListCell<Flight> {
         flightBox.setAlignment(Pos.CENTER);
 
         selectFlight.setOnAction(e -> {
-            selectedFlight selectedFlightView = new selectedFlight();
+            SelectedFlight selectedFlightView = new SelectedFlight();
             selectedFlightView.start(window);
             System.err.println("Test!");
         });
