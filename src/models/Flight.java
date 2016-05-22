@@ -4,21 +4,20 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 
+import java.security.Timestamp;
+import java.sql.Time;
 import java.util.Date;
 
-/**
- * Created by Caseru on 5/16/2016.
- */
 public class Flight {
 
     private Plane plane;
     private IntegerProperty flight_id;
     private Airport departure_loc;
-    private ObservableValue<Date> departure_time;
     private Airport arrival_loc;
-    private ObservableValue<Date> arrival_time;
+    private java.sql.Timestamp departure_time;
+    private java.sql.Timestamp arrival_time;
 
-    public Flight(int flight_id, Plane plane, Airport departure_loc, ObservableValue<Date> departure_time, Airport arrival_loc, ObservableValue<Date> arrival_time) {
+    public Flight(int flight_id, Plane plane, Airport departure_loc, java.sql.Timestamp departure_time, Airport arrival_loc, java.sql.Timestamp arrival_time) {
         this.flight_id = new SimpleIntegerProperty(flight_id);
         this.plane = plane;
         this.departure_loc = departure_loc;
@@ -57,14 +56,6 @@ public class Flight {
         return this;
     }
 
-    public Date getDeparture_time() {
-        return departure_time.getValue();
-    }
-
-    public ObservableValue<Date> departure_timeProperty() {
-        return departure_time;
-    }
-
     public Airport getArrival_loc() {
         return arrival_loc;
     }
@@ -74,11 +65,19 @@ public class Flight {
         return this;
     }
 
-    public Date getArrival_time() {
-        return arrival_time.getValue();
+    public java.sql.Timestamp getDeparture_time() {
+        return departure_time;
     }
 
-    public ObservableValue<Date> arrival_timeProperty() {
+    public void setDeparture_time(java.sql.Timestamp departure_time) {
+        this.departure_time = departure_time;
+    }
+
+    public java.sql.Timestamp getArrival_time() {
         return arrival_time;
+    }
+
+    public void setArrival_time(java.sql.Timestamp arrival_time) {
+        this.arrival_time = arrival_time;
     }
 }
