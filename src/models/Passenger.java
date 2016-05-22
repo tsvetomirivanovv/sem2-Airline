@@ -5,21 +5,20 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Created by Andrei on 5/16/2016.
- */
+import java.sql.Timestamp;
+
 public class Passenger {
 
     private IntegerProperty id;
     private IntegerProperty baggage;
-    private IntegerProperty birth_date;
+    private java.sql.Timestamp birth_date;
     private StringProperty name;
     private IntegerProperty seat_no;
 
-    public Passenger(int id, int baggage, int birth_date, String name, int seat_no) {
+    public Passenger(int id, int baggage, java.sql.Timestamp birth_date, String name, int seat_no) {
         this.id = new SimpleIntegerProperty(id);
         this.baggage = new SimpleIntegerProperty(baggage);
-        this.birth_date = new SimpleIntegerProperty(birth_date);
+        this.birth_date = birth_date;
         this.name = new SimpleStringProperty(name);
         this.seat_no = new SimpleIntegerProperty(seat_no);
     }
@@ -48,16 +47,12 @@ public class Passenger {
         this.baggage.set(baggage);
     }
 
-    public int getBirth_date() {
-        return birth_date.get();
-    }
-
-    public IntegerProperty birth_dateProperty() {
+    public Timestamp getBirth_date() {
         return birth_date;
     }
 
-    public void setBirth_date(int birth_date) {
-        this.birth_date.set(birth_date);
+    public void setBirth_date(Timestamp birth_date) {
+        this.birth_date = birth_date;
     }
 
     public String getName() {
