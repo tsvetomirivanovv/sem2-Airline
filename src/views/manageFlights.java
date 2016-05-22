@@ -2,17 +2,23 @@ package views;
 
 
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import models.Flight;
 import models.Plane;
 
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -21,7 +27,7 @@ public class manageFlights extends Application{
     TableView<Flight> mainFlightsTable = new TableView<>();
     TableColumn<Flight,Integer> flightNo;
     TableColumn<Flight,String> planeNo, departureLoc, arrivalLoc;
-    TableColumn<Flight,Date> departureTime, arrivalTime;
+    TableColumn<Flight,String> departureTime, arrivalTime;
 
     Button addFlight, deleteFlights,updateFlight,close;
 
@@ -38,6 +44,24 @@ public class manageFlights extends Application{
         departureTime = new TableColumn<>("Departure time");
         arrivalTime = new TableColumn<>("Arrival time");
 
+        flightNo.setCellValueFactory(e -> e.getValue().flight_idProperty().asObject());
+        planeNo.setCellValueFactory(e -> e.getValue().getPlane().reg_noProperty());
+        departureLoc.setCellValueFactory(e-> e.getValue().getDeparture_loc().cityProperty());
+        arrivalLoc.setCellValueFactory(e-> e.getValue().getArrival_loc().cityProperty());
+        departureTime.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
+            ObservableValue<String> deptime = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return deptime;
+        });
+        arrivalLoc.setCellValueFactory(cellData -> {
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
+            ObservableValue<String> artime = new ReadOnlyObjectWrapper<>(timeStamp);
+
+            return artime;
+        });
+
+       
 
 
 
