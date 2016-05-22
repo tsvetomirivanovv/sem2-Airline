@@ -21,7 +21,8 @@ public class menu {
         MenuItem loginCustomer = new MenuItem("Log in as Customer");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
-        MenuItem OSCA1 = new MenuItem("OSCA");
+        MenuItem flights = new MenuItem("Export flights");
+        MenuItem planes = new MenuItem("Export planes");
 
         loginCustomer.setOnAction(event -> {
             loginAsCustomer login2 = new loginAsCustomer();
@@ -45,15 +46,19 @@ public class menu {
             manageReservations1.start(primaryStage);
         });
 
-        OSCA1.setOnAction(event -> {
+        flights.setOnAction(event -> {
             OscaServices caos = new OscaServices();
             caos.FlightToCSV();
+        });
+        planes.setOnAction(event -> {
+            OscaServices caos = new OscaServices();
+            caos.PlaneToCSV();
         });
 
         filemenu.getItems().addAll(login,loginCustomer);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
-        OSCA.getItems().addAll(OSCA1);
+        OSCA.getItems().addAll(flights,planes);
 
         //Main menu bar
         MenuBar menuBar = new MenuBar();
