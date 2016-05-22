@@ -1,34 +1,27 @@
 package models;
 
-import java.util.Date;
-
-/**
- * Created by Caseru on 5/21/2016.
- */
 public class Interval {
-    private Date departureTime;
-    private Date arrivalTime;
+    private java.sql.Timestamp departureTime;
+    private java.sql.Timestamp arrivalTime;
 
-    public Interval(Date departureTime, Date arrivalTime) {
+    public Interval(java.sql.Timestamp departureTime, java.sql.Timestamp arrivalTime) {
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
     }
 
-    public Date getDepartureTime() {
+    public java.sql.Timestamp getDepartureTime() {
         return departureTime;
     }
 
-    public Interval setDepartureTime(Date departureTime) {
+    public void setDepartureTime(java.sql.Timestamp departureTime) {
         this.departureTime = departureTime;
-        return this;
     }
 
-    public Date getArrivalTime() {
+    public java.sql.Timestamp getArrivalTime() {
         return arrivalTime;
     }
 
-    public Interval setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(java.sql.Timestamp arrivalTime) {
         this.arrivalTime = arrivalTime;
-        return this;
     }
 }
