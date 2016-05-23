@@ -29,6 +29,9 @@ public class manageReservations extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        BorderPane layout = new BorderPane();
+        Scene scene = new Scene(layout, 1000, 600);
+        primaryStage.setScene(scene);
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         status = new TableColumn<>("Status");
@@ -68,30 +71,37 @@ public class manageReservations extends Application {
 
         //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
-        Button addButton = new Button("Create ");
-        Button deleteButton = new Button("Delete ");
+        Button addButton = new Button("Confirm reservation ");
+        Button deleteButton = new Button("Refresh");
+        Button cancelButton  = new Button("Cancel reservation");
 
         addButton.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
             String status = tableView.getSelectionModel().getSelectedItem().getStatus();
             data.setReservationStatus(i);
+
         });
 
         deleteButton.setOnAction(event -> {
-
+            tableView.setItems(data.getReservations());
         });
 
-        VBox vBox1 = new VBox();
-        vBox1.getChildren().addAll(addButton,deleteButton);
+        cancelButton.setOnAction(event ->{
+            int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
+            String status = tableView.getSelectionModel().getSelectedItem().getStatus();
+            data.cancelReservation(i);
+        });
 
-        BorderPane layout = new BorderPane();
+        HBox hBox1 = new HBox(15);
+        hBox1.getChildren().addAll(addButton,cancelButton,deleteButton);
+
+
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
-        layout.setBottom(vBox1);
+        layout.setBottom(hBox1);
 
-        Scene scene = new Scene(layout, 1000, 600);
-        primaryStage.setScene(scene);
+
         primaryStage.setTitle("Log in as Admin");
         primaryStage.show();
     }

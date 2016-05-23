@@ -440,34 +440,7 @@ public class DataController {
         return airport;
     }
 
-   /* public static String confirmReservation(int id,String rStatus){
-        String status = "";
-        id = 0;
-        try {
-            Statement s = null;
-            s = conn.createStatement();
 
-          //  ResultSet rs = s.executeUpdate("INSERT INTO Reservations(status)"+ "VALUES('confirmed') WHERE customer_id  = '" + id + "' AND status = '"+ rStatus +"'");
-            ResultSet rs = s.executeQuery("SELECT id, status FROM Reservations WHERE customer_id  = '" + id + "' AND status = '"+ rStatus +"'");
-            //String query = "UPDATE Reservations set status  = confirmed WHERE customer_id  = '" + id + "' AND status = '"+ rStatus +"'";
-            if (rs != null) {
-                while (rs.next()) {
-                    System.out.println(rStatus = rs.getString("rStatus"));
-
-                }
-            }
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
-
-        return rStatus;
-    }
-    */
    public static String setReservationStatus(int customerId) {
        String name = "";
 
@@ -492,5 +465,30 @@ public class DataController {
 
        return name;
    }
+
+    public static String cancelReservation(int customerId) {
+        String name = "";
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+
+            // ResultSet rs = s.executeQuery("SELECT status FROM Reservations WHERE customer_id = '" + customerId + "'");
+            String query = "UPDATE Reservations set status  = 'canceled' WHERE customer_id  = '" + customerId + "'";
+            {
+                s.executeUpdate(query);
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return name;
+    }
 
 }
