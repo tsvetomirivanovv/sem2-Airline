@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -57,6 +60,8 @@ public class manageReservations extends Application {
             (event.getTableView().getItems().get(event.getTablePosition().getRow())).setTotal_passengers(event.getNewValue());
         });
 
+
+
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
         //tableView.setEditable(true);
         tableView.setItems(data.getReservations());
@@ -65,6 +70,14 @@ public class manageReservations extends Application {
 
         Button addButton = new Button("Create ");
         Button deleteButton = new Button("Delete ");
+
+        addButton.setOnAction(event -> {
+            int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
+            String status = tableView.getSelectionModel().getSelectedItem().getStatus();
+            System.out.println(i+""+status);
+            data.confirmReservation(i,status);
+
+        });
 
         deleteButton.setOnAction(event -> {
 
