@@ -533,6 +533,8 @@ public class DataController {
             loggedIn = true;
             checkLogin.setLoggedIn(true);
             System.out.println("Logged in");
+            checkLogin.setAccount_id(id);
+            checkLogin.setAccount_email(account_email);
 
             if (role == 1) {
                 checkLogin.setAdmin(true);
