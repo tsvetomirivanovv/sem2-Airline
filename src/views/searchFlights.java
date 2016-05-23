@@ -109,7 +109,10 @@ public class searchFlights extends Application {
 
         layout = new BorderPane();
 
-        menu menu1 = new menu(); // CREATING THE MENU OBJECT
+        menu menu1 = new menu();
+        layout.setTop(menu1.display(primaryStage));
+
+
 
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(v3);

@@ -16,13 +16,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import services.DataController;
 
 public class Login {
+    DataController data = new DataController();
 
 
     public void start () {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
+
 
         Label title = new Label("Log in as Admin");
 
@@ -57,6 +60,13 @@ public class Login {
         loginButton.setOnAction(e -> {
            // Menu menu = new Menu();
            // menu.start(primaryStage);
+            String userName;
+            String userPassword;
+
+            userName = email.getText();
+            userPassword = password.getText();
+            data.adminLoginCheck(userName,userPassword);
+
         });
 
 

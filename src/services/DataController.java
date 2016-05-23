@@ -2,7 +2,11 @@ package services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import models.*;
+import views.Login;
+import views.menu;
+import views.searchFlights;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -490,5 +494,72 @@ public class DataController {
 
         return name;
     }
+
+   /* Login login = new Login();
+    ResultSet rs = s.executeQuery("SELECT email,password from accounts where email = '" + email + "' and password='" + userPassword + "'");
+
+    int accessCounter = 0;
+    if (rs != null)
+            while (rs.next()) {
+
+        accessCounter++;
+        login.errorLabel.setText("Access Granted!");
+        Alert granted = new Alert(Alert.AlertType.INFORMATION);
+        granted.setTitle("Access Granted!");
+        granted.setContentText("Hello " + email);
+        granted.setHeaderText(null);
+        granted.show();
+
+    }
+
+    if (accessCounter == 0) {
+
+        login.errorLabel.setText("Access DENIED " + " Please try again! ");
+    }
+*/
+
+    public static String adminLoginCheck(String email, String userPassword) {
+        String name = "";
+        Login login = new Login();
+        menu menu = new menu();
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT email,password from accounts where email = '" + email + "' and password='" + userPassword + "'");
+            int accessCounter = 0;
+            if (rs != null) {
+                while (rs.next()) {
+
+                    accessCounter++;
+                    Alert granted = new Alert(Alert.AlertType.INFORMATION);
+                    granted.setTitle("Access Granted!");
+                    granted.setContentText("Hello " + email);
+                    granted.setHeaderText(null);
+                    granted.show();
+
+                }
+
+
+                if (accessCounter == 0) {
+                    Alert granted = new Alert(Alert.AlertType.INFORMATION);
+                    granted.setTitle("Access Denied!");
+                    granted.setContentText("Please type the correct Email and Password");
+                    granted.setHeaderText(null);
+                    granted.show();
+                }
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return name;
+    }
+
 
 }
