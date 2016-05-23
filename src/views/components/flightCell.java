@@ -9,18 +9,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import models.Flight;
-
+import views.SelectedFlight;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by Caseru on 5/22/2016.
- */
 public class flightCell extends ListCell<Flight> {
+    Stage window;
+
+    public flightCell(Stage primaryStage) {
+        window  = primaryStage;
+    }
+
     @Override
     protected void updateItem(Flight t, boolean bln) {
-        if (t != null){
-            setGraphic(getFlightCell(t));  // ***set the content of the graphic
+        // don't omit this!!!
+        super.updateItem(t, bln);
+        if (bln) {
+            setGraphic(null);
+        } else {
+            this.setGraphic(getFlightCell(t));  // ***set the content of the graphic
         }
     }
     private Node getFlightCell(Flight flight) {
@@ -68,6 +76,12 @@ public class flightCell extends ListCell<Flight> {
         Label price = new Label(sprice); // will be changed to flight.getPrice
         flightBox.getChildren().addAll(price,selectFlight,details);
         flightBox.setAlignment(Pos.CENTER);
+
+        selectFlight.setOnAction(e -> {
+            SelectedFlight selectedFlightView = new SelectedFlight();
+            selectedFlightView.start(window);
+            System.err.println("Test!");
+        });
 
         HBox hBox2 = new HBox(20);
         hBox2.getChildren().addAll(flightVbox,flightBox);

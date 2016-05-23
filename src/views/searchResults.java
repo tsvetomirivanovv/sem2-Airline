@@ -64,7 +64,7 @@ public class searchResults extends Application {
         box1.setAlignment(Pos.CENTER);
 
         flights.setItems(data.getFlights());
-        flights.setCellFactory(e -> new flightCell());
+        flights.setCellFactory(e -> new flightCell(primaryStage));
 
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);
