@@ -34,8 +34,7 @@ public class menu {
         MenuItem manageFlights = new MenuItem("Manage flights");
 
         logOut.setOnAction(event -> {
-            checkLogin.setLoggedIn(false);
-            checkLogin.setAdmin(false);
+            checkLogin.logOut();
             searchFlights searchFlights = new searchFlights();
             searchFlights.start(primaryStage);
         });
