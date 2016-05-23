@@ -495,33 +495,8 @@ public class DataController {
         return name;
     }
 
-   /* Login login = new Login();
-    ResultSet rs = s.executeQuery("SELECT email,password from accounts where email = '" + email + "' and password='" + userPassword + "'");
-
-    int accessCounter = 0;
-    if (rs != null)
-            while (rs.next()) {
-
-        accessCounter++;
-        login.errorLabel.setText("Access Granted!");
-        Alert granted = new Alert(Alert.AlertType.INFORMATION);
-        granted.setTitle("Access Granted!");
-        granted.setContentText("Hello " + email);
-        granted.setHeaderText(null);
-        granted.show();
-
-    }
-
-    if (accessCounter == 0) {
-
-        login.errorLabel.setText("Access DENIED " + " Please try again! ");
-    }
-*/
-
     public static String adminLoginCheck(String email, String userPassword) {
         String name = "";
-        Login login = new Login();
-        menu menu = new menu();
         try {
             Statement s = null;
             s = conn.createStatement();
