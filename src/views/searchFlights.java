@@ -27,7 +27,7 @@ public class searchFlights extends Application {
     static DatePicker datePicker1, datePicker2;
     static BorderPane layout;
 
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
 
         label1 = new Label("Leaving from:");
         label2 = new Label("Going to:");
