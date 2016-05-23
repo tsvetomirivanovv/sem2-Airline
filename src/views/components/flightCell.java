@@ -3,6 +3,7 @@ package views.components;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Flight;
+import views.BookTicketPopUp;
 import views.SelectedFlight;
 import java.text.SimpleDateFormat;
 
@@ -69,7 +71,7 @@ public class flightCell extends ListCell<Flight> {
         flightVbox.getChildren().addAll(flightHbox);
 
 
-        Button details = new Button("See details");
+        Hyperlink details = new Hyperlink("See details");
         Button selectFlight = new Button("Select flight");
         VBox flightBox = new VBox(20);
         String sprice = "" + flight.getPlane().getCoachPrice();
@@ -80,6 +82,12 @@ public class flightCell extends ListCell<Flight> {
         selectFlight.setOnAction(e -> {
             SelectedFlight selectedFlightView = new SelectedFlight();
             selectedFlightView.start(window);
+            System.err.println("Test!");
+        });
+
+        details.setOnAction(event -> {
+            BookTicketPopUp popUp = new BookTicketPopUp();
+            popUp.start();
             System.err.println("Test!");
         });
 
