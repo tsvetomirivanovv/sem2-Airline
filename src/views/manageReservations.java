@@ -74,9 +74,7 @@ public class manageReservations extends Application {
         addButton.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
             String status = tableView.getSelectionModel().getSelectedItem().getStatus();
-            System.out.println(i+""+status);
-            data.confirmReservation(i,status);
-
+            data.setReservationStatus(i);
         });
 
         deleteButton.setOnAction(event -> {
