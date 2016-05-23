@@ -19,13 +19,13 @@ import java.text.SimpleDateFormat;
 /**
  * Created by Andrei on 5/23/2016.
  */
-public class BookTicketPopUp extends Application {
+public class BookTicketPopUp {
 
     DataController controller = new DataController();
 
-    public void start(Stage primaryStage) {
-        //Stage primaryStage = new Stage();
-        //primaryStage.initModality(Modality.APPLICATION_MODAL);
+    public void start() {
+        Stage primaryStage = new Stage();
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         // this is the big VBox, that will contain everything
         VBox layout = new VBox(20);
@@ -148,7 +148,7 @@ public class BookTicketPopUp extends Application {
         Scene scene = new Scene(layout, 500, 500);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Book ticket");
-        primaryStage.show();
+        primaryStage.showAndWait();
 
     }
 
