@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import models.*;
+import services.components.checkLogin;
 import views.Login;
 import views.menu;
 import views.searchFlights;
@@ -495,33 +496,26 @@ public class DataController {
         return name;
     }
 
-    public static String adminLoginCheck(String email, String userPassword) {
-        String name = "";
+    public static Boolean login(String email, String password) {
+        checkLogin checkLogin = new checkLogin();
+        Boolean loggedIn = false;
+        int id = -1;
+        int role = -1;
+        String account_email = "";
+        String account_password = "";
+
+
         try {
             Statement s = null;
             s = conn.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT email,password from accounts where email = '" + email + "' and password='" + userPassword + "'");
-            int accessCounter = 0;
+            ResultSet rs = s.executeQuery("SELECT * from Accounts where email = '" + email + "' and password='" + password + "'");
             if (rs != null) {
                 while (rs.next()) {
-
-                    accessCounter++;
-                    Alert granted = new Alert(Alert.AlertType.INFORMATION);
-                    granted.setTitle("Access Granted!");
-                    granted.setContentText("Hello " + email);
-                    granted.setHeaderText(null);
-                    granted.show();
-
-                }
-
-
-                if (accessCounter == 0) {
-                    Alert granted = new Alert(Alert.AlertType.INFORMATION);
-                    granted.setTitle("Access Denied!");
-                    granted.setContentText("Please type the correct Email and Password");
-                    granted.setHeaderText(null);
-                    granted.show();
+                    id = rs.getInt("id");
+                    role = rs.getInt("role");
+                    account_email = rs.getString("email");
+                    account_password = rs.getString("password");
                 }
             }
         } catch (SQLException sqlex) {
@@ -533,8 +527,22 @@ public class DataController {
             catch(SQLException sql){}
         }
 
-        return name;
+        if(id == -1) {
+            loggedIn = false;
+        } else {
+            loggedIn = true;
+            checkLogin.setLoggedIn(true);
+            System.out.println("Logged in");
+
+            if (role == 1) {
+                checkLogin.setAdmin(true);
+                System.out.println("As admin");
+            } else if (role == 0) {
+                checkLogin.setAdmin(false);
+                System.out.println("As customer");
+            }
+        }
+
+        return loggedIn;
     }
-
-
 }
