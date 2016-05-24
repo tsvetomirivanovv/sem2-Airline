@@ -4,6 +4,8 @@ package views;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -76,6 +78,11 @@ public class manageFlights extends Application{
        // deleteFlights = new Button("Delete Flight");
         updateFlight = new Button("Update Flight");
         close = new Button("Close");
+
+        updateFlight.setOnAction(event -> {
+            views.updateFlight updateFlight = new updateFlight();
+            updateFlight.start();
+        });
 
         addFlight.setOnAction(event -> {
             views.addFlight addFlight = new addFlight();

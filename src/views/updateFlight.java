@@ -1,8 +1,6 @@
 package views;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -17,14 +15,17 @@ import javafx.stage.StageStyle;
 import models.Airport;
 import services.DataController;
 
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Paradox on 5/24/2016.
  */
-public class addFlight {
+public class updateFlight {
 
-    public  DataController controller = new DataController();
+
     public ComboBox depBox;
     public ComboBox arrbox;
     public ComboBox planeBox;
@@ -33,37 +34,28 @@ public class addFlight {
     public HBox buttonBox;
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
-    ObservableList<String> airportName = FXCollections.observableArrayList();
-    ObservableList<String> arrivalName = FXCollections.observableArrayList();
+
+    manageFlights manageFlights = new manageFlights();
+    DataController data = new DataController();
 
     public void start(){
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        for (Airport x:controller.getAirports()) {
-
-            airportName.add(x.getName());
-        }
-
-        for (Airport x:controller.getAirports()) {
-
-            arrivalName.add(x.getName());
-        }
-
         depBox = new ComboBox();
         depBox.setMinWidth(240);
-        depBox.setItems(airportName);
+
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
-
 
         planeBox = new ComboBox();
         planeBox.setMinWidth(240);
 
         depTime = new TextField();
         depTime.setMaxWidth(240);
+
 
         arrTime = new TextField();
         arrTime.setMaxWidth(240);
@@ -77,38 +69,20 @@ public class addFlight {
         addFlight = new Button("Add flight");
         close = new Button("Close");
 
+        addFlight.setOnAction(event -> {
 
+            if (depBox.getSelectionModel().isEmpty() || arrbox.getSelectionModel().isEmpty() || planeBox.getSelectionModel().isEmpty() || depTime.getText().isEmpty() || arrTime.getText().isEmpty()) {
 
-        depBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                String code = depBox.getSelectionModel().getSelectedItem().toString();
-                if (arrivalName.contains(code)){
-                    arrivalName.removeAll();
-                    arrivalName.setAll(airportName);
-                    arrivalName.remove(code);
-                }
-
-                arrbox.setItems(arrivalName);
+                Alert granted = new Alert(Alert.AlertType.ERROR);
+                granted.setTitle("Creating Denied!");
+                granted.setContentText("Please fill all the required fields before creating a new flight");
+                granted.setHeaderText(null);
+                granted.show();
             }
+
         });
 
-        addFlight.setOnAction(event -> {
-            String test = depBox.getSelectionModel().getSelectedItem().toString();
-
-            System.out.println(test);
-                        if (depBox.getSelectionModel().isEmpty() || arrbox.getSelectionModel().isEmpty() || planeBox.getSelectionModel().isEmpty() || depTime.getText().isEmpty() || arrTime.getText().isEmpty()) {
-
-                            Alert granted = new Alert(Alert.AlertType.ERROR);
-                            granted.setTitle("Creating Denied!");
-                            granted.setContentText("Please fill all the required fields before creating a new flight");
-                            granted.setHeaderText(null);
-                            granted.show();
-                        }
-
-                });
-
-            close.setOnAction(event -> {
+        close.setOnAction(event -> {
 
             primaryStage.close();
         });
@@ -125,9 +99,11 @@ public class addFlight {
         mainVbox.getChildren().addAll(componentBox,buttonBox);
         mainVbox.setAlignment(Pos.CENTER);
 
+
+
         Scene scene = new Scene(mainVbox, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manage flights");
-        primaryStage.show();
+        primaryStage.showAndWait();
     }
 }
