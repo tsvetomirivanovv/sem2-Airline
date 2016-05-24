@@ -73,12 +73,17 @@ public class manageFlights extends Application{
         mainFlightsTable.setItems(DataController.getFlights());
 
         addFlight = new Button("Add Flight");
-        deleteFlights = new Button("Delete Flight");
+       // deleteFlights = new Button("Delete Flight");
         updateFlight = new Button("Update Flight");
         close = new Button("Close");
 
+        addFlight.setOnAction(event -> {
+            views.addFlight addFlight = new addFlight();
+            addFlight.start();
+        });
+
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(addFlight,deleteFlights,updateFlight,close);
+        hBox1.getChildren().addAll(addFlight,updateFlight,close);
 
 
         BorderPane layout = new BorderPane();
