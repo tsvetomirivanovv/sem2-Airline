@@ -2,9 +2,6 @@ package views;
 
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import services.DataController;
+import services.components.comboBoxAutocomplete;
 
 import java.time.LocalDate;
 
@@ -27,24 +26,37 @@ public class searchFlights extends Application {
     static DatePicker datePicker1, datePicker2;
     static BorderPane layout;
 
+    DataController data = new DataController();
+
     public void start (Stage primaryStage) {
 
         label1 = new Label("Leaving from:");
         label2 = new Label("Going to:");
 
         ComboBox comboBox1 = new ComboBox();
-        comboBox1.getItems().addAll(
-                "Option 4",
-                "Option 5",
-                "Option 6"
-        );
-
         ComboBox comboBox2 = new ComboBox();
-        comboBox2.getItems().addAll(
-                "Option 8",
-                "Option 9",
-                "Option 10"
-        );
+        comboBox1.getItems().addAll(data.getAllAirports(""));
+        comboBox2.getItems().addAll(data.getAllAirports(""));
+        comboBox1.setPromptText("Search departure location");
+
+        comboBox1.setOnAction( e -> {
+
+            // Clear all items
+            comboBox2.getItems().clear();
+
+            // Add the list again but ignore the value selected in the first combobox
+            comboBox2.getItems().addAll(data.getAllAirports((String)comboBox1.getValue()));
+            System.err.println("Departure location is: " + comboBox1.getValue());
+        });
+
+        comboBox2.setPromptText("Search arrival location");
+
+        comboBox2.setOnAction( e -> {
+            System.err.println("Departure location is: " + comboBox2.getValue());
+        });
+
+        new comboBoxAutocomplete<String>(comboBox1);
+        new comboBoxAutocomplete<String>(comboBox2);
 
         label3 = new Label("Departure Date:");
         label4 = new Label("Return Date:");
