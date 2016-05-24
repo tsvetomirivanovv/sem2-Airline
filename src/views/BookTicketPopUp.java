@@ -57,7 +57,6 @@ public class BookTicketPopUp extends Application {
 
         VBox radiobox = new VBox(5);
         radiobox.getChildren().addAll(economybut, firstclassbut);
-        //layout.setAlignment(radiobox, Pos.BOTTOM_RIGHT);
 
         h1.getChildren().addAll(small, total, radiobox);
 

@@ -242,7 +242,7 @@ public class SelectedFlight extends Application {
         Button b4 = new Button();
         b4.setId("b4");
 
-        b4.setMaxWidth(1024);
+       /* b4.setMaxWidth(1024);
         b4.setMaxHeight(640);
 
         b3.setMaxWidth(240);
@@ -264,7 +264,7 @@ public class SelectedFlight extends Application {
         b3.setBorder(null);
 
         b4.setGraphic(visa_electron);
-        b4.setBorder(null);
+        b4.setBorder(null);*/
 
         HBox hbox = new HBox(20);
         hbox.getChildren().addAll(b1,b2,b3,b4);
@@ -319,6 +319,9 @@ public class SelectedFlight extends Application {
         Label baggage = new Label("Baggage, Max 15 Kg:");
         Label no3 = new Label("1 X 50 DKK");
         ImageView dash = new ImageView(new Image("assets/images/dash.png", 80, 80, false, false));
+        dash.setScaleY(1);
+        dash.setScaleX(1);
+        dash.setScaleZ(1);
         Label TotalP = new Label("TOTAL PRICE:  ");
         Label no4 = new Label("840 DKK");
 
@@ -341,7 +344,7 @@ public class SelectedFlight extends Application {
         VBox vbo = new VBox(3);
         vbo.getChildren().addAll(dash, hbo4);
         // this does not appear in the grid pane, for some reason
-        grid.add(vbo, 2, 21);
+        grid.add(vbo, 1, 21);
 
         Button Book = new Button("Book reservation");
         Button close = new Button("Close");
@@ -350,6 +353,8 @@ public class SelectedFlight extends Application {
         hbut.getChildren().addAll(Book, close);
         //same thing as the vbox above, does not appear
         grid.add(hbut, 2, 22);
+        grid.getStylesheets().add("assets/styles/style.css");
+
 
 
 
