@@ -571,4 +571,40 @@ public class DataController {
 
         return airports;
     }
+
+    public static ObservableList<String> getAllAirports(String exclude) {
+        ObservableList<String> airports = FXCollections.observableArrayList();
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+            if(exclude.length() > 0) {
+                System.out.println("Exclude:" + exclude);
+                exclude = exclude.substring(exclude.length() - 4, exclude.length() - 1);
+
+                rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports WHERE airport_code != '" + exclude + "'");
+            } else {
+                rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports");
+            }
+
+            if (rs != null)
+                while (rs.next()) {
+                    String airport_code = rs.getString("airport_code");
+                    String airport_city = rs.getString("airport_city");
+
+                    String airportResult = airport_city + " (" + airport_code + ")";
+                    airports.add(airportResult);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return airports;
+    }
 }
