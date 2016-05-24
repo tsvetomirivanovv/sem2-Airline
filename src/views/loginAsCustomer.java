@@ -10,9 +10,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import services.DataController;
 
 public class loginAsCustomer {
-    public void start () {
+    DataController data = new DataController();
+
+    public void start (Stage parentStage) {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -61,8 +64,23 @@ public class loginAsCustomer {
         });
 
         loginButton.setOnAction(e -> {
-            // Menu menu = new Menu();
-            // menu.start(primaryStage);
+            String userName;
+            String userPassword;
+
+            userName = email.getText();
+            userPassword = password.getText();
+
+            if (data.login(userName, userPassword)) {
+                searchFlights searchFlights = new searchFlights();
+                searchFlights.start(parentStage);
+                primaryStage.close();
+            } else {
+                Alert granted = new Alert(Alert.AlertType.ERROR);
+                granted.setTitle("Access Denied!");
+                granted.setContentText("You need to enter a valid Email and Password");
+                granted.setHeaderText(null);
+                granted.show();
+            }
         });
 
 

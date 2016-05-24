@@ -27,7 +27,7 @@ public class searchFlights extends Application {
     static DatePicker datePicker1, datePicker2;
     static BorderPane layout;
 
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
 
         label1 = new Label("Leaving from:");
         label2 = new Label("Going to:");
@@ -109,7 +109,10 @@ public class searchFlights extends Application {
 
         layout = new BorderPane();
 
-        menu menu1 = new menu(); // CREATING THE MENU OBJECT
+        menu menu1 = new menu();
+        layout.setTop(menu1.display(primaryStage));
+
+
 
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(v3);

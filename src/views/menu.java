@@ -6,12 +6,17 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import services.OscaServices;
+import services.components.checkLogin;
 
 
 public class menu {
 
     public MenuBar display(Stage primaryStage){
-        Menu filemenu = new Menu("File");
+
+        // Call the checkLogin class
+
+        Menu filemenu1 = new Menu("File");
+        Menu filemenu2 = new Menu("File");
         Menu reservationsMenu = new Menu("Manage reservations");
         Menu planesMenus = new Menu("Manage Planes");
         Menu OSCA = new Menu("OSCA");
@@ -21,20 +26,27 @@ public class menu {
         //MENU ITEMS
         MenuItem login = new MenuItem("Log in as Admin");
         MenuItem loginCustomer = new MenuItem("Log in as Customer");
+        MenuItem logOut = new MenuItem("Log out");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
         MenuItem flights = new MenuItem("Export flights");
         MenuItem planes = new MenuItem("Export planes");
         MenuItem manageFlights = new MenuItem("Manage flights");
 
+        logOut.setOnAction(event -> {
+            checkLogin.logOut();
+            searchFlights searchFlights = new searchFlights();
+            searchFlights.start(primaryStage);
+        });
+
         loginCustomer.setOnAction(event -> {
             loginAsCustomer login2 = new loginAsCustomer();
-            login2.start();
+            login2.start(primaryStage);
         });
 
         login.setOnAction(e->{
             Login login1 = new Login();
-            login1.start();
+            login1.start(primaryStage);
         });
 
 
@@ -63,14 +75,26 @@ public class menu {
             manageFlights1.start(primaryStage);
         });
 
-        filemenu.getItems().addAll(login,loginCustomer);
+        filemenu1.getItems().addAll(login,loginCustomer);
+        filemenu2.getItems().addAll(logOut);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
         OSCA.getItems().addAll(flights,planes);
         flightsMenu.getItems().addAll(manageFlights);
         //Main menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(filemenu,reservationsMenu,planesMenus,flightsMenu,OSCA);
+        if(!checkLogin.isLoggedIn()) {
+            menuBar.getMenus().addAll(filemenu1,OSCA);
+        }
+
+        if(checkLogin.isLoggedIn()) {
+            if (checkLogin.isAdmin()) {
+                menuBar.getMenus().addAll(filemenu2, reservationsMenu, planesMenus, flightsMenu, OSCA);
+            } else {
+                menuBar.getMenus().addAll(filemenu2, reservationsMenu, OSCA);
+            }
+
+        }
         return menuBar;
 
     }

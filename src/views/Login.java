@@ -6,23 +6,22 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import services.DataController;
 
 public class Login {
+    DataController data = new DataController();
 
-
-    public void start () {
+    public void start (Stage parentStage) {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
+
 
         Label title = new Label("Log in as Admin");
 
@@ -57,6 +56,23 @@ public class Login {
         loginButton.setOnAction(e -> {
            // Menu menu = new Menu();
            // menu.start(primaryStage);
+            String userName;
+            String userPassword;
+
+            userName = email.getText();
+            userPassword = password.getText();
+
+            if (data.login(userName,userPassword)) {
+                searchFlights searchFlights = new searchFlights();
+                searchFlights.start(parentStage);
+                primaryStage.close();
+            } else {
+                Alert granted = new Alert(Alert.AlertType.ERROR);
+                granted.setTitle("Access Denied!");
+                granted.setContentText("You need to enter a valid Email and Password");
+                granted.setHeaderText(null);
+                granted.show();
+            }
         });
 
 
