@@ -1,18 +1,21 @@
 package views;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Airport;
+import services.DataController;
+
+import java.util.ArrayList;
 
 /**
  * Created by Paradox on 5/24/2016.
@@ -29,12 +32,11 @@ public class addFlight {
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
 
-
     public void start(){
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
-
+        
         depBox = new ComboBox();
         depBox.setMinWidth(240);
 
@@ -59,7 +61,21 @@ public class addFlight {
         addFlight = new Button("Add flight");
         close = new Button("Close");
 
-        close.setOnAction(event -> {
+        addFlight.setOnAction(event -> {
+
+                        if (depBox.getSelectionModel().isEmpty() || arrbox.getSelectionModel().isEmpty() || planeBox.getSelectionModel().isEmpty() || depTime.getText().isEmpty() || arrTime.getText().isEmpty()) {
+
+                            Alert granted = new Alert(Alert.AlertType.ERROR);
+                            granted.setTitle("Creating Denied!");
+                            granted.setContentText("Please fill all the required fields before creating a new flight");
+                            granted.setHeaderText(null);
+                            granted.show();
+                        }
+
+                });
+
+            close.setOnAction(event -> {
+
             primaryStage.close();
         });
 
