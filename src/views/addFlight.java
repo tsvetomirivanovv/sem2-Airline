@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class addFlight {
 
-
+    public  DataController controller = new DataController();
     public ComboBox depBox;
     public ComboBox arrbox;
     public ComboBox planeBox;
@@ -31,14 +31,20 @@ public class addFlight {
     public HBox buttonBox;
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
-
+    ObservableList<String> airportName = FXCollections.observableArrayList();
     public void start(){
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        
+
+        for (Airport x:controller.getAirports()) {
+
+            airportName.add(x.getName());
+        }
+
         depBox = new ComboBox();
         depBox.setMinWidth(240);
+        depBox.setItems(airportName);
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
