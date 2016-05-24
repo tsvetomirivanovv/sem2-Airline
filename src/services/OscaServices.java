@@ -38,7 +38,7 @@ public class OscaServices {
             out.print(timeStamp1);
             out.println();
         }
-
+        System.out.println("Done! Flights to Flights.csv");
     }
     public void PlaneToCSV () {
         PrintStream out = null;
@@ -59,6 +59,6 @@ public class OscaServices {
             out.print(list.get(i).getCoachPrice());
             out.println();
         }
-
+        System.out.println("Done! Planes to Planes.csv");
     }
 }
