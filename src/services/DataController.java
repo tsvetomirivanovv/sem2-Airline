@@ -2,13 +2,8 @@ package services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import models.*;
 import services.components.checkLogin;
-import views.Login;
-import views.menu;
-import views.searchFlights;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -430,7 +425,7 @@ public class DataController {
                     String airport_name = rs.getString("airport_name");
                     String airport_city = rs.getString("airport_city");
 
-                    airport = new Airport(airport_code, airport_name, airport_city);
+                    airport = new Airport(airport_name, airport_code, airport_city);
                 }
             }
         } catch (SQLException sqlex) {
@@ -546,5 +541,34 @@ public class DataController {
         }
 
         return loggedIn;
+    }
+
+    public static ObservableList<Airport> getAirports() {
+        ObservableList<Airport> airports = FXCollections.observableArrayList();
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT a.airport_code as airport_code, a.name as airport_name, a.city as airport_city FROM Airports a");
+
+            if (rs != null)
+                while (rs.next()) {
+                    String airport_code = rs.getString("airport_code");
+                    String airport_name = rs.getString("airport_name");
+                    String airport_city = rs.getString("airport_city");
+
+                    Airport airport = new Airport(airport_name, airport_code, airport_city);
+                    airports.add(airport);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return airports;
     }
 }
