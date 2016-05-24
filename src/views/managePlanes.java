@@ -15,7 +15,6 @@ import services.DataController;
 public class managePlanes extends Application{
     DataController data = new DataController();
 
-    public  Button addPlane, deletePlane,close;
     public TableView<Plane> mainPlanesTable = new TableView<>();
 
     @Override
