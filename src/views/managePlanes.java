@@ -34,7 +34,7 @@ public class managePlanes extends Application{
         reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
-        availability.setCellFactory(e -> new availabilityCell());
+        availability.setCellFactory(e -> new availabilityCell(primaryStage));
 
         // TO DO: We need that fucking button in here (See availability).
 
