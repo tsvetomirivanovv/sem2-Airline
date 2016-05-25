@@ -626,4 +626,35 @@ public class DataController {
 
         return airports;
     }
+
+    public static ObservableList<String> getAllPlanes() {
+        ObservableList<String> planes = FXCollections.observableArrayList();
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+
+                rs = s.executeQuery("SELECT reg_no, model  FROM planes");
+
+
+            if (rs != null)
+                while (rs.next()) {
+                    String plane_reg = rs.getString("reg_no");
+                    String model = rs.getString("model");
+
+                    String planeResult = plane_reg + " (" + model + ")";
+                    planes.add(planeResult);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return planes;
+    }
 }

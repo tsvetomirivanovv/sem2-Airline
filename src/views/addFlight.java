@@ -97,7 +97,7 @@ public class addFlight {
         });
 
         componentBox = new VBox(5);
-        componentBox.getChildren().addAll(depboxLabel,depBox,arrboxLabel,arrbox,depTimeLable,depTime,arrTimeLabel,arrTime,planeboxLabel,planeBox);
+        componentBox.getChildren().addAll(depboxLabel,depBox,arrboxLabel,arrbox,planeboxLabel,planeBox,depTimeLable,depTime,arrTimeLabel,arrTime);
         componentBox.setAlignment(Pos.CENTER);
 
         buttonBox = new HBox(15);

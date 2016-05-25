@@ -12,12 +12,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
+import jdk.nashorn.internal.objects.DataPropertyDescriptor;
 import models.Airport;
 import models.Flight;
+import models.Plane;
 import services.DataController;
 
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,22 +55,32 @@ public class updateFlight {
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
         depBox = new ComboBox();
-        depBox.setPromptText(flight.getArrival_loc().getName());
         depBox.setMinWidth(240);
 
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
 
+
+        depBox.getItems().addAll(data.getAllAirports(""));
+        arrbox.getItems().addAll(data.getAllAirports(""));
+
+        depBox.setOnAction(event -> {
+            arrbox.getItems().clear();
+            arrbox.getItems().addAll(data.getAllAirports((String)depBox.getValue()));
+        });
+
         planeBox = new ComboBox();
         planeBox.setMinWidth(240);
 
+
         depTime = new TextField();
         depTime.setMaxWidth(240);
-
+        depTime.setText(flight.getDeparture_time().toString());
 
         arrTime = new TextField();
         arrTime.setMaxWidth(240);
+        arrTime.setText(flight.getArrival_time().toString());
 
         depboxLabel = new Label("Departure location");
         arrboxLabel = new Label("Arrival location");
