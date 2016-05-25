@@ -125,7 +125,7 @@ public class DataController {
                     int totalSeats = firstclass_seats + coach_seats + economy_seats;
 
                     // Get intervals for each plane:
-                    ArrayList<Interval> intervals = getIntervals(plane_id);
+                    ObservableList<Interval> intervals = getIntervals(plane_id);
 
                     //Create plane object:
                     Plane plane = new Plane(plane_id, plane_number, model, totalSeats, intervals, firstclass_seats, coach_seats, economy_seats, firstclass_price, coach_price);
@@ -144,8 +144,8 @@ public class DataController {
         return planes;
     }
 
-    public static ArrayList<Interval> getIntervals(int planeId) {
-        ArrayList<Interval> intervals = new ArrayList<>();
+    public static ObservableList<Interval> getIntervals(int planeId) {
+        ObservableList<Interval> intervals = FXCollections.observableArrayList();
 
         try {
             Statement s = null;

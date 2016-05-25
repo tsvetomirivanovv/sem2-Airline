@@ -1,6 +1,7 @@
 package models;
 
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -10,14 +11,14 @@ public class Plane {
     private StringProperty reg_no;
     private StringProperty model;
     private IntegerProperty seats;
-    private ArrayList<Interval> in_use;
+    private ObservableList<Interval> in_use;
     private IntegerProperty businessSeats;
     private IntegerProperty coachSeats;
     private IntegerProperty economySeats;
     private DoubleProperty businessPrice;
     private DoubleProperty coachPrice;
 
-    public Plane(int plane_id, String reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice) {
+    public Plane(int plane_id, String reg_no, String model, int seats, ObservableList<Interval> in_use, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice) {
         this.plane_id = new SimpleIntegerProperty(plane_id);
         this.reg_no = new SimpleStringProperty(reg_no);
         this.model = new SimpleStringProperty(model);
@@ -52,7 +53,7 @@ public class Plane {
         this.coachPrice = new SimpleDoubleProperty(coachPrice);
     }
 
-    public void updatePlane(String reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats) {
+    public void updatePlane(String reg_no, String model, int seats, ObservableList<Interval> in_use, int businessSeats, int coachSeats, int economySeats) {
         setReg_no(reg_no);
         setModel(model);
         setSeats(seats);
@@ -110,11 +111,11 @@ public class Plane {
         this.seats.set(seats);
     }
 
-    public ArrayList<Interval> getIn_use() {
+    public ObservableList<Interval> getIn_use() {
         return in_use;
     }
 
-    public Plane setIn_use(ArrayList<Interval> in_use) {
+    public Plane setIn_use(ObservableList<Interval> in_use) {
         this.in_use = in_use;
         return this;
     }
