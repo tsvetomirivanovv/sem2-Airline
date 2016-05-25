@@ -1,16 +1,14 @@
 package views;
 
 
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.DataController;
@@ -22,8 +20,7 @@ public class Login {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
-
-        Label title = new Label("Log in as Admin");
+        Label title = new Label("Log in");
 
         Label emailLabel = new Label("Email: ");
         emailLabel.setAlignment(Pos.CENTER_LEFT);
@@ -53,29 +50,23 @@ public class Login {
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(loginButton,closeButton);
 
-        loginButton.setOnAction(e -> {
-           // Menu menu = new Menu();
-           // menu.start(primaryStage);
-            String userName;
-            String userPassword;
+        HBox createAccount = new HBox();
+        createAccount.setAlignment(Pos.CENTER);
+        TextFlow flow = new TextFlow();
+        Text text = new Text("Don't have an account yet?");
+        Hyperlink hyperlink = new Hyperlink("Click here!");
 
-            userName = email.getText();
-            userPassword = password.getText();
+        flow.getChildren().addAll(text,hyperlink);
+        createAccount.getChildren().addAll(flow);
 
-            if (data.login(userName,userPassword)) {
-                searchFlights searchFlights = new searchFlights();
-                searchFlights.start(parentStage);
-                primaryStage.close();
-            } else {
-                Alert granted = new Alert(Alert.AlertType.ERROR);
-                granted.setTitle("Access Denied!");
-                granted.setContentText("You need to enter a valid Email and Password");
-                granted.setHeaderText(null);
-                granted.show();
-            }
+        hyperlink.setOnAction(event -> {
+            views.createAccount createAccount1 = new createAccount();
+            createAccount1.start();
         });
 
-
+        loginButton.setOnAction(e -> {
+            onAc(primaryStage,parentStage,email,password);
+        });
 
         closeButton.setOnAction(e -> {
             primaryStage.close();
@@ -83,16 +74,38 @@ public class Login {
 
 
         VBox mainVbox =  new VBox(15);
-        mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
+        mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox,createAccount);
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(mainVbox, 600, 600);
+        scene.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.ENTER){
+                onAc(primaryStage,parentStage,email,password);
+            }
+        });
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Log in as Admin");
+        primaryStage.setTitle("Log in");
         primaryStage.showAndWait();
 
     }
+    public void onAc(Stage primaryStage, Stage parentStage, TextField email, PasswordField password){
+        String userName;
+        String userPassword;
 
+        userName = email.getText();
+        userPassword = password.getText();
+
+        if (data.login(userName, userPassword)) {
+            searchFlights searchFlights = new searchFlights();
+            searchFlights.start(parentStage);
+            primaryStage.close();
+        } else {
+            Alert granted = new Alert(Alert.AlertType.ERROR);
+            granted.setTitle("Access Denied!");
+            granted.setContentText("You need to enter a valid Email and Password");
+            granted.setHeaderText(null);
+            granted.show();
+        }
+    }
 }
-
