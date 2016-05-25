@@ -12,14 +12,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
+import jdk.nashorn.internal.objects.DataPropertyDescriptor;
 import models.Airport;
 import models.Flight;
+import models.Plane;
 import services.DataController;
 
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Paradox on 5/24/2016.
@@ -35,7 +41,7 @@ public class updateFlight {
     public HBox buttonBox;
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
-
+    String depCode;
     Flight flight = new Flight();
 
     public updateFlight(Flight tempFlight) {
@@ -49,24 +55,36 @@ public class updateFlight {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
-
         depBox = new ComboBox();
-        depBox.setPromptText(flight.getArrival_loc().getName());
         depBox.setMinWidth(240);
 
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
 
+
+        depBox.getItems().addAll(data.getAllAirports(""));
+        arrbox.getItems().addAll(data.getAllAirports(""));
+
+        depBox.setOnAction(event -> {
+            arrbox.getItems().clear();
+            arrbox.getItems().addAll(data.getAllAirports((String)depBox.getValue()));
+
+            depCode = new String(data.codeCUT(depBox.getSelectionModel().getSelectedItem().toString()));
+            System.out.println(depCode);
+        });
+
         planeBox = new ComboBox();
         planeBox.setMinWidth(240);
+        planeBox.setItems(data.getAllPlanes());
 
         depTime = new TextField();
         depTime.setMaxWidth(240);
-
+        depTime.setText(flight.getDeparture_time().toString());
 
         arrTime = new TextField();
         arrTime.setMaxWidth(240);
+        arrTime.setText(flight.getArrival_time().toString());
 
         depboxLabel = new Label("Departure location");
         arrboxLabel = new Label("Arrival location");
@@ -86,6 +104,19 @@ public class updateFlight {
                 granted.setContentText("Please fill all the required fields before creating a new flight");
                 granted.setHeaderText(null);
                 granted.show();
+
+            }else {
+
+                try {
+                    int id = flight.getFlight_id();
+
+
+                    data.updateFlight(id,depCode);
+                    primaryStage.close();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("da");
+                }
             }
 
         });

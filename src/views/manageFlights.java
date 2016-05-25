@@ -53,8 +53,8 @@ public class manageFlights extends Application{
 
         flightNo.setCellValueFactory(e -> e.getValue().flight_idProperty().asObject());
         planeNo.setCellValueFactory(e -> e.getValue().getPlane().reg_noProperty());
-        departureLoc.setCellValueFactory(e-> e.getValue().getDeparture_loc().cityProperty());
-        arrivalLoc.setCellValueFactory(e-> e.getValue().getArrival_loc().cityProperty());
+        departureLoc.setCellValueFactory(e-> e.getValue().getDeparture_loc().nameProperty());
+        arrivalLoc.setCellValueFactory(e-> e.getValue().getArrival_loc().nameProperty());
         departureTime.setCellValueFactory(cellData -> {
             String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
             ObservableValue<String> deptime = new ReadOnlyObjectWrapper<>(timeStamp);
