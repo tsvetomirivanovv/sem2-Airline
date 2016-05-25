@@ -4,6 +4,7 @@ package views;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,6 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Plane;
 import services.DataController;
+
+import java.util.Objects;
 
 public class addPlane  {
 
@@ -51,29 +54,27 @@ public class addPlane  {
         economicSeatLabel.setMaxWidth(220);
 
 
-        TextField regNum = new TextField();
+        TextField regNum = new TextField("");
         regNum.setMaxWidth(220);
 
-        TextField model = new TextField();
+        TextField model = new TextField("");
         model.setMaxWidth(220);
 
-        TextField seats = new TextField();
-        seats.setMaxWidth(220);
 
-        TextField businessSeat = new TextField();
+        TextField businessSeat = new TextField("");
         businessSeat.setMaxWidth(220);
 
-        TextField coachSeat = new TextField();
+        TextField coachSeat = new TextField("");
         coachSeat.setMaxWidth(220);
 
-        TextField economicSeat = new TextField();
+        TextField economicSeat = new TextField("");
         economicSeat.setMaxWidth(220);
 
-        TextField businessPrice = new TextField();
+        TextField businessPrice = new TextField("");
         businessPrice.setMaxWidth(220);
         businessPrice.setPromptText("The price for business class");
 
-        TextField coachPrice = new TextField();
+        TextField coachPrice = new TextField("");
         coachPrice.setMaxWidth(220);
         coachPrice.setPromptText("The price for business class");
 
@@ -85,9 +86,6 @@ public class addPlane  {
         vBox2.getChildren().addAll(modelLabel,model);
         vBox2.setAlignment(Pos.CENTER);
 
-        VBox vBox3 = new VBox();
-        vBox3.getChildren().addAll(seatsLabel,seats);
-        vBox3.setAlignment(Pos.CENTER);
 
         VBox vBox4 = new VBox();
         vBox4.getChildren().addAll(businessSeatLabel,businessSeat);
@@ -108,11 +106,26 @@ public class addPlane  {
         Button addPlane = new Button("Add Plane");
 
         addPlane.setOnAction(event -> {
-            Plane plane = new Plane(regNum.getText(),model.getText(),
-                Integer.parseInt(seats.getText()),Integer.parseInt(businessSeat.getText()),
-                Integer.parseInt(coachSeat.getText()),Integer.parseInt(economicSeat.getText()),
-                Double.parseDouble(businessPrice.getText()),Double.parseDouble(coachPrice.getText()));
-            data.addPlane(plane);
+
+            if (Objects.equals(regNum.getText(), "") || Objects.equals(model.getText(), "") ||  Objects.equals(businessSeat.getText(), "") ||
+                    Objects.equals(coachSeat.getText(), "") || Objects.equals(economicSeat.getText(), "") ||
+                    Objects.equals(businessPrice.getText(), "") || Objects.equals(coachPrice.getText(), "")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Complete all fields!");
+                alert.showAndWait();
+            }else {
+
+                try {
+                    data.addPlane(regNum.getText(),model.getText(),
+                            Integer.parseInt(businessSeat.getText()),
+                            Integer.parseInt(coachSeat.getText()),Integer.parseInt(economicSeat.getText()),
+                            Double.parseDouble(businessPrice.getText()),Double.parseDouble(coachPrice.getText()));
+                    primaryStage.close();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("da");
+                }
+            }
 
         });
 
@@ -124,7 +137,7 @@ public class addPlane  {
         ButtonHbox.getChildren().addAll(addPlane,close);
 
         VBox mainVbox =  new VBox(15);
-        mainVbox.getChildren().addAll(title,vBox1,vBox2,vBox3,vBox4,vBox5,vBox6,businessPrice,coachPrice,ButtonHbox);
+        mainVbox.getChildren().addAll(title,vBox1,vBox2,vBox4,vBox5,vBox6,businessPrice,coachPrice,ButtonHbox);
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
 
