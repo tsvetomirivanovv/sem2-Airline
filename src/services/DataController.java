@@ -4,8 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.*;
 import services.components.checkLogin;
+
+import java.security.*;
 import java.sql.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataController {
     static Connection conn = SQLConfig.connect();
@@ -656,5 +661,44 @@ public class DataController {
         }
 
         return planes;
+    }
+
+    public static void updateFlight(int flightID, String deploc){
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+           // String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
+            //        "VALUES ('"+getReg_no+"','"+getModel+"',"+getBusinessSeats+","+getCoachSeats+","+getEconomySeats+","+getBusinessPrice+","+getCoachPrice+");";
+
+
+            String disableForeign = "SET FOREIGN_KEY_CHECKS=0";
+            String enableForeign = "SET FOREIGN_KEY_CHECKS=1";
+            String query = "UPDATE Flights set departure_loc  = '"+deploc+"' WHERE id  = '" + flightID + "'";
+            {
+                s.execute(disableForeign);
+                s.executeUpdate(query);
+                s.execute(enableForeign);
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+    }
+
+    public static String codeCUT(String fullString){
+        String code = new String();
+        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(fullString);
+        while(m.find()) {
+            System.out.println(m.group(1));
+            code = m.group(1);
+
+        }
+
+        return  code;
     }
 }
