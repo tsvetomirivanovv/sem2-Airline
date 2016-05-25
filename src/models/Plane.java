@@ -41,6 +41,16 @@ public class Plane {
         this.businessPrice = new SimpleDoubleProperty(businessPrice);
         this.coachPrice = new SimpleDoubleProperty(coachPrice);
     }
+    public Plane(String reg_no, String model, int seats, int businessSeats, int coachSeats, int economySeats, double businessPrice, double coachPrice) {
+        this.reg_no = new SimpleStringProperty(reg_no);
+        this.model = new SimpleStringProperty(model);
+        this.seats = new SimpleIntegerProperty(seats);
+        this.businessSeats = new SimpleIntegerProperty(businessSeats);
+        this.coachSeats = new SimpleIntegerProperty(coachSeats);
+        this.economySeats = new SimpleIntegerProperty(economySeats);
+        this.businessPrice = new SimpleDoubleProperty(businessPrice);
+        this.coachPrice = new SimpleDoubleProperty(coachPrice);
+    }
 
     public void updatePlane(String reg_no, String model, int seats, ArrayList<Interval> in_use, int businessSeats, int coachSeats, int economySeats) {
         setReg_no(reg_no);

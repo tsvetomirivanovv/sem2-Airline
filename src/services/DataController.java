@@ -440,6 +440,26 @@ public class DataController {
         return airport;
     }
 
+    public static void addPlane(Plane plane){
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+
+            String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
+                    "VALUES ('"+plane.getReg_no()+"','"+plane.getModel()+"',"+plane.getBusinessSeats()+","+plane.getCoachSeats()+","+plane.getEconomySeats()+","+plane.getBusinessPrice()+","+plane.getCoachPrice()+");";
+            {
+                s.executeUpdate(query);
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+    }
 
    public static String setReservationStatus(int customerId) {
        String name = "";
@@ -449,7 +469,6 @@ public class DataController {
            s = conn.createStatement();
 
 
-          // ResultSet rs = s.executeQuery("SELECT status FROM Reservations WHERE customer_id = '" + customerId + "'");
            String query = "UPDATE Reservations set status  = 'confirmed' WHERE customer_id  = '" + customerId + "'";
            {
                s.executeUpdate(query);

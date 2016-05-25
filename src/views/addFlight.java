@@ -33,30 +33,26 @@ public class addFlight {
     public HBox buttonBox;
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
-    ObservableList<String> airportName = FXCollections.observableArrayList();
-    ObservableList<String> arrivalName = FXCollections.observableArrayList();
+
 
     public void start(){
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        for (Airport x:controller.getAirports()) {
-
-            airportName.add(x.getName());
-        }
-
-        for (Airport x:controller.getAirports()) {
-
-            arrivalName.add(x.getName());
-        }
-
         depBox = new ComboBox();
         depBox.setMinWidth(240);
-        depBox.setItems(airportName);
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
+
+        depBox.getItems().addAll(controller.getAllAirports(""));
+        arrbox.getItems().addAll(controller.getAllAirports(""));
+
+        depBox.setOnAction(event -> {
+            arrbox.getItems().clear();
+            arrbox.getItems().addAll(controller.getAllAirports((String)depBox.getValue()));
+        });
 
 
         planeBox = new ComboBox();
@@ -79,19 +75,6 @@ public class addFlight {
 
 
 
-        depBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                String code = depBox.getSelectionModel().getSelectedItem().toString();
-                if (arrivalName.contains(code)){
-                    arrivalName.removeAll();
-                    arrivalName.setAll(airportName);
-                    arrivalName.remove(code);
-                }
-
-                arrbox.setItems(arrivalName);
-            }
-        });
 
         addFlight.setOnAction(event -> {
             String test = depBox.getSelectionModel().getSelectedItem().toString();
