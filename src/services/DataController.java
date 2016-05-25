@@ -440,14 +440,14 @@ public class DataController {
         return airport;
     }
 
-    public static void addPlane(Plane plane){
+    public static void addPlane(String getReg_no, String getModel, int getBusinessSeats, int getCoachSeats, int getEconomySeats, double getBusinessPrice, double getCoachPrice){
         try {
             Statement s = null;
             s = conn.createStatement();
 
 
             String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
-                    "VALUES ('"+plane.getReg_no()+"','"+plane.getModel()+"',"+plane.getBusinessSeats()+","+plane.getCoachSeats()+","+plane.getEconomySeats()+","+plane.getBusinessPrice()+","+plane.getCoachPrice()+");";
+                    "VALUES ('"+getReg_no+"','"+getModel+"',"+getBusinessSeats+","+getCoachSeats+","+getEconomySeats+","+getBusinessPrice+","+getCoachPrice+");";
             {
                 s.executeUpdate(query);
             }
