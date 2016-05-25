@@ -12,94 +12,144 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.DataController;
 import services.components.comboBoxAutocomplete;
+import services.components.searchInfo;
 
 import java.time.LocalDate;
 
 public class searchFlights extends Application {
 
-    static Label label1, label2, label3, label4;
-    static TextField user;
-    static PasswordField pass;
-    static Button searchButton;
     static HBox h1,h2,h3,h4;
-    static VBox v1,v2, v3 ,v4;
-    static DatePicker datePicker1, datePicker2;
+    static VBox v1, v2, v3, v4, v5, v6;
     static BorderPane layout;
 
     DataController data = new DataController();
 
     public void start (Stage primaryStage) {
 
-        label1 = new Label("Leaving from:");
-        label2 = new Label("Going to:");
+        Label departureLocLabel = new Label("Leaving from:");
+        Label arrivalLocLabel = new Label("Going to:");
 
-        ComboBox comboBox1 = new ComboBox();
-        ComboBox comboBox2 = new ComboBox();
-        comboBox1.getItems().addAll(data.getAllAirports(""));
-        comboBox2.getItems().addAll(data.getAllAirports(""));
-        comboBox1.setPromptText("Search departure location");
+        ComboBox departure = new ComboBox();
+        ComboBox arrival = new ComboBox();
+        departure.getItems().addAll(data.getAllAirports(""));
+        arrival.getItems().addAll(data.getAllAirports(""));
+        departure.setPromptText("Search departure location");
 
-        comboBox1.setOnAction( e -> {
+        departure.setOnAction( e -> {
 
             // Clear all items
-            comboBox2.getItems().clear();
+            arrival.getItems().clear();
 
             // Add the list again but ignore the value selected in the first combobox
-            comboBox2.getItems().addAll(data.getAllAirports((String)comboBox1.getValue()));
-            System.err.println("Departure location is: " + comboBox1.getValue());
+            arrival.getItems().addAll(data.getAllAirports((String)departure.getValue()));
         });
 
-        comboBox2.setPromptText("Search arrival location");
+        arrival.setPromptText("Search arrival location");
 
-        comboBox2.setOnAction( e -> {
-            System.err.println("Departure location is: " + comboBox2.getValue());
-        });
+        new comboBoxAutocomplete<String>(departure);
+        new comboBoxAutocomplete<String>(arrival);
 
-        new comboBoxAutocomplete<String>(comboBox1);
-        new comboBoxAutocomplete<String>(comboBox2);
+        Label departureTimeLabel = new Label("Departure Date:");
+        Label returnTimeLabel = new Label("Return Date:");
 
-        label3 = new Label("Departure Date:");
-        label4 = new Label("Return Date:");
-
-        datePicker1 = new DatePicker();
+        DatePicker datePicker1 = new DatePicker();
         datePicker1.setOnAction(e -> {
             LocalDate date = datePicker1.getValue();
-            System.err.println("Selected date: " + date);
         });
 
-        datePicker2 = new DatePicker();
+        DatePicker datePicker2 = new DatePicker();
         datePicker2.setOnAction( e -> {
             LocalDate date = datePicker2.getValue();
-            System.err.println("Selected date: " + date);
         });
 
-        searchButton = new Button("Search");
-        searchButton.setId("b");
+        datePicker2.setPromptText("One way");
 
+        // ------------------------
+        // Class type & Passengers number
+        // ------------------------
+
+        Label passengersLabel = new Label("Passengers:");
+        Label classLabel = new Label("Class type");
+
+        ComboBox passengers = new ComboBox();
+        ComboBox classType = new ComboBox();
+
+        passengers.setPromptText("How many passengers?");
+        passengers.getItems().addAll(
+                "1 Passenger",
+                "2 Passengers",
+                "3 Passengers",
+                "4 Passengers"
+        );
+        classType.setPromptText("Select the class type");
+        classType.getItems().addAll(
+                "Economy class",
+                "Coach class",
+                "First class"
+        );
+
+        Button searchButton = new Button("Seach");
+
+
+        // Search button - Switch the scene where you can see all the results
         searchButton.setOnAction(event -> {
-            searchResults results = new searchResults();
-            try {
-                results.start(primaryStage);
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            String date1 = datePicker1.getValue().toString();
+            int passengerNo = 0;
+            searchInfo info = new searchInfo();
+
+            switch ((String)passengers.getValue()) {
+                case "1 Passenger":
+                    passengerNo = 1;
+                    break;
+                case "2 Passengers":
+                    passengerNo = 2;
+                    break;
+                case "3 Passengers":
+                    passengerNo = 1;
+                    break;
+                case "4 Passengers":
+                    passengerNo = 1;
+                    break;
             }
+
+            if(datePicker2.getValue() == null) {
+                //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), "", (String) passengers.getValue(), (String) classType.getValue());
+                info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1,  "", passengerNo, (String) classType.getValue());
+            } else {
+                String date2 = datePicker2.getValue().toString();
+                //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), date2, (String) passengers.getValue(), (String) classType.getValue());
+                info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, date2, passengerNo, (String) classType.getValue());
+            }
+
+
+            searchResults results = new searchResults(info);
+            results.start(primaryStage);
         });
 
         v1 = new VBox(7);
-        v1.getChildren().addAll(label1, comboBox1);
+        v1.getChildren().addAll(departureLocLabel, departure);
         v1.setAlignment(Pos.CENTER);
 
         v2 = new VBox(7);
-        v2.getChildren().addAll(label2, comboBox2);
+        v2.getChildren().addAll(arrivalLocLabel, arrival);
         v2.setAlignment(Pos.CENTER);
 
         v3 = new VBox(7);
-        v3.getChildren().addAll(label3, datePicker1);
+        v3.getChildren().addAll(departureTimeLabel, datePicker1);
         v3.setAlignment(Pos.CENTER);
 
         v4 = new VBox(7);
-        v4.getChildren().addAll(label4, datePicker2);
+        v4.getChildren().addAll(returnTimeLabel, datePicker2);
         v4.setAlignment(Pos.CENTER);
+
+        v5 = new VBox(7);
+        v5.getChildren().addAll(passengersLabel, passengers);
+        v5.setAlignment(Pos.CENTER);
+
+        v6 = new VBox(7);
+        v6.getChildren().addAll(classLabel, classType);
+        v6.setAlignment(Pos.CENTER);
 
 
         h1 = new HBox(10);
@@ -114,8 +164,14 @@ public class searchFlights extends Application {
         h2.setPadding(new Insets(20, 20, 20, 20));
         h2.setSpacing(20);
 
-        v3 = new VBox(50);
-        v3.getChildren().addAll(h1, h2, searchButton);
+        h3 = new HBox(10);
+        h3.getChildren().addAll(v5, v6);
+        h3.setAlignment(Pos.CENTER);
+        h3.setPadding(new Insets(20, 20, 20, 20));
+        h3.setSpacing(20);
+
+        v3 = new VBox(20);
+        v3.getChildren().addAll(h1, h2, h3, searchButton);
         v3.setAlignment(Pos.CENTER);
 
 
