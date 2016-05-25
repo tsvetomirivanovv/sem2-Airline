@@ -1,6 +1,7 @@
 package views;
 
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -36,6 +37,11 @@ public class menu {
             checkLogin.logOut();
             searchFlights searchFlights = new searchFlights();
             searchFlights.start(primaryStage);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("You have logged out!");
+            alert.setContentText("You are now back in the guest screen !");
+            alert.showAndWait();
         });
 
         login.setOnAction(event -> {

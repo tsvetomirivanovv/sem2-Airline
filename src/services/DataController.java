@@ -2,6 +2,7 @@ package services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import models.*;
 import services.components.checkLogin;
 
@@ -557,10 +558,18 @@ public class DataController {
 
             if (role == 1) {
                 checkLogin.setAdmin(true);
-                System.out.println("As admin");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as admin!");
+                alert.setContentText("You can now manage planes, flights and reservations.");
+                alert.showAndWait();
             } else if (role == 0) {
                 checkLogin.setAdmin(false);
-                System.out.println("As customer");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as a customer!");
+                alert.setContentText("You can now search a flight and book a reservation.");
+                alert.showAndWait();
             }
         }
 
