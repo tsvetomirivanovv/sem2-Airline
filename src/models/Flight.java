@@ -30,6 +30,10 @@ public class Flight {
         this.flight_price = new SimpleDoubleProperty(flight_price);
     }
 
+    public Flight() {
+
+    }
+
     public int getFlight_id() {
         return flight_id.get();
     }

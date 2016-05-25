@@ -36,6 +36,8 @@ public class manageFlights extends Application{
 
     Button addFlight, deleteFlights,updateFlight,close;
 
+    Flight tempFlight = new Flight();
+
 
     @Override
     public void start(Stage primaryStage)  {
@@ -79,8 +81,12 @@ public class manageFlights extends Application{
         updateFlight = new Button("Update Flight");
         close = new Button("Close");
 
+        mainFlightsTable.setOnMouseClicked(e -> {
+            tempFlight = mainFlightsTable.getSelectionModel().getSelectedItem();
+        });
+
         updateFlight.setOnAction(event -> {
-            views.updateFlight updateFlight = new updateFlight();
+            views.updateFlight updateFlight = new updateFlight(tempFlight);
             updateFlight.start();
         });
 

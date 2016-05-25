@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.Airport;
+import models.Flight;
 import services.DataController;
 
 import java.security.Timestamp;
@@ -35,6 +36,12 @@ public class updateFlight {
     public Label depboxLabel,arrboxLabel,depTimeLable,arrTimeLabel,planeboxLabel;
     public Button addFlight,close;
 
+    Flight flight = new Flight();
+
+    public updateFlight(Flight tempFlight) {
+        flight = tempFlight;
+    }
+
     manageFlights manageFlights = new manageFlights();
     DataController data = new DataController();
 
@@ -44,6 +51,7 @@ public class updateFlight {
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
         depBox = new ComboBox();
+        depBox.setPromptText(flight.getArrival_loc().getName());
         depBox.setMinWidth(240);
 
 

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Plane;
 import services.DataController;
+import views.components.availabilityCell;
 
 public class managePlanes extends Application{
     DataController data = new DataController();
@@ -24,6 +25,7 @@ public class managePlanes extends Application{
         TableColumn<Plane, String> reg_num = new TableColumn<>("Registration Number");
         TableColumn<Plane, String> model = new TableColumn<>("Model");
         TableColumn<Plane, Integer> seats = new TableColumn<>("Total Seats");
+        TableColumn availability = new TableColumn("Availability");
         //TableColumn<Plane, Integer> availability = new TableColumn<>("See availability");
 
 
@@ -32,22 +34,7 @@ public class managePlanes extends Application{
         reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
-
-        reg_num.setCellFactory(TextFieldTableCell.forTableColumn());
-        model.setCellFactory(TextFieldTableCell.forTableColumn());
-        seats.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-
-        reg_num.setOnEditCommit((TableColumn.CellEditEvent<Plane, String> event) -> {
-            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setReg_no(event.getNewValue());
-        });
-
-        model.setOnEditCommit((TableColumn.CellEditEvent<Plane, String> event) -> {
-            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setModel(event.getNewValue());
-        });
-
-        seats.setOnEditCommit((TableColumn.CellEditEvent<Plane, Integer> event) -> {
-            (event.getTableView().getItems().get(event.getTablePosition().getRow())).setSeats(event.getNewValue());
-        });
+        availability.setCellFactory(e -> new availabilityCell(primaryStage));
 
         // TO DO: We need that fucking button in here (See availability).
 
@@ -67,7 +54,7 @@ public class managePlanes extends Application{
         vBox1.getChildren().addAll(addButton,deleteButton);
 
         mainPlanesTable.setItems(data.getPlanes());
-        mainPlanesTable.getColumns().addAll(reg_num,model,seats);
+        mainPlanesTable.getColumns().addAll(reg_num,model,seats,availability);
         mainPlanesTable.setEditable(true);
         mainPlanesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // DESTRIBURE THE SIZE OF THE COLLUMS
 
