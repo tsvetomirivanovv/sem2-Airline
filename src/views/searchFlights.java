@@ -73,7 +73,7 @@ public class searchFlights extends Application {
             System.err.println("Selected date: " + date);
         });
 
-        searchButton = new Button("Seach");
+        searchButton = new Button("Search");
         searchButton.setId("b");
 
         searchButton.setOnAction(event -> {
