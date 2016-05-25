@@ -866,14 +866,6 @@ public class DataController {
     }
 
     public static String codeCUT(String fullString){
-        String code = new String();
-        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(fullString);
-        while(m.find()) {
-            System.out.println(m.group(1));
-            code = m.group(1);
-
-        }
-
-        return  code;
+        return  fullString.substring(fullString.length() - 4, fullString.length() - 1);
     }
 }
