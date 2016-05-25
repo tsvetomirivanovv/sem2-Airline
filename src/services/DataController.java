@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import models.*;
 import services.components.checkLogin;
 
-import java.security.*;
 import java.sql.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -55,7 +54,44 @@ public class DataController {
 
         return reservations;
     }
+    public ObservableList<Reservation> getCustomerReservations(int id) {
+        ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+        ArrayList<Passenger> passenger_list;
 
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT * FROM Reservations WHERE customer_id = '"+id+"'");
+
+            if (rs != null)
+                while (rs.next()) {
+
+                    int reservation_id = rs.getInt("id");
+                    int flight_id = rs.getInt("flight_id");
+                    int customer_id = rs.getInt("customer_id");
+                    String status = rs.getString("status");
+                    String customer_name = getCustomerName(customer_id);
+
+                    Flight flight = getFlight(flight_id);
+                    passenger_list = getPassengers(reservation_id);
+                    Double price = getReservationPrice(reservation_id);
+                    int total_passengers = getPassengers(reservation_id).size();
+
+                    Reservation reservation = new Reservation(flight, price, reservation_id, status, customer_id, passenger_list, total_passengers , customer_name);
+                    reservations.add(reservation);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return reservations;
+    }
     public static Flight getFlight(int flightId) {
         Flight flight = null;
 
@@ -516,6 +552,8 @@ public class DataController {
         return name;
     }
 
+
+
     public static Boolean login(String email, String password) {
         checkLogin checkLogin = new checkLogin();
         Boolean loggedIn = false;
@@ -574,6 +612,66 @@ public class DataController {
         }
 
         return loggedIn;
+    }
+
+    public static int getCustomerId(String email, String password) {
+        checkLogin checkLogin = new checkLogin();
+        Boolean loggedIn = false;
+        int id = -1;
+        int role = -1;
+        String account_email = "";
+        String account_password = "";
+
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT * from Accounts where email = '" + email + "' and password='" + password + "'");
+            if (rs != null) {
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    role = rs.getInt("role");
+                    account_email = rs.getString("email");
+                    account_password = rs.getString("password");
+                }
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        if(id == -1) {
+            loggedIn = false;
+        } else {
+            loggedIn = true;
+            checkLogin.setLoggedIn(true);
+            System.out.println("Logged in");
+            checkLogin.setAccount_id(id);
+            checkLogin.setAccount_email(account_email);
+
+            if (role == 1) {
+                checkLogin.setAdmin(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as admin!");
+                alert.setContentText("You can now manage planes, flights and reservations.");
+                alert.showAndWait();
+            } else if (role == 0) {
+                checkLogin.setAdmin(false);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as a customer!");
+                alert.setContentText("You can now search a flight and book a reservation.");
+                alert.showAndWait();
+            }
+        }
+
+        return id;
     }
 
     public static ObservableList<Airport> getAirports() {
