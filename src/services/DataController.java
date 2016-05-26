@@ -748,11 +748,12 @@ public class DataController {
             ResultSet rs;
 
 
-                rs = s.executeQuery("SELECT reg_no, model  FROM planes");
+                rs = s.executeQuery("SELECT id, reg_no, model  FROM planes");
 
 
             if (rs != null)
                 while (rs.next()) {
+                    int id = rs.getInt("id");
                     String plane_reg = rs.getString("reg_no");
                     String model = rs.getString("model");
 
@@ -826,15 +827,23 @@ public class DataController {
         return flights;
     }
 
-    public static void updateFlight(int flightID, String deploc){
+    public static void updateFlight(int flightId, String depLoc, String arrLoc, String depDate, String ArrDate, String airplane){
+        int planeId = getPlaneId(airplane);
+        System.err.println("planeId: " + planeId);
+        System.err.println("flight_id: " + flightId);
+        System.err.println("depLoc: " + codeCUT(depLoc));
+        System.err.println("arrLoc: " + codeCUT(arrLoc));
+        System.err.println("depDate: " + depDate);
+        System.err.println("ArrDate: " + ArrDate);
+        System.err.println("airplane: " + airplane);
+
         try {
             Statement s = null;
             s = conn.createStatement();
 
-            String query = "UPDATE Flights set departure_loc  = '"+deploc+"' WHERE id  = '" + flightID + "'";
-            {
-                s.executeUpdate(query);
-            }
+            System.out.println("UPDATE Flights SET (plane_id, departure_loc, arrival_loc, departure_time, arrival_time) VALUES ("+ planeId +", '"+codeCUT(depLoc) +"', '"+codeCUT(arrLoc)+"', '"+ depDate +"', '"+ ArrDate +"') WHERE id = " + flightId);
+
+            s.executeUpdate("UPDATE Flights SET plane_id = "+ planeId + ", departure_loc = '"+codeCUT(depLoc) +"',  arrival_loc = '"+codeCUT(arrLoc)+"', departure_time = '"+ depDate +"', arrival_time = '"+ ArrDate +"' WHERE id = " + flightId);
         } catch (SQLException sqlex) {
             try{
                 System.out.println(sqlex.getMessage());
@@ -843,6 +852,36 @@ public class DataController {
             }
             catch(SQLException sql){}
         }
+    }
+
+    public static int getPlaneId(String regNo) {
+        int planeId = 0;
+        regNo = regNo.substring(0, 6);
+        System.err.println(regNo);
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+
+            rs = s.executeQuery("SELECT id FROM Planes WHERE reg_no = '" + regNo + "'");
+
+
+            if (rs != null)
+                while (rs.next()) {
+                    planeId = rs.getInt("id");
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return planeId;
     }
 
     public static String codeCUT(String fullString){
