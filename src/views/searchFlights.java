@@ -94,37 +94,45 @@ public class searchFlights extends Application {
         // Search button - Switch the scene where you can see all the results
         searchButton.setOnAction(event -> {
 
-            String date1 = datePicker1.getValue().toString();
-            int passengerNo = 0;
-            searchInfo info = new searchInfo();
-
-            switch ((String)passengers.getValue()) {
-                case "1 Passenger":
-                    passengerNo = 1;
-                    break;
-                case "2 Passengers":
-                    passengerNo = 2;
-                    break;
-                case "3 Passengers":
-                    passengerNo = 1;
-                    break;
-                case "4 Passengers":
-                    passengerNo = 1;
-                    break;
-            }
-
-            if(datePicker2.getValue() == null) {
-                //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), "", (String) passengers.getValue(), (String) classType.getValue());
-                info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1,  "", passengerNo, (String) classType.getValue());
+            if(departure.getValue() == null || arrival.getValue() == null || datePicker1.getValue() == null || passengers.getValue() == null || classType.getValue() == null) {
+                Alert granted = new Alert(Alert.AlertType.ERROR);
+                granted.setTitle("Error!");
+                granted.setContentText("Please fill all the required fields before searching a flight");
+                granted.setHeaderText(null);
+                granted.show();
             } else {
-                String date2 = datePicker2.getValue().toString();
-                //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), date2, (String) passengers.getValue(), (String) classType.getValue());
-                info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, date2, passengerNo, (String) classType.getValue());
+                String date1 = datePicker1.getValue().toString();
+                int passengerNo = 0;
+                searchInfo info = new searchInfo();
+
+                switch ((String)passengers.getValue()) {
+                    case "1 Passenger":
+                        passengerNo = 1;
+                        break;
+                    case "2 Passengers":
+                        passengerNo = 2;
+                        break;
+                    case "3 Passengers":
+                        passengerNo = 1;
+                        break;
+                    case "4 Passengers":
+                        passengerNo = 1;
+                        break;
+                }
+
+                if(datePicker2.getValue() == null) {
+                    //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), "", (String) passengers.getValue(), (String) classType.getValue());
+                    info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1,  "", passengerNo, (String) classType.getValue());
+                } else {
+                    String date2 = datePicker2.getValue().toString();
+                    //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), date2, (String) passengers.getValue(), (String) classType.getValue());
+                    info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, date2, passengerNo, (String) classType.getValue());
+                }
+
+
+                searchResults results = new searchResults(info);
+                results.start(primaryStage);
             }
-
-
-            searchResults results = new searchResults(info);
-            results.start(primaryStage);
         });
 
         v1 = new VBox(7);
