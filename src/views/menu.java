@@ -25,7 +25,8 @@ public class menu {
 
 
         //MENU ITEMS
-        MenuItem login = new MenuItem("Log in");
+        MenuItem login1 = new MenuItem("Log in as Admin");
+        MenuItem login2 = new MenuItem("Log in as Customer");
         MenuItem logOut = new MenuItem("Log out");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
@@ -44,9 +45,14 @@ public class menu {
             alert.showAndWait();
         });
 
-        login.setOnAction(event -> {
-            Login login2 = new Login();
-            login2.start(primaryStage);
+        login1.setOnAction(event -> {
+            Login loginAsAdmin = new Login(true);
+            loginAsAdmin.start(primaryStage);
+        });
+
+        login2.setOnAction(event -> {
+            Login loginAsCustomer = new Login(false);
+            loginAsCustomer.start(primaryStage);
         });
 
         addPlane.setOnAction(e->{
@@ -74,7 +80,7 @@ public class menu {
             manageFlights1.start(primaryStage);
         });
 
-        filemenu1.getItems().addAll(login);
+        filemenu1.getItems().addAll(login1, login2);
         filemenu2.getItems().addAll(logOut);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
@@ -92,7 +98,6 @@ public class menu {
             } else {
                 menuBar.getMenus().addAll(filemenu2, reservationsMenu, OSCA);
             }
-
         }
         return menuBar;
 

@@ -15,12 +15,22 @@ import services.DataController;
 
 public class Login {
     DataController data = new DataController();
+    boolean isAdmin = false;
+
+    public Login(boolean admin) {
+        isAdmin = admin;
+    }
 
     public void start (Stage parentStage) {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
+        Label title;
 
-        Label title = new Label("Log in");
+        if (isAdmin) {
+            title = new Label("Log in as admin");
+        } else {
+            title = new Label("Log in as customer");
+        }
 
         Label emailLabel = new Label("Email: ");
         emailLabel.setAlignment(Pos.CENTER_LEFT);
@@ -46,6 +56,7 @@ public class Login {
 
         HBox ButtonHbox = new HBox(25);
         Button loginButton = new Button("Log In");
+
         Button closeButton = new Button("Close");
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(loginButton,closeButton);
@@ -74,7 +85,10 @@ public class Login {
 
 
         VBox mainVbox =  new VBox(15);
-        mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox,createAccount);
+        mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
+        if(!isAdmin) {
+            mainVbox.getChildren().add(createAccount);
+        }
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
 
