@@ -3,6 +3,7 @@ package services;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import models.*;
 import services.components.checkLogin;
 
@@ -932,4 +933,27 @@ public class DataController {
 
         return duration;
     }
+
+    public static ObservableList<Integer> getSeatsForClass(int flight_id, String classe) {
+        ObservableList<Integer> integers = FXCollections.observableArrayList();
+        Flight flighter = getFlight(flight_id);
+        int seats = 0;
+
+        if (classe.equals("coach")) {
+            seats=(flighter.getPlane().getCoachSeats());
+        }
+        else if (classe.equals("economy")) {
+            seats=(flighter.getPlane().getEconomySeats());
+        }
+        else if (classe.equals("business")) {
+            seats=(flighter.getPlane().getBusinessSeats());
+        }
+
+        for (int i=1; i <= seats; i++) {
+            integers.add(i);
+        }
+
+        return integers;
+    }
+
 }
