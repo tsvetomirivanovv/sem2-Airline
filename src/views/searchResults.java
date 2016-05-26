@@ -95,7 +95,7 @@ public class searchResults extends Application {
         } else {
             flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), "", searchInfo.getPassengers(), searchInfo.getClassType()));
         }
-        flights.setCellFactory(e -> new flightCell(primaryStage));
+        flights.setCellFactory(e -> new flightCell(primaryStage, searchInfo));
 
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);
@@ -105,7 +105,7 @@ public class searchResults extends Application {
         layout.setTop(menu1.display(primaryStage));
 
         primaryStage.setTitle("Search Results");
-        primaryStage.setScene(new Scene(layout,600,400));
+        primaryStage.setScene(new Scene(layout, 1000, 600));
         primaryStage.show();
     }
 }
