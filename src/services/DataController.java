@@ -713,7 +713,7 @@ public class DataController {
             ResultSet rs;
 
             if(exclude.length() > 0) {
-                exclude = exclude.substring(exclude.length() - 4, exclude.length() - 1);
+                exclude = codeCUT(exclude);
 
                 rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports WHERE airport_code != '" + exclude + "'");
             } else {
@@ -915,10 +915,9 @@ public class DataController {
             //in milliseconds
             long diff = d2.getTime() - d1.getTime();
 
-            long diffSeconds = diff / 1000 % 60;
             long diffMinutes = diff / (60 * 1000) % 60;
             long diffHours = diff / (60 * 60 * 1000) % 24;
-            long diffDays = diff / (24 * 60 * 60 * 1000);
+            //long diffDays = diff / (24 * 60 * 60 * 1000);
 
             if(diffHours > 0) {
                 duration = diffHours + "h " + diffMinutes + "m";
