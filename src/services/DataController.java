@@ -467,7 +467,7 @@ public class DataController {
                     String airport_name = rs.getString("airport_name");
                     String airport_city = rs.getString("airport_city");
 
-                    airport = new Airport(airport_name, airport_code, airport_city);
+                    airport = new Airport(airport_name, airport_city, airport_code);
                 }
             }
         } catch (SQLException sqlex) {
