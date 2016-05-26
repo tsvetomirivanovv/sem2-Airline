@@ -13,9 +13,11 @@ import views.planeAvailability;
  */
 public class availabilityCell extends TableCell<Plane, Plane> {
     Stage window;
+    Plane one;
 
-    public availabilityCell(Stage primaryStage){
+    public availabilityCell(Stage primaryStage, Plane plane1){
         window=primaryStage;
+        one=plane1;
     }
 
     protected void updateItem(Plane t, boolean bln) {
@@ -33,7 +35,7 @@ public class availabilityCell extends TableCell<Plane, Plane> {
         Button cellButton = new Button("view");
 
         cellButton.setOnAction(event -> {
-            planeAvailability ava= new planeAvailability(plane);
+            planeAvailability ava= new planeAvailability(one);
             ava.start();
         });
         pane.getChildren().addAll(cellButton);
