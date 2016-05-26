@@ -7,8 +7,10 @@ import models.*;
 import services.components.checkLogin;
 
 import java.sql.*;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -810,8 +812,6 @@ public class DataController {
                     // Create flight object
                     Flight flight = new Flight(flight_id, plane, departure_loc, departure_time, arrival_loc, arrival_time, flight_price);
 
-                    System.err.println("Flight id: " + flight.getFlight_id());
-
                     flights.add(flight);
                 }
         } catch (SQLException sqlex) {
@@ -831,11 +831,6 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
 
-            // String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
-            //        "VALUES ('"+getReg_no+"','"+getModel+"',"+getBusinessSeats+","+getCoachSeats+","+getEconomySeats+","+getBusinessPrice+","+getCoachPrice+");";
-
-
-
             String query = "UPDATE Flights set departure_loc  = '"+deploc+"' WHERE id  = '" + flightID + "'";
             {
                 s.executeUpdate(query);
@@ -852,5 +847,89 @@ public class DataController {
 
     public static String codeCUT(String fullString){
         return  fullString.substring(fullString.length() - 4, fullString.length() - 1);
+    }
+
+    public static Double getClassPrice(int flight_id, String classType) {
+        Double price = 0.0;
+        String query = "";
+
+        switch(classType) {
+            case "Economy class":
+                price = 0.0;
+                break;
+            case "Coach class":
+                query = "SELECT p.coach_price FROM Planes p, Flights f WHERE f.plane_id = p.id AND f.id = " + flight_id;
+                break;
+            case "First class":
+                query = "SELECT p.firstclass_price FROM Planes p, Flights f WHERE f.plane_id = p.id AND f.id = " + flight_id;
+                break;
+        }
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery(query);
+
+            if (rs != null)
+                while (rs.next()) {
+
+                    switch(classType) {
+                        case "Economy class":
+                            price = 0.0;
+                            break;
+                        case "Coach class":
+                            price = rs.getDouble("coach_price");
+                            break;
+                        case "First class":
+                            price = rs.getDouble("firstclass_price");
+                            break;
+                    }
+
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return price;
+    }
+
+    public static String getFlightDuration(String date1, String date2) {
+        String duration = "";
+
+        //HH converts hour in 24 hours format (0-23), day calculation
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+        java.util.Date d1 = null;
+        java.util.Date d2 = null;
+
+        try {
+            d1 = format.parse(date1);
+            d2 = format.parse(date2);
+
+            //in milliseconds
+            long diff = d2.getTime() - d1.getTime();
+
+            long diffSeconds = diff / 1000 % 60;
+            long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+
+            if(diffHours > 0) {
+                duration = diffHours + "h " + diffMinutes + "m";
+            } else {
+                duration = diffMinutes + "m";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return duration;
     }
 }
