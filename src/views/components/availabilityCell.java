@@ -1,44 +1,56 @@
 package views.components;
 
-import javafx.scene.Node;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
 import models.Plane;
 import views.planeAvailability;
 
-/**
- * Created by Caseru on 5/25/2016.
- */
-public class availabilityCell extends TableCell<Plane, Plane> {
-    Stage window;
-    Plane one;
+public class availabilityCell {
 
-    public availabilityCell(Stage primaryStage, Plane plane1){
-        window=primaryStage;
-        one=plane1;
+    public Callback<TableColumn<Plane, Plane>, TableCell<Plane, Plane>> getCallback1(){
+
+        Callback<TableColumn<Plane, Plane>, TableCell<Plane, Plane>> callback1 = new Callback<TableColumn<Plane, Plane>, TableCell<Plane, Plane>>() {
+            @Override public TableCell<Plane, Plane> call(TableColumn<Plane, Plane> availability) {
+                return new TableCell<Plane, Plane>() {
+                    final Button button = new Button(); {
+                        button.setMinWidth(100);
+                    }
+                    @Override public void updateItem(final Plane plane, boolean empty) {
+                        super.updateItem(plane, empty);
+                        if (plane != null) {
+                            button.setText("View");
+
+                            setGraphic(button);
+                            button.setOnAction(e -> {
+                                planeAvailability ddd = new planeAvailability();
+                                ddd.start(plane);
+                            });
+                        } else {
+                            setGraphic(null);
+                        }
+                    }
+                };
+            }
+        };
+
+        return callback1;
     }
 
-    protected void updateItem(Plane t, boolean bln) {
-        // don't omit this!!!
-        super.updateItem(t, bln);
-        if (bln) {
-            setGraphic(null);
-        } else {
-            this.setGraphic(buttonCell(t));  // ***set the content of the graphic
-        }
-    }
-    private Node buttonCell(Plane plane) {
-        StackPane pane = new StackPane();
 
-        Button cellButton = new Button("view");
+    public Callback<TableColumn.CellDataFeatures<Plane, Plane>, ObservableValue<Plane>> getCallback2() {
+        Callback<TableColumn.CellDataFeatures<Plane, Plane>, ObservableValue<Plane>> callback2 = new Callback<TableColumn.CellDataFeatures<Plane, Plane>, ObservableValue<Plane>>() {
+            @Override public ObservableValue<Plane> call(TableColumn.CellDataFeatures<Plane, Plane> features) {
+                return new ReadOnlyObjectWrapper(features.getValue());
+            }
+        };
 
-        cellButton.setOnAction(event -> {
-            planeAvailability ava= new planeAvailability(one);
-            ava.start();
-        });
-        pane.getChildren().addAll(cellButton);
-        return pane;
+        return callback2;
     }
+
+
+
 }

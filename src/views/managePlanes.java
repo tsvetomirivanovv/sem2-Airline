@@ -2,12 +2,15 @@ package views;
 
 
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import models.Plane;
 import services.DataController;
@@ -15,6 +18,7 @@ import views.components.availabilityCell;
 
 public class managePlanes extends Application{
     DataController data = new DataController();
+    availabilityCell avb = new availabilityCell();
 
     public TableView<Plane> mainPlanesTable = new TableView<>();
 
@@ -25,16 +29,16 @@ public class managePlanes extends Application{
         TableColumn<Plane, String> reg_num = new TableColumn<>("Registration Number");
         TableColumn<Plane, String> model = new TableColumn<>("Model");
         TableColumn<Plane, Integer> seats = new TableColumn<>("Total Seats");
-        TableColumn <Plane, Plane>availability = new TableColumn<>("Availability");
-        //TableColumn<Plane, Integer> availability = new TableColumn<>("See availability");
-
+        TableColumn <Plane, Plane> availability = new TableColumn<>("Availability");
 
         // ATTACHING ACTION LISTENERS (Displaying the objects into the tableview)
 
         reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
-        availability.setCellFactory(e -> new availabilityCell(primaryStage,mainPlanesTable.getSelectionModel().getSelectedItem()));
+        availability.setCellValueFactory(avb.getCallback2());
+
+        availability.setCellFactory(avb.getCallback1());
         // TO DO: We need that fucking button in here (See availability).
 
         Button addButton = new Button("Create ");

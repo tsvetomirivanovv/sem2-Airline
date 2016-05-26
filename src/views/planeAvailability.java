@@ -14,18 +14,10 @@ import models.Plane;
 import services.DataController;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by Caseru on 5/25/2016.
- */
 public class planeAvailability {
     DataController data = new DataController();
-    Plane plane;
 
-    public planeAvailability(Plane plane) {
-        this.plane=plane;
-    }
-
-    public void start(){
+    public void start(Plane pl) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
 
@@ -36,7 +28,7 @@ public class planeAvailability {
         });
 
         TableView<Interval> table = new TableView<>();
-        table.setItems(plane.getIn_use());
+        table.setItems(pl.getIn_use());
 
         TableColumn<Interval, String> departure = new TableColumn<>();
         departure.setCellValueFactory(cellData -> {
