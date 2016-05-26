@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.*;
+import services.components.searchInfo;
 
 
 import java.sql.Timestamp;
@@ -33,6 +34,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SelectedFlight extends Application {
+    Flight flight = new Flight();
+    searchInfo searchInfo = new searchInfo();
+
+    public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
+        flight = flightItem;
+        searchInfo = searchInfoItem;
+    }
 
     public void start(Stage primaryStage) {
         primaryStage.setTitle("   Selected flight");
