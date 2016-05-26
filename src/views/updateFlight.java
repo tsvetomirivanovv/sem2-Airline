@@ -57,16 +57,28 @@ public class updateFlight {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         depBox = new ComboBox();
         depBox.setMinWidth(240);
+        depBox.setPromptText("Select departure location");
 
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
+        arrbox.setPromptText("Select arrival location");
 
 
         depBox.getItems().addAll(data.getAllAirports(""));
-        arrbox.getItems().addAll(data.getAllAirports(""));
+        String depDefValue = flight.getDeparture_loc().getCity() + " (" + flight.getDeparture_loc().getAirport_code() + ")";
+        depBox.setValue(depDefValue);
+
+
+        String arrDefValue = flight.getArrival_loc().getCity() + " (" + flight.getArrival_loc().getAirport_code() + ")";
+        arrbox.getItems().addAll(flight.getDeparture_loc().getCity() + " (" + flight.getDeparture_loc().getAirport_code() + ")");
+        arrbox.setValue(arrDefValue);
 
         depBox.setOnAction(event -> {
+            if(depBox.getValue().toString().equals(arrbox.getValue().toString())) {
+                System.err.println("Same shit" + arrbox.getValue());
+                arrbox.setValue(null);
+            }
             arrbox.getItems().clear();
             arrbox.getItems().addAll(data.getAllAirports((String)depBox.getValue()));
 
@@ -77,14 +89,18 @@ public class updateFlight {
         planeBox = new ComboBox();
         planeBox.setMinWidth(240);
         planeBox.setItems(data.getAllPlanes());
+        String initPlane = flight.getPlane().getReg_no() + " (" + flight.getPlane().getModel() + ")";
+        planeBox.setValue(initPlane);
 
         depTime = new TextField();
         depTime.setMaxWidth(240);
-        depTime.setText(flight.getDeparture_time().toString());
+        String depDatetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(flight.getDeparture_time());
+        depTime.setText(depDatetime);
 
         arrTime = new TextField();
         arrTime.setMaxWidth(240);
-        arrTime.setText(flight.getArrival_time().toString());
+        String arrDatetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(flight.getDeparture_time());
+        arrTime.setText(arrDatetime);
 
         depboxLabel = new Label("Departure location");
         arrboxLabel = new Label("Arrival location");
@@ -92,7 +108,7 @@ public class updateFlight {
         arrTimeLabel = new Label("Arrival time");
         planeboxLabel = new Label("Plane");
 
-        addFlight = new Button("Add flight");
+        addFlight = new Button("Update flight");
         close = new Button("Close");
 
         addFlight.setOnAction(event -> {
