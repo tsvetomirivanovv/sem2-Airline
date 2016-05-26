@@ -21,16 +21,18 @@ public class DataController {
     public ObservableList<Reservation> getReservations(int customerid,boolean checklogin) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
+        String query = "";
+        if (checklogin == false){
+            query = ("SELECT id,flight_id,customer_id,status FROM Reservations WHERE  customer_id = '" + customerid + "'");
+        } else if (checklogin == true){
+            query = ("SELECT * FROM Reservations ");
+        }
 
         try {
             Statement s = null;
             s = conn.createStatement();
-            // if (rolecheck = false) {
-         //   rs = s.executeQuery("SELECT id,flight_id,customer_id,status FROM Reservations WHERE  customer_id = '" + loginid + "'");
-        //} else  {
-         //   rs = s.executeQuery("SELECT * FROM Reservations ");
-       // }
-            ResultSet rs = s.executeQuery("SELECT * FROM Reservations");
+
+            ResultSet rs = s.executeQuery(query);
 
             if (rs != null)
                 while (rs.next()) {

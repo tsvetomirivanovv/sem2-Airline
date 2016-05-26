@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import models.Payment;
 import services.DataController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Caseru on 5/25/2016.
  */
@@ -61,8 +65,11 @@ public class creditCardPopUp {
             }
             else {
                 Payment aux = new Payment(cardType.getText(), Integer.parseInt(cardNo.getText()), cardEx.getText(), cardName.getText());
-                data.setReservationStatus(id);
-                window.close();
+
+
+               // data.setPayment(cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
+               // data.setReservationStatus(id);
+                //window.close();
             }
         });
 
