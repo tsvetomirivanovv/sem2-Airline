@@ -27,7 +27,8 @@ public class manageReservations extends Application {
         BorderPane layout = new BorderPane();
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
-
+        int loginid = services.components.checkLogin.getAccount_id();
+        boolean checkadmin = services.components.checkLogin.isAdmin();
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         status = new TableColumn<>("Status");
         status.setMinWidth(50);
@@ -61,7 +62,7 @@ public class manageReservations extends Application {
 
 
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
-        tableView.setItems(data.getReservations());
+        tableView.setItems(data.getReservations(loginid,checkadmin));
         //tableView.setEditable(true);
         //tableView.setItems(data.getCustomerReservations(data.getCustomerId())); // we need the password and the email
 
@@ -78,7 +79,7 @@ public class manageReservations extends Application {
         });
 
         refresh.setOnAction(event -> {
-            tableView.setItems(data.getReservations());
+            tableView.setItems(data.getReservations(loginid,checkadmin));
         });
 
         cancelButton.setOnAction(event ->{
