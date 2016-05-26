@@ -233,10 +233,12 @@ public class SelectedFlight extends Application {
         Label holderName = new Label("Card holder name:");
         TextField holderField = new TextField();
         VBox holder = new VBox(20);
+        holder.getChildren().addAll(holderName,holderField);
 
         Label cardNo = new Label("Card no:");
         TextField noField = new TextField();
         VBox number = new VBox(20);
+        number.getChildren().addAll(cardNo,noField);
 
         Label expirationDate= new Label("Expiration date:");
         TextField expirationYear = new TextField();
