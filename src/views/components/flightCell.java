@@ -12,14 +12,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Flight;
+import services.components.searchInfo;
 import views.BookTicketPopUp;
 import views.SelectedFlight;
 import java.text.SimpleDateFormat;
 
 public class flightCell extends ListCell<Flight> {
     Stage window;
+    searchInfo searchInfo = new searchInfo();
 
-    public flightCell(Stage primaryStage) {
+
+    public flightCell(Stage primaryStage,searchInfo srchInfo) {
+        searchInfo = srchInfo;
         window  = primaryStage;
     }
 
@@ -74,21 +78,19 @@ public class flightCell extends ListCell<Flight> {
         Hyperlink details = new Hyperlink("See details");
         Button selectFlight = new Button("Select flight");
         VBox flightBox = new VBox(20);
-        String sprice = "" + flight.getPlane().getCoachPrice();
-        Label price = new Label(sprice); // will be changed to flight.getPrice
-        flightBox.getChildren().addAll(price,selectFlight,details);
+        String sprice = "" + flight.getFlight_price();
+        Label price = new Label(sprice + "DKK"); // will be changed to flight.getPrice
+        flightBox.getChildren().addAll(price, selectFlight, details);
         flightBox.setAlignment(Pos.CENTER);
 
         selectFlight.setOnAction(e -> {
             SelectedFlight selectedFlightView = new SelectedFlight();
             selectedFlightView.start(window);
-            System.err.println("Test!");
         });
 
         details.setOnAction(event -> {
-            BookTicketPopUp popUp = new BookTicketPopUp();
+            BookTicketPopUp popUp = new BookTicketPopUp(flight, searchInfo);
             popUp.start();
-            System.err.println("Test!");
         });
 
         HBox hBox2 = new HBox(20);
