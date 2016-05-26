@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 
 public class BookTicketPopUp {
 
-    DataController controller = new DataController();
+    DataController data = new DataController();
     searchInfo searchInfo = new searchInfo();
     Flight flight;
 
@@ -43,10 +43,6 @@ public class BookTicketPopUp {
         Label title = new Label("Book your ticket");
         Label checkroutes = new Label("Check your routes");
 
-        layout.getChildren().addAll(title, h1, checkroutes, h2, h3, h4);
-
-        layout.setAlignment(Pos.TOP_CENTER);
-
         Label checkticket = new Label("Check ticket info");
         String wayAndPassangers;
 
@@ -65,17 +61,7 @@ public class BookTicketPopUp {
         Label returnfor = new Label(wayAndPassangers);
         String totalPrice = "";
 
-        switch(searchInfo.getClassType()) {
-            case "Economy class":
-                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * flight.getFlight_price()) + " (" + searchInfo.getClassType() + ")";
-                break;
-            case "Coach class":
-                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * (flight.getFlight_price()+flight.getPlane().getCoachPrice())) + " (" + searchInfo.getClassType() + ")";
-                break;
-            case "First class":
-                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * (flight.getFlight_price()+flight.getPlane().getBusinessPrice())) + " (" + searchInfo.getClassType() + ")";
-                break;
-        }
+        totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * (flight.getFlight_price() + data.getClassPrice(flight.getFlight_id(), searchInfo.getClassType()))) + " (" + searchInfo.getClassType() + ")";
 
         Label total = new Label(totalPrice);
 
@@ -84,7 +70,7 @@ public class BookTicketPopUp {
 
         h1.getChildren().addAll(small);
 
-        //everything for the second horizontal box
+        //everything for the first flight details box
         Label outboundtitle = new Label("OUTBOUND - " + searchInfo.getStart_date());
 
         VBox flightPlaneBox = new VBox();
@@ -94,20 +80,51 @@ public class BookTicketPopUp {
 
         VBox timeBox = new VBox();
         Label timeLabel = new Label("Time");
-        Label timeValue = new Label(flight.getArrival_time().getHours() + ":" + flight.getArrival_time().getMinutes());
-        timeBox.getChildren().addAll(flightPlaneLabel, flightPlaneValue);
+        String dep_time = new SimpleDateFormat("HH:mm:ss").format(flight.getDeparture_time());
+        String arr_time = new SimpleDateFormat("HH:mm:ss").format(flight.getArrival_time());
+        Label timeValue = new Label(dep_time + "\n" + arr_time);
+        timeBox.getChildren().addAll(timeLabel, timeValue);
 
-        System.err.println(flight.getArrival_time().toString());
+        VBox locationBox = new VBox();
+        Label locationLabel = new Label("Location");
+        Label locationValue = new Label(flight.getDeparture_loc().getCity() + "(" + flight.getDeparture_loc().getAirport_code() + ")" + "\n" + flight.getArrival_loc().getCity() + "(" + flight.getArrival_loc().getAirport_code() + ")");
+        locationBox.getChildren().addAll(locationLabel, locationValue);
 
+        VBox durationBox = new VBox();
+        Label durationLabel = new Label("Duration");
+        String dep_datetime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getDeparture_time());
+        String arr_datetime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getArrival_time());
+        Label durationValue = new Label(data.getFlightDuration(dep_datetime, arr_datetime));
+        durationBox.getChildren().addAll(durationLabel, durationValue);
 
+        VBox arrivesBox = new VBox();
+        Label arrivesLabel = new Label("Arrives");
+        String arr_date = new SimpleDateFormat("EEE, MMM d, yyyy").format(flight.getArrival_time());
+        Label arrivesValue = new Label(arr_date);
+        arrivesBox.getChildren().addAll(arrivesLabel, arrivesValue);
+
+        VBox priceBox = new VBox();
+        Label priceLabel = new Label("Price");
+        Label priceValue = new Label((flight.getFlight_price() + data.getClassPrice(flight.getFlight_id(), searchInfo.getClassType()) )  + " DKK");
+        priceBox.getChildren().addAll(priceLabel, priceValue);
+
+        HBox firstFlightDetails = new HBox();
+        firstFlightDetails.getChildren().addAll(flightPlaneBox, timeBox, locationBox, durationBox, arrivesBox, priceBox);
+
+        layout.getChildren().addAll(title, h1, checkroutes, firstFlightDetails, h4);
+        layout.setAlignment(Pos.TOP_CENTER);
 
         //everything for the third horizontal box
         //Label returntitle = new Label("RETURN - Thursday, 19 May 2016");
 
-
         //everything for the fourth table
         Button selectflight = new Button("Select flight");
+        selectflight.setOnAction(e-> {
+            SelectedFlight SelectedFlight = new SelectedFlight(flight, searchInfo);
+            SelectedFlight.start(primaryStage);
+        });
         Button close = new Button("Close");
+        close.setOnAction(event -> primaryStage.close());
         h4.getChildren().addAll(selectflight, close);
         h4.setAlignment(Pos.BOTTOM_RIGHT);
 
