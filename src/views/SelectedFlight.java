@@ -9,6 +9,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.*;
+import services.DataController;
 import services.components.searchInfo;
 
 
@@ -36,6 +38,7 @@ import java.util.Date;
 public class SelectedFlight extends Application {
     Flight flight = new Flight();
     searchInfo searchInfo = new searchInfo();
+    DataController data = new DataController();
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -45,13 +48,9 @@ public class SelectedFlight extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("   Selected flight");
 
-        Plane p1 = new Plane(1, "222", "Boeing 837", 650, 200, 200, 250, 25, 25);
-        Airport a1 = new Airport("Baneasa","Bucuresti", "BNS");
-        Airport a2 = new Airport("Otopeni","Otopeni", "OTP");
-        Flight fl = new Flight(1, p1, a1, Timestamp.valueOf("2000-01-01 00:05:00"), a2, Timestamp.valueOf("2000-01-01 00:08:00"), 800.0);
 
-        Label titleLabel = new Label("We just need a few more details. Who is travelling?");
-        Label flightdetail = new Label("Flight details");
+        Label flightdetails = new Label("Flight details");
+        flightdetails.setAlignment(Pos.TOP_CENTER);
 
         HBox layout = new HBox(2);
 
@@ -60,35 +59,39 @@ public class SelectedFlight extends Application {
 
         layout.getChildren().addAll(vbig, vflights);
 
-        //setting the contect for the second vbox
-
-        VBox firstflight = new VBox(5); // the vbox with outbound flight
+        //setting the content for the second vbox
 
         Label outbound = new Label("OUTBOUND");
-        Label flight = new Label("Flight ID");
+        Label labeloutbound = new Label();
+        labeloutbound.setText(searchInfo.getStart_date());
+        HBox hout = new HBox(10);
+        hout.getChildren().addAll(outbound, labeloutbound);
+
+        Label flightlabel = new Label("Flight ID");
         Label date = new Label("Date&Time");
         Label fromto = new Label("From->To");
         Label duration = new Label("Duration");
         Label price = new Label("Price");
 
-        Label reg_no = new Label(""+fl.getPlane().getReg_no());
+        Label reg_no = new Label(""+flight.getFlight_id());
 
-        Label datevalue1 = new Label(""+fl.getDeparture_time());
-        Label datevalue2 = new Label(""+fl.getArrival_time());
+        Label datevalue1 = new Label(""+flight.getDeparture_time());
+        Label datevalue2 = new Label(""+flight.getArrival_time());
         VBox vdates = new VBox(1);
         vdates.getChildren().addAll(datevalue1, datevalue2);
 
-        Label fromvalue = new Label(""+fl.getDeparture_loc().getName());
-        Label tovalue = new Label(""+fl.getArrival_loc().getName());
+        Label fromvalue = new Label(""+flight.getDeparture_loc().getName());
+        Label tovalue = new Label(""+flight.getArrival_loc().getName());
         VBox vlocations = new VBox(1);
         vlocations.getChildren().addAll(fromvalue, tovalue);
 
-        Label durationvalue = new Label("3 hr");
+        Label durationvalue = new Label();
+        durationvalue.setText(data.getFlightDuration(flight.getDeparture_time().toString(), flight.getArrival_time().toString()));
 
-        Label pricevalue = new Label(fl.getFlight_price()+" DKK");
+        Label pricevalue = new Label(data.getFlightPrice(flight.getFlight_id())+" DKK");
 
         VBox v1 = new VBox(5);
-        v1.getChildren().addAll(flight, reg_no);
+        v1.getChildren().addAll(flightlabel, reg_no);
 
         VBox v2 = new VBox(5);
         v2.getChildren().addAll(date, vdates);
@@ -106,16 +109,18 @@ public class SelectedFlight extends Application {
         houtboundflight.getChildren().addAll(v1, v2, v3, v4, v5);
 
         VBox vfirst = new VBox(8);
-        vfirst.getChildren().addAll(outbound, houtboundflight);
+        vfirst.getChildren().addAll(flightdetails, hout, houtboundflight);
 
-        Label returner = new Label("RETURN");
+        //Label returner = new Label("RETURN");
+        //Label labelreturner = new Label();
+        //labelreturner.setText(searchInfo.getReturn_date());
+        //HBox hout2 = new HBox(10);
+        //hout2.getChildren().addAll(returner, labelreturner);
 
-        Plane p2 = new Plane(2, "539", "Boeing 777", 550, 100, 100, 350, 25, 25);
-        Flight fl2 = new Flight(2, p2, a2, Timestamp.valueOf("2000-03-01 00:12:35"),a1,Timestamp.valueOf("2000-03-01 00:14:00"), 825.5 );
 
-        Label reg_no2 = new Label(""+fl2.getPlane().getReg_no());
+        //Label reg_no2 = new Label(""+flight.getPlane().getReg_no());
 
-        Label datevalue3 = new Label(""+fl2.getDeparture_time());
+        /*Label datevalue3 = new Label(""+fl2.getDeparture_time());
         Label datevalue4 = new Label(""+fl2.getArrival_time());
         VBox vdates2 = new VBox(1);
         vdates2.getChildren().addAll(datevalue3, datevalue4);
@@ -155,14 +160,97 @@ public class SelectedFlight extends Application {
 
         VBox vsecond = new VBox(8);
         vsecond.getChildren().addAll(returner, houtboundflight2);
+*/
 
 
+        vflights.getChildren().addAll(vfirst);
 
-        vflights.getChildren().addAll(vfirst, vsecond);
+        // setting the content for the first vbox, vbig
+        Label wejustneed = new Label("We just need a few more details. Who is traveling?");
+        wejustneed.setAlignment(Pos.TOP_CENTER);
 
+        Label passengerdetails = new Label("Passenger(s) details");
+        passengerdetails.setAlignment(Pos.CENTER);
 
+        Label passengername = new Label("Passenger name:");
+        TextField tfpassengername = new TextField();
+        tfpassengername.setPromptText("Write the passenger's name here");
+        tfpassengername.setMaxWidth(178);
+        VBox vpass1 = new VBox(4);
+        vpass1.getChildren().addAll(passengername, tfpassengername);
 
+        Label birthdate = new Label("Birth date:");
+        DatePicker dpbirthdate = new DatePicker();
+        VBox vpass2 = new VBox(4);
+        vpass2.getChildren().addAll(birthdate, dpbirthdate);
 
+        Label seatno = new Label();
+        ChoiceBox cbseatno = new ChoiceBox();
+        cbseatno.setMaxWidth(30);
+        cbseatno.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
+        VBox vpass3 = new VBox(4);
+        vpass3.getChildren().addAll(seatno, cbseatno);
+
+        Label checkedbaggage = new Label("Checked baggage");
+        ChoiceBox cbbaggage = new ChoiceBox();
+        cbbaggage.getItems().addAll("None - 0 DKK", "Baggage, Max 15 Kg. - 50 DKK", "Baggage, Max 20 Kg - 90 DKK");
+        VBox vpass4 = new VBox(4);
+        vpass4.getChildren().addAll(checkedbaggage, cbbaggage);
+        VBox passengerDet = new VBox(20);
+
+        switch(searchInfo.getPassengers()) {
+            case 1:
+                passengerDet.getChildren().addAll(passengerH(vpass1,vpass2,vpass3,vpass4));
+                break;
+            case 2:
+                passengerDet.getChildren().addAll(passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4));
+                break;
+            case 3:
+                passengerDet.getChildren().addAll(passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4));
+                break;
+            case 4:
+                passengerDet.getChildren().addAll(passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4),passengerH(vpass1,vpass2,vpass3,vpass4));
+                break;
+
+            default:
+                break;
+        }
+
+        vbig.getChildren().addAll(wejustneed, passengerdetails);
+
+        Label Payment = new Label("Payment info");
+        Label note1 = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
+        Label note2 = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
+
+        VBox vpayment = new VBox(4);
+        vpayment.getChildren().addAll(Payment, note1, note2);
+
+        ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
+        ImageView visa = new ImageView(new Image("assets\\images\\visa.png"));
+        ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
+        ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
+
+        Label holderName = new Label("Card holder name:");
+        TextField holderField = new TextField();
+        VBox holder = new VBox(20);
+
+        Label cardNo = new Label("Card no:");
+        TextField noField = new TextField();
+        VBox number = new VBox(20);
+
+        Label expirationDate= new Label("Expiration date:");
+        TextField expirationYear = new TextField();
+        Label dash = new Label("/");
+        TextField expirationMounth = new TextField();
+        HBox fields = new HBox(5);
+        fields.getChildren().addAll(expirationMounth,dash,expirationYear);
+        VBox expiration = new VBox(20);
+        expiration.getChildren().addAll(expirationDate,fields);
+
+        Label securityCode = new Label("Security code:");
+        TextField cvv = new TextField();
+        VBox security = new VBox(20);
+        security.getChildren().addAll(securityCode,cvv);
 
         Scene scene = new Scene(layout, 1200, 600);
         primaryStage.setScene(scene);
@@ -172,6 +260,13 @@ public class SelectedFlight extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static HBox passengerH(VBox v1, VBox v2, VBox v3, VBox v4) {
+        HBox aux = new HBox(15);
+        aux.getChildren().addAll(v1, v2, v3, v4);
+
+        return aux;
     }
 
 }
