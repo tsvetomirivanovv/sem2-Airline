@@ -25,7 +25,7 @@ public class managePlanes extends Application{
         TableColumn<Plane, String> reg_num = new TableColumn<>("Registration Number");
         TableColumn<Plane, String> model = new TableColumn<>("Model");
         TableColumn<Plane, Integer> seats = new TableColumn<>("Total Seats");
-        TableColumn availability = new TableColumn("Availability");
+        TableColumn <Plane, Plane>availability = new TableColumn<>("Availability");
         //TableColumn<Plane, Integer> availability = new TableColumn<>("See availability");
 
 
@@ -34,8 +34,7 @@ public class managePlanes extends Application{
         reg_num.setCellValueFactory(e -> e.getValue().reg_noProperty());
         model.setCellValueFactory(e -> e.getValue().modelProperty());
         seats.setCellValueFactory(e -> e.getValue().seatsProperty().asObject());
-        availability.setCellFactory(e -> new availabilityCell(primaryStage));
-
+        availability.setCellFactory(e -> new availabilityCell(primaryStage,mainPlanesTable.getSelectionModel().getSelectedItem()));
         // TO DO: We need that fucking button in here (See availability).
 
         Button addButton = new Button("Create ");
