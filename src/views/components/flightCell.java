@@ -84,7 +84,7 @@ public class flightCell extends ListCell<Flight> {
         flightBox.setAlignment(Pos.CENTER);
 
         selectFlight.setOnAction(e -> {
-            SelectedFlight selectedFlightView = new SelectedFlight();
+            SelectedFlight selectedFlightView = new SelectedFlight(flight, searchInfo);
             selectedFlightView.start(window);
         });
 
