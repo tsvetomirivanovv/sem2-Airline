@@ -1,6 +1,7 @@
 package views;
 
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -24,8 +25,7 @@ public class menu {
 
 
         //MENU ITEMS
-        MenuItem login = new MenuItem("Log in as Admin");
-        MenuItem loginCustomer = new MenuItem("Log in as Customer");
+        MenuItem login = new MenuItem("Log in");
         MenuItem logOut = new MenuItem("Log out");
         MenuItem addPlane = new MenuItem("Add Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
@@ -37,18 +37,17 @@ public class menu {
             checkLogin.logOut();
             searchFlights searchFlights = new searchFlights();
             searchFlights.start(primaryStage);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setTitle("You have logged out!");
+            alert.setContentText("You are now back in the guest screen !");
+            alert.showAndWait();
         });
 
-        loginCustomer.setOnAction(event -> {
-            loginAsCustomer login2 = new loginAsCustomer();
+        login.setOnAction(event -> {
+            Login login2 = new Login();
             login2.start(primaryStage);
         });
-
-        login.setOnAction(e->{
-            Login login1 = new Login();
-            login1.start(primaryStage);
-        });
-
 
         addPlane.setOnAction(e->{
             managePlanes managePlanes = new managePlanes();
@@ -75,7 +74,7 @@ public class menu {
             manageFlights1.start(primaryStage);
         });
 
-        filemenu1.getItems().addAll(login,loginCustomer);
+        filemenu1.getItems().addAll(login);
         filemenu2.getItems().addAll(logOut);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);

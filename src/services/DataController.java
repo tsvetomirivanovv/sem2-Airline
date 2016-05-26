@@ -2,10 +2,10 @@ package services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import models.*;
 import services.components.checkLogin;
 
-import java.security.*;
 import java.sql.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -54,7 +54,44 @@ public class DataController {
 
         return reservations;
     }
+    public ObservableList<Reservation> getCustomerReservations(int id) {
+        ObservableList<Reservation> reservations = FXCollections.observableArrayList();
+        ArrayList<Passenger> passenger_list;
 
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT * FROM Reservations WHERE customer_id = '"+id+"'");
+
+            if (rs != null)
+                while (rs.next()) {
+
+                    int reservation_id = rs.getInt("id");
+                    int flight_id = rs.getInt("flight_id");
+                    int customer_id = rs.getInt("customer_id");
+                    String status = rs.getString("status");
+                    String customer_name = getCustomerName(customer_id);
+
+                    Flight flight = getFlight(flight_id);
+                    passenger_list = getPassengers(reservation_id);
+                    Double price = getReservationPrice(reservation_id);
+                    int total_passengers = getPassengers(reservation_id).size();
+
+                    Reservation reservation = new Reservation(flight, price, reservation_id, status, customer_id, passenger_list, total_passengers , customer_name);
+                    reservations.add(reservation);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return reservations;
+    }
     public static Flight getFlight(int flightId) {
         Flight flight = null;
 
@@ -130,7 +167,7 @@ public class DataController {
                     int totalSeats = firstclass_seats + coach_seats + economy_seats;
 
                     // Get intervals for each plane:
-                    ArrayList<Interval> intervals = getIntervals(plane_id);
+                    ObservableList<Interval> intervals = getIntervals(plane_id);
 
                     //Create plane object:
                     Plane plane = new Plane(plane_id, plane_number, model, totalSeats, intervals, firstclass_seats, coach_seats, economy_seats, firstclass_price, coach_price);
@@ -149,8 +186,8 @@ public class DataController {
         return planes;
     }
 
-    public static ArrayList<Interval> getIntervals(int planeId) {
-        ArrayList<Interval> intervals = new ArrayList<>();
+    public static ObservableList<Interval> getIntervals(int planeId) {
+        ObservableList<Interval> intervals = FXCollections.observableArrayList();
 
         try {
             Statement s = null;
@@ -515,6 +552,8 @@ public class DataController {
         return name;
     }
 
+
+
     public static Boolean login(String email, String password) {
         checkLogin checkLogin = new checkLogin();
         Boolean loggedIn = false;
@@ -557,14 +596,82 @@ public class DataController {
 
             if (role == 1) {
                 checkLogin.setAdmin(true);
-                System.out.println("As admin");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as admin!");
+                alert.setContentText("You can now manage planes, flights and reservations.");
+                alert.showAndWait();
             } else if (role == 0) {
                 checkLogin.setAdmin(false);
-                System.out.println("As customer");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as a customer!");
+                alert.setContentText("You can now search a flight and book a reservation.");
+                alert.showAndWait();
             }
         }
 
         return loggedIn;
+    }
+
+    public static int getCustomerId(String email, String password) {
+        checkLogin checkLogin = new checkLogin();
+        Boolean loggedIn = false;
+        int id = -1;
+        int role = -1;
+        String account_email = "";
+        String account_password = "";
+
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT * from Accounts where email = '" + email + "' and password='" + password + "'");
+            if (rs != null) {
+                while (rs.next()) {
+                    id = rs.getInt("id");
+                    role = rs.getInt("role");
+                    account_email = rs.getString("email");
+                    account_password = rs.getString("password");
+                }
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        if(id == -1) {
+            loggedIn = false;
+        } else {
+            loggedIn = true;
+            checkLogin.setLoggedIn(true);
+            System.out.println("Logged in");
+            checkLogin.setAccount_id(id);
+            checkLogin.setAccount_email(account_email);
+
+            if (role == 1) {
+                checkLogin.setAdmin(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as admin!");
+                alert.setContentText("You can now manage planes, flights and reservations.");
+                alert.showAndWait();
+            } else if (role == 0) {
+                checkLogin.setAdmin(false);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as a customer!");
+                alert.setContentText("You can now search a flight and book a reservation.");
+                alert.showAndWait();
+            }
+        }
+
+        return id;
     }
 
     public static ObservableList<Airport> getAirports() {
@@ -604,7 +711,6 @@ public class DataController {
             ResultSet rs;
 
             if(exclude.length() > 0) {
-                System.out.println("Exclude:" + exclude);
                 exclude = exclude.substring(exclude.length() - 4, exclude.length() - 1);
 
                 rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports WHERE airport_code != '" + exclude + "'");
@@ -663,12 +769,81 @@ public class DataController {
         return planes;
     }
 
+    public static ObservableList<Flight> searchFlights(String departure, String date1, String arrival, String date2, int passengers, String classType) {
+        ObservableList<Flight> flights = FXCollections.observableArrayList();
+        departure  = departure.substring(departure.length() - 4, departure.length() - 1);
+        arrival  = arrival.substring(arrival.length() - 4, arrival.length() - 1);
+
+        System.out.println("Departure loc is: " + departure + " at " + date1);
+
+        if (date2 == "") {
+            System.out.println("One way");
+        } else {
+            System.out.println("Arrival loc is: " + arrival + " at " + date2);
+
+        }
+
+        System.out.println(passengers + " at " + classType);
+
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT f.id as flight_id, p.id as plane_id, p.reg_no as plane_number, model, firstclass_seats, coach_seats, economy_seats, firstclass_price, coach_price, departure_loc, arrival_loc, departure_time, arrival_time, flight_price FROM Flights f, Planes p WHERE f.plane_id = p.id AND departure_time like '" + date1 + "%' AND departure_loc = '" + departure + "' AND arrival_loc = '" + arrival + "'");
+
+            if (rs != null)
+                while (rs.next()) {
+                    int flight_id = rs.getInt("flight_id");
+                    String departure_code = rs.getString("departure_loc");
+                    String arrival_code = rs.getString("arrival_loc");
+                    Timestamp departure_time = rs.getTimestamp("departure_time");
+                    Timestamp arrival_time = rs.getTimestamp("arrival_time");
+                    Double flight_price = rs.getDouble("flight_price");
+
+
+                    //Get plane info
+                    int plane_id = rs.getInt("plane_id");
+                    String plane_number = rs.getString("plane_number");
+                    String model = rs.getString("model");
+                    int firstclass_seats = rs.getInt("firstclass_seats");
+                    int coach_seats = rs.getInt("coach_seats");
+                    int economy_seats = rs.getInt("economy_seats");
+                    Double firstclass_price = rs.getDouble("firstclass_price");
+                    Double coach_price = rs.getDouble("coach_price");
+                    int totalSeats = firstclass_seats + coach_seats + economy_seats;
+
+                    Airport departure_loc = getAirport(departure_code);
+                    Airport arrival_loc = getAirport(arrival_code);
+
+                    //Create plane object:
+                    Plane plane = new Plane(plane_id, plane_number, model, totalSeats, firstclass_seats, coach_seats, economy_seats, firstclass_price, coach_price);
+
+                    // Create flight object
+                    Flight flight = new Flight(flight_id, plane, departure_loc, departure_time, arrival_loc, arrival_time, flight_price);
+
+                    System.err.println("Flight id: " + flight.getFlight_id());
+
+                    flights.add(flight);
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return flights;
+    }
+
     public static void updateFlight(int flightID, String deploc){
         try {
             Statement s = null;
             s = conn.createStatement();
 
-           // String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
+            // String query = "INSERT INTO `Planes` (`reg_no`,`model`,`firstclass_seats`,`coach_seats`,`economy_seats`,`firstclass_price`,`coach_price`) " +
             //        "VALUES ('"+getReg_no+"','"+getModel+"',"+getBusinessSeats+","+getCoachSeats+","+getEconomySeats+","+getBusinessPrice+","+getCoachPrice+");";
 
 
@@ -691,14 +866,6 @@ public class DataController {
     }
 
     public static String codeCUT(String fullString){
-        String code = new String();
-        Matcher m = Pattern.compile("\\(([^)]+)\\)").matcher(fullString);
-        while(m.find()) {
-            System.out.println(m.group(1));
-            code = m.group(1);
-
-        }
-
-        return  code;
+        return  fullString.substring(fullString.length() - 4, fullString.length() - 1);
     }
 }

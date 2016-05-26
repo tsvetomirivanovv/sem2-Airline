@@ -24,6 +24,13 @@ public class Payment {
         this.cardHolder_name = new SimpleStringProperty(cardHolder_name);
     }
 
+    public Payment(String card_type, int card_no, String card_expiration, String cardHolder_name) {
+        this.card_type = new SimpleStringProperty(card_type);
+        this.card_no = new SimpleIntegerProperty(card_no);
+        this.card_expiration = new SimpleStringProperty(card_expiration);
+        this.cardHolder_name = new SimpleStringProperty(cardHolder_name);
+    }
+
     public int getPayment_id() {
         return payment_id.get();
     }

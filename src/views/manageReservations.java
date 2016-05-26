@@ -1,17 +1,11 @@
 package views;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Account;
@@ -68,33 +62,31 @@ public class manageReservations extends Application {
 
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
         //tableView.setEditable(true);
-        tableView.setItems(data.getReservations());
+        //tableView.setItems(data.getCustomerReservations(data.getCustomerId())); // we need the password and the email
 
         //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
-        Button addButton = new Button("Confirm reservation ");
-        Button deleteButton = new Button("Refresh");
+        Button confirm = new Button("Confirm reservation ");
+        Button refresh = new Button("Refresh");
         Button cancelButton  = new Button("Cancel reservation");
 
-        addButton.setOnAction(event -> {
+        confirm.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
-            String status = tableView.getSelectionModel().getSelectedItem().getStatus();
-            data.setReservationStatus(i);
-
+            creditCardPopUp popup = new creditCardPopUp();
+            popup.start(i);
         });
 
-        deleteButton.setOnAction(event -> {
+        refresh.setOnAction(event -> {
             tableView.setItems(data.getReservations());
         });
 
         cancelButton.setOnAction(event ->{
             int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
-            String status = tableView.getSelectionModel().getSelectedItem().getStatus();
             data.cancelReservation(i);
         });
 
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(addButton,cancelButton,deleteButton);
+        hBox1.getChildren().addAll(confirm,cancelButton,refresh);
 
 
         menu menu1 = new menu();

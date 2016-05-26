@@ -12,63 +12,94 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.DataController;
+import services.components.searchInfo;
 import views.components.flightCell;
 
 public class searchResults extends Application {
 
+    searchInfo searchInfo = new searchInfo();
+
+    public searchResults(searchInfo info) {
+        searchInfo = info;
+    }
+
     //List of flights
     ListView flights = new ListView();
-
-    // The filter
-    Label empty = new Label();
-     Label label1 = new Label("You are searching for:");
-     VBox box1, box12, box11;
-     HBox hBox1;
-     Label label111, label112, label113, label114, label115, label116;
-     Label label121, label122, label123, label124, label125;
-     RadioButton radio11, radio12;
-     CheckBox check12;
 
     DataController data = new DataController();
 
     @Override
     public void start(Stage primaryStage)  {
+        Label sidebarTitle = new Label("You are searching for:");
+        ToggleGroup flightType = new ToggleGroup(); // Group the 2 radioboxes (One way / Return)
 
-        label111 = new Label("Departure:");
-        label112 = new Label("Arrival:");
-        label113 = new Label("For:");
-        label114 = new Label("Direct flight:");
-        radio11 = new RadioButton("Return");
-        label115 = new Label("From:");
-        label116 = new Label("To:");
+        Label departureLocLabel = new Label("Departure:");
+        Label arrivalLocLabel = new Label("Arrival:");
+        Label passengersLabel = new Label("For:");
+        Label classTypeLabel = new Label("At: ");
+        RadioButton oneWay = new RadioButton("One way");
+        oneWay.setToggleGroup(flightType);
+        oneWay.setDisable(true);
+        oneWay.setSelected(!searchInfo.hasReturnDate());
+        Label startDateLabel = new Label("From:");
+        Label returnDateLabel = new Label("To:");
 
-        box11 = new VBox(20);
-        box11.getChildren().addAll(label111,label112,label113,label114,radio11,label115,label116);
+        VBox sidebarLabels = new VBox(20);
+        sidebarLabels.getChildren().addAll(departureLocLabel, arrivalLocLabel, passengersLabel, classTypeLabel, oneWay, startDateLabel);
 
-        label121 = new Label("Airport");
-        label122 = new Label("Airport");
-        label123 = new Label("1 passanger");
-        check12 = new CheckBox("One way");
-        radio12 = new RadioButton("Return");
-        label124 = new Label("Date");
-        label125 = new Label("Date");
+        // Add return date just if we selected one
+        if (searchInfo.hasReturnDate()) {
+            sidebarLabels.getChildren().add(returnDateLabel);
+        }
 
-        box12 = new VBox(20);
-        box12.getChildren().addAll(label121,label122,label123,check12,radio12,label124,label125);
+        Label departureLocValue = new Label(searchInfo.getDeparture_loc());
+        Label arrivalLocValue = new Label(searchInfo.getArrival_loc());
+        Label passengersValue = new Label();
 
-        hBox1 = new HBox(20);
-        hBox1.getChildren().addAll(box11,box12);
+        // Check passengers number to validate plural/singular for Passenger word
+        if (searchInfo.getPassengers() == 1) {
+            passengersValue = new Label(searchInfo.getPassengers() + " Passenger");
+        } else {
+            passengersValue = new Label(searchInfo.getPassengers() + " Passengers");
+        }
 
-        box1 = new VBox(20);
-        box1.getChildren().addAll(label1,hBox1);
-        box1.setAlignment(Pos.CENTER);
+        Label classTypeValue = new Label(searchInfo.getClassType());
+        RadioButton returnWay = new RadioButton("Return");
+        oneWay.setToggleGroup(flightType);
+        returnWay.setDisable(true);
+        returnWay.setSelected(searchInfo.hasReturnDate());
+        Label startDateValue = new Label(searchInfo.getStart_date());
+        Label returnDateValue = new Label(searchInfo.getReturn_date());
 
-        flights.setItems(data.getFlights());
+
+        // the vBox from the right side of the Sidebar (The values selected in the previous page)
+        VBox sidebarValues = new VBox(20);
+        sidebarValues.getChildren().addAll(departureLocValue, arrivalLocValue, passengersValue, classTypeValue, returnWay, startDateValue);
+
+        // Add return date just if we selected one
+        if (searchInfo.hasReturnDate()) {
+            sidebarValues.getChildren().add(returnDateValue);
+        }
+
+
+        // Hbox where we put both the labels and the values
+        HBox sidebarContent = new HBox(20);
+        sidebarContent.getChildren().addAll(sidebarLabels, sidebarValues);
+
+        VBox sidebarWrapper = new VBox(20);
+        sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent);
+        sidebarWrapper.setAlignment(Pos.CENTER);
+
+        if(searchInfo.hasReturnDate()) {
+            flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), searchInfo.getReturn_date(), searchInfo.getPassengers(), searchInfo.getClassType()));
+        } else {
+            flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), "", searchInfo.getPassengers(), searchInfo.getClassType()));
+        }
         flights.setCellFactory(e -> new flightCell(primaryStage));
 
         BorderPane layout = new BorderPane();
         layout.setCenter(flights);
-        layout.setLeft(box1);
+        layout.setLeft(sidebarWrapper);
 
         menu menu1 = new menu(); // CREATING THE MENU OBJECT
         layout.setTop(menu1.display(primaryStage));
