@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import models.Account;
 import models.Reservation;
 import services.DataController;
 
@@ -60,6 +61,7 @@ public class manageReservations extends Application {
 
 
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
+        tableView.setItems(data.getReservations());
         //tableView.setEditable(true);
         //tableView.setItems(data.getCustomerReservations(data.getCustomerId())); // we need the password and the email
 
