@@ -7,7 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import services.components.searchInfo;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,12 +16,16 @@ import services.DataController;
 
 import java.text.SimpleDateFormat;
 
-/**
- * Created by Andrei on 5/23/2016.
- */
 public class BookTicketPopUp {
 
     DataController controller = new DataController();
+    searchInfo searchInfo = new searchInfo();
+    Flight flight;
+
+    public BookTicketPopUp(Flight flightItem, searchInfo srchInfo) {
+        searchInfo = srchInfo;
+        flight = flightItem;
+    }
 
     public void start() {
         Stage primaryStage = new Stage();
@@ -44,99 +48,62 @@ public class BookTicketPopUp {
         layout.setAlignment(Pos.TOP_CENTER);
 
         Label checkticket = new Label("Check ticket info");
-        Label returnfor = new Label("Return for 1x Passenger");
-        Label seatsleft = new Label("Seats left: ");
-        Label lessthan = new Label("less than 5");
+        String wayAndPassangers;
 
-        Label total = new Label("Total price: ");
+        if(searchInfo.hasReturnDate()) {
+            wayAndPassangers = "Return for ";
+        } else {
+            wayAndPassangers = "One way for ";
+        }
 
-        RadioButton economybut = new RadioButton("kr. 890.0 (Economy)");
-        RadioButton firstclassbut = new RadioButton("kr. 1590.9 (First class)");
+        if(searchInfo.getPassengers() == 1) {
+            wayAndPassangers += searchInfo.getPassengers() + " Passenger";
+        } else {
+            wayAndPassangers += searchInfo.getPassengers() + " Passengers";
+        }
 
-        HBox seatsH = new HBox(2);
-        seatsH.getChildren().addAll(seatsleft, lessthan);
+        Label returnfor = new Label(wayAndPassangers);
+        String totalPrice = "";
+
+        switch(searchInfo.getClassType()) {
+            case "Economy class":
+                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * flight.getFlight_price()) + " (" + searchInfo.getClassType() + ")";
+                break;
+            case "Coach class":
+                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * (flight.getFlight_price()+flight.getPlane().getCoachPrice())) + " (" + searchInfo.getClassType() + ")";
+                break;
+            case "First class":
+                totalPrice = "Total price: kr. " + (searchInfo.getPassengers() * (flight.getFlight_price()+flight.getPlane().getBusinessPrice())) + " (" + searchInfo.getClassType() + ")";
+                break;
+        }
+
+        Label total = new Label(totalPrice);
 
         VBox small = new VBox(3);
-        small.getChildren().addAll(checkticket, returnfor, seatsH);
+        small.getChildren().addAll(checkticket, returnfor, total);
 
-        VBox radiobox = new VBox(5);
-        radiobox.getChildren().addAll(economybut, firstclassbut);
-
-        h1.getChildren().addAll(small, total, radiobox);
+        h1.getChildren().addAll(small);
 
         //everything for the second horizontal box
-        Label outboundtitle = new Label("OUTBOUND - Sunday, 15 May 2016");
-        TableView<Flight> outbounds = new TableView<Flight>();
+        Label outboundtitle = new Label("OUTBOUND - " + searchInfo.getStart_date());
 
-        outbounds.setItems(controller.getFlights());
+        VBox flightPlaneBox = new VBox();
+        Label flightPlaneLabel = new Label("Flight/Plane");
+        Label flightPlaneValue = new Label(flight.getFlight_id() + "\n" + flight.getPlane().getReg_no());
+        flightPlaneBox.getChildren().addAll(flightPlaneLabel, flightPlaneValue);
 
-        TableColumn<Flight, String> columne1 = new TableColumn<>("Flight/Plane");
-        columne1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty());
+        VBox timeBox = new VBox();
+        Label timeLabel = new Label("Time");
+        Label timeValue = new Label(flight.getArrival_time().getHours() + ":" + flight.getArrival_time().getMinutes());
+        timeBox.getChildren().addAll(flightPlaneLabel, flightPlaneValue);
 
-        TableColumn<Flight, String> columne2 = new TableColumn<>("Date & Time");
-        columne2.setCellValueFactory(cellData -> {
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
-            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
+        System.err.println(flight.getArrival_time().toString());
 
-            return dd;
-        });
 
-        TableColumn<Flight, String> columne3 = new TableColumn<>("From");
-        columne3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
-
-        TableColumn<Flight, String> columne4 = new TableColumn<>("-> To");
-        columne4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
-
-        TableColumn<Flight, String> columne5 = new TableColumn<>("Duration");
-
-        TableColumn<Flight, String> columne6 = new TableColumn<>("Arrival");
-        columne6.setCellValueFactory(cellData -> {
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getArrival_time());
-            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
-
-            return dd;
-        });
-
-        outbounds.getColumns().addAll(columne1,columne2,columne3,columne4,columne5,columne6);
-
-        h2.getChildren().addAll(outboundtitle, outbounds);
 
         //everything for the third horizontal box
-        Label returntitle = new Label("RETURN - Thursday, 19 May 2016");
-        TableView<Flight> returns = new TableView<Flight>();
+        //Label returntitle = new Label("RETURN - Thursday, 19 May 2016");
 
-        returns.setItems(controller.getFlights());
-
-        TableColumn<Flight, String> column1 = new TableColumn<>("Flight/Plane");
-        column1.setCellValueFactory(cellData -> cellData.getValue().getPlane().reg_noProperty());
-
-        TableColumn<Flight, String> column2 = new TableColumn<>("Date & Time");
-        column2.setCellValueFactory(cellData -> {
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getDeparture_time());
-            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
-
-            return dd;
-        });
-
-        TableColumn<Flight, String> column3 = new TableColumn<>("From");
-        column3.setCellValueFactory(cellData -> cellData.getValue().getDeparture_loc().nameProperty());
-
-        TableColumn<Flight, String> column4 = new TableColumn<>("-> To");
-        column4.setCellValueFactory(cellData -> cellData.getValue().getArrival_loc().nameProperty());
-
-        TableColumn<Flight, String> column5 = new TableColumn<>("Duration");
-
-        TableColumn<Flight, String> column6 = new TableColumn<>("Arrival");
-        column6.setCellValueFactory(cellData -> {
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cellData.getValue().getArrival_time());
-            ObservableValue<String> dd = new ReadOnlyObjectWrapper<>(timeStamp);
-
-            return dd;
-        });
-
-        returns.getColumns().addAll(column1,column2,column3,column4,column5,column6);
-
-        h3.getChildren().addAll(returntitle, returns);
 
         //everything for the fourth table
         Button selectflight = new Button("Select flight");
@@ -144,7 +111,7 @@ public class BookTicketPopUp {
         h4.getChildren().addAll(selectflight, close);
         h4.setAlignment(Pos.BOTTOM_RIGHT);
 
-        Scene scene = new Scene(layout, 500, 500);
+        Scene scene = new Scene(layout, 745, 520);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Book ticket");
         primaryStage.showAndWait();
