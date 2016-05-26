@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Interval;
+import models.Plane;
 import services.DataController;
 import java.text.SimpleDateFormat;
 
@@ -18,10 +19,10 @@ import java.text.SimpleDateFormat;
  */
 public class planeAvailability {
     DataController data = new DataController();
-    int id;
+    Plane plane;
 
-    public planeAvailability(int id) {
-        this.id = id;
+    public planeAvailability(Plane plane) {
+        this.plane=plane;
     }
 
     public void start(){
@@ -35,7 +36,7 @@ public class planeAvailability {
         });
 
         TableView<Interval> table = new TableView<>();
-        table.setItems(data.getIntervals(id));
+        table.setItems(plane.getIn_use());
 
         TableColumn<Interval, String> departure = new TableColumn<>();
         departure.setCellValueFactory(cellData -> {
