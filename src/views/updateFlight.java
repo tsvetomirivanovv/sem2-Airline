@@ -99,7 +99,7 @@ public class updateFlight {
 
         arrTime = new TextField();
         arrTime.setMaxWidth(240);
-        String arrDatetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(flight.getDeparture_time());
+        String arrDatetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(flight.getArrival_time());
         arrTime.setText(arrDatetime);
 
         depboxLabel = new Label("Departure location");
@@ -113,26 +113,17 @@ public class updateFlight {
 
         addFlight.setOnAction(event -> {
 
-            if (depBox.getSelectionModel().isEmpty() || arrbox.getSelectionModel().isEmpty() || planeBox.getSelectionModel().isEmpty() || depTime.getText().isEmpty() || arrTime.getText().isEmpty()) {
+            if (depBox.getValue().toString().equals("") || arrbox.getValue().toString().equals("") || planeBox.getValue().toString().equals("") || depTime.getText().equals("") || arrTime.getText().equals("")) {
 
                 Alert granted = new Alert(Alert.AlertType.ERROR);
-                granted.setTitle("Creating Denied!");
+                granted.setTitle("Error!");
                 granted.setContentText("Please fill all the required fields before creating a new flight");
                 granted.setHeaderText(null);
                 granted.show();
 
-            }else {
-
-                try {
-                    int id = flight.getFlight_id();
-
-
-                    data.updateFlight(id,depCode);
-                    primaryStage.close();
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    System.out.println("da");
-                }
+            } else {
+                data.updateFlight(flight.getFlight_id(), depBox.getValue().toString(), arrbox.getValue().toString(), depTime.getText(), arrTime.getText(), planeBox.getValue().toString());
+                primaryStage.close();
             }
 
         });
