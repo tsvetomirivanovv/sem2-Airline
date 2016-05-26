@@ -6,15 +6,18 @@ import javafx.scene.control.TableCell;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import models.Plane;
+import views.planeAvailability;
 
 /**
  * Created by Caseru on 5/25/2016.
  */
 public class availabilityCell extends TableCell<Plane, Plane> {
     Stage window;
+    int id;
 
-    public availabilityCell(Stage primaryStage){
+    public availabilityCell(Stage primaryStage,int id){
         window=primaryStage;
+        this.id=id;
     }
 
     protected void updateItem(Plane t, boolean bln) {
@@ -32,7 +35,8 @@ public class availabilityCell extends TableCell<Plane, Plane> {
         Button cellButton = new Button("view");
 
         cellButton.setOnAction(event -> {
-            // create the interval pop_up
+            planeAvailability ava= new planeAvailability(id);
+            ava.start();
         });
         pane.getChildren().addAll(cellButton);
         return pane;
