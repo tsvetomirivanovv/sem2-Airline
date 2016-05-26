@@ -771,20 +771,8 @@ public class DataController {
 
     public static ObservableList<Flight> searchFlights(String departure, String date1, String arrival, String date2, int passengers, String classType) {
         ObservableList<Flight> flights = FXCollections.observableArrayList();
-        departure  = departure.substring(departure.length() - 4, departure.length() - 1);
-        arrival  = arrival.substring(arrival.length() - 4, arrival.length() - 1);
-
-        System.out.println("Departure loc is: " + departure + " at " + date1);
-
-        if (date2 == "") {
-            System.out.println("One way");
-        } else {
-            System.out.println("Arrival loc is: " + arrival + " at " + date2);
-
-        }
-
-        System.out.println(passengers + " at " + classType);
-
+        departure  = codeCUT(departure);
+        arrival  = codeCUT(arrival);
 
         try {
             Statement s = null;
