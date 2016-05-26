@@ -18,14 +18,18 @@ public class DataController {
     static Connection conn = SQLConfig.connect();
 
     // getReservations function
-    public ObservableList<Reservation> getReservations() {
+    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
 
         try {
             Statement s = null;
             s = conn.createStatement();
-
+            // if (rolecheck = false) {
+         //   rs = s.executeQuery("SELECT id,flight_id,customer_id,status FROM Reservations WHERE  customer_id = '" + loginid + "'");
+        //} else  {
+         //   rs = s.executeQuery("SELECT * FROM Reservations ");
+       // }
             ResultSet rs = s.executeQuery("SELECT * FROM Reservations");
 
             if (rs != null)
