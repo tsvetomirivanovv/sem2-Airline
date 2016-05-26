@@ -847,13 +847,10 @@ public class DataController {
             //        "VALUES ('"+getReg_no+"','"+getModel+"',"+getBusinessSeats+","+getCoachSeats+","+getEconomySeats+","+getBusinessPrice+","+getCoachPrice+");";
 
 
-            String disableForeign = "SET FOREIGN_KEY_CHECKS=0";
-            String enableForeign = "SET FOREIGN_KEY_CHECKS=1";
+
             String query = "UPDATE Flights set departure_loc  = '"+deploc+"' WHERE id  = '" + flightID + "'";
             {
-                s.execute(disableForeign);
                 s.executeUpdate(query);
-                s.execute(enableForeign);
             }
         } catch (SQLException sqlex) {
             try{

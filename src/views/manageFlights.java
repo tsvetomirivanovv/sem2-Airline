@@ -35,7 +35,7 @@ public class manageFlights extends Application{
     TableColumn<Flight,String> planeNo, departureLoc, arrivalLoc;
     TableColumn<Flight,String> departureTime, arrivalTime;
 
-    Button addFlight, deleteFlights,updateFlight,close;
+    Button addFlight, deleteFlights,updateFlight,close,refresh;
 
     Flight tempFlight = new Flight();
 
@@ -81,6 +81,7 @@ public class manageFlights extends Application{
        // deleteFlights = new Button("Delete Flight");
         updateFlight = new Button("Update Flight");
         close = new Button("Close");
+        refresh = new Button("Refresh");
 
         mainFlightsTable.setOnMouseClicked(e -> {
             tempFlight = mainFlightsTable.getSelectionModel().getSelectedItem();
@@ -96,8 +97,12 @@ public class manageFlights extends Application{
             addFlight.start();
         });
 
+        refresh.setOnAction(event -> {
+            mainFlightsTable.setItems(data.getFlights());
+        });
+
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(addFlight,updateFlight,close);
+        hBox1.getChildren().addAll(addFlight,updateFlight,refresh,close);
 
 
         BorderPane layout = new BorderPane();
