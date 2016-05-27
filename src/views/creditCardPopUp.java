@@ -67,7 +67,7 @@ public class creditCardPopUp {
                 Payment aux = new Payment(cardType.getText(), Integer.parseInt(cardNo.getText()), cardEx.getText(), cardName.getText());
 
 
-               // data.setPayment(cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
+                data.setPayment(cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
                // data.setReservationStatus(id);
                 //window.close();
             }

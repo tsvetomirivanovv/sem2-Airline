@@ -1000,4 +1000,35 @@ public class DataController {
         return integers;
     }
 
+    public static void setPayment(String cardType,int cardNo,String cardEXP,String cardName){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        java.util.Date d1 = null;
+
+        try {
+            d1= format.parse(cardEXP);
+            System.out.println(d1);
+            Statement s = null;
+            s = conn.createStatement();
+            System.out.println(d1);
+
+
+            // String query = "UPDATE Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"'";
+            //String query = "INSERT INTO Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"' WHERE id  = '" + flightID + "'";
+            String query = "INSERT INTO `Payments` (`card_type`,`card_no`,`card_expiration`,`cardholder_name`) " +
+                    "VALUES ('"+cardType+"','"+cardNo+"',"+cardEXP+",'"+cardName+"');";
+            {
+                s.executeUpdate(query);
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
