@@ -993,10 +993,12 @@ public class DataController {
         }
 
         try {
+            ResultSet rs =  null;
             Statement s = null;
             s = conn.createStatement();
-
-            ResultSet rs = s.executeQuery(query);
+            if (query.length()>0) {
+                rs = s.executeQuery(query);
+            }
 
             if (rs != null)
                 while (rs.next()) {

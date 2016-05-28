@@ -49,7 +49,6 @@ public class SelectedFlight extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Selected flight");
 
-
         Label flightdetails = new Label("Flight details");
         flightdetails.setAlignment(Pos.TOP_CENTER);
 
