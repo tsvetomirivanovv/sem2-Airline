@@ -10,6 +10,8 @@ import services.components.checkLogin;
 import java.sql.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -19,7 +21,7 @@ public class DataController {
     static Connection conn = SQLConfig.connect();
 
     // getReservations function
-    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin) {
+    public ObservableList<Reservation> getReservations(int customerid, boolean checklogin) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
         String query = "";
@@ -193,6 +195,83 @@ public class DataController {
         }
 
         return planes;
+    }
+
+    // getAvailablePlanes function
+    public static ObservableList<String> getAvailablePlanes(String from, String to) {
+        ObservableList<String> planes = FXCollections.observableArrayList();
+        java.util.Date date1 = null;
+        java.util.Date date2 = null;
+        String depDate = "";
+        String arrDate = "";
+
+        try {
+            if(!from.equals("") || !to.equals("")) {
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                date1 = formatter.parse(from);
+                depDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date1);
+                date2 = formatter.parse(to);
+                arrDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date2);
+            }
+        } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            if(!from.equals("") || !to.equals("")) {
+                ResultSet rs = s.executeQuery("select reg_no, model from planes where id not in (select distinct(p.id) from planes p, flights f where f.plane_id = p.id and ( (f.departure_time <= STR_TO_DATE('" + depDate + "', '%Y-%m-%d %H:%i:%s') and f.arrival_time >= STR_TO_DATE('" + depDate + "', '%Y-%m-%d %H:%i:%s') ) or (f.departure_time <= STR_TO_DATE('" + arrDate + "', '%Y-%m-%d %H:%i:%s') and f.arrival_time >= STR_TO_DATE('" + arrDate + "', '%Y-%m-%d %H:%i:%s')) ))");
+
+
+                if (rs != null)
+                    while (rs.next()) {
+                        String plane_reg = rs.getString("reg_no");
+                        String model = rs.getString("model");
+                        String planeResult = plane_reg + " (" + model + ")";
+                        planes.add(planeResult);
+                    }
+            }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        if(from.equals("") || to.equals("")) {
+            planes.add("Select departure & arrival times");
+        }
+
+        return planes;
+    }
+
+
+    public static void addFlight(String depLoc, String arrLoc, String planeItem, String depTime, String arrTime, String price) {
+        int planeId = getPlaneId(planeItem);
+        String depCode = codeCUT(depLoc);
+        String arrCode = codeCUT(arrLoc);
+        Double priceValue = Double.parseDouble(price);
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            String query = "INSERT INTO Flights (plane_id, departure_loc, arrival_loc, departure_time, arrival_time, flight_price) VALUES (" + planeId + ", '" + depCode + "', '" + arrCode + "', DATE_FORMAT(STR_TO_DATE('" + depTime + "' , '%d/%m/%Y %H:%i:%s'), '%Y-%m-%d %H:%i:%s'), DATE_FORMAT(STR_TO_DATE('" + arrTime + "' , '%d/%m/%Y %H:%i:%s'), '%Y-%m-%d %H:%i:%s'), " + priceValue + ")";
+            s.executeUpdate(query);
+            System.out.println(query);
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
     }
 
     public static ObservableList<Interval> getIntervals(int planeId) {
