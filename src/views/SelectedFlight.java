@@ -52,7 +52,7 @@ public class SelectedFlight extends Application {
         Label flightdetails = new Label("Flight details");
         flightdetails.setAlignment(Pos.TOP_CENTER);
 
-        HBox layout = new HBox(2);
+        HBox layout = new HBox(0);
 
         VBox vbig = new VBox(5);
         VBox vflights = new VBox(20);
@@ -166,9 +166,9 @@ public class SelectedFlight extends Application {
                 break;
         }
 
-        vbig.getChildren().addAll(wejustneed, passengerdetails);
+        VBox vbiggg = new VBox(6);
+        vbiggg.getChildren().addAll(wejustneed, passengerdetails);
 
-        VBox vbigger = new VBox(20);
         Label Payment = new Label("Payment info");
         Label note1 = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
         Label note2 = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
@@ -177,9 +177,17 @@ public class SelectedFlight extends Application {
         vpayment.getChildren().addAll(Payment, note1, note2);
 
         ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
+        mastercard.setFitHeight(100);
+        mastercard.setFitWidth(100);
         ImageView visa = new ImageView(new Image("assets\\images\\visa.jpg"));
+        visa.setFitHeight(100);
+        visa.setFitWidth(100);
         ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
+        visa_electron.setFitHeight(100);
+        visa_electron.setFitWidth(100);
         ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
+        maestro.setFitHeight(100);
+        maestro.setFitWidth(100);
 
         HBox himages = new HBox(5);
         himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
@@ -225,7 +233,7 @@ public class SelectedFlight extends Application {
         hedge.getChildren().addAll(hloc, pricevalue);
 
         Label choiceboxlabel = new Label();
-        choiceboxlabel.setText(cbbaggage.getValue().toString());
+        choiceboxlabel.setText(cbbaggage.getValue()+"");
 
         ImageView line = new ImageView(new Image("assets//images//dash.png"));
 
@@ -233,14 +241,14 @@ public class SelectedFlight extends Application {
 
         double totalpricevalue = data.getFlightPrice(flight.getFlight_id());
 
-        if (cbbaggage.getValue().equals("None - 0 DKK")) {
-            totalpricevalue+=0;
-        }
-        else if(cbbaggage.getValue().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-            totalpricevalue+=50;
-        }
-        else if(cbbaggage.getValue().equals("Baggage, Max 20 Kg - 90 DKK")) {
-            totalpricevalue+=90;
+        if(!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
+            if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
+                totalpricevalue += 0;
+            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
+                totalpricevalue += 50;
+            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
+                totalpricevalue += 90;
+            }
         }
 
         Label bigvalue = new Label();
@@ -252,8 +260,7 @@ public class SelectedFlight extends Application {
         VBox vforprice = new VBox(5);
         vforprice.getChildren().addAll(pricel, hedge, line, htot);
 
-        vbig.getChildren().addAll();
-
+        vbig.getChildren().addAll(vbiggg, passengerDet, vpayment, himages, hcard, vforprice);
 
         Scene scene = new Scene(layout, 1200, 600);
         primaryStage.setScene(scene);
