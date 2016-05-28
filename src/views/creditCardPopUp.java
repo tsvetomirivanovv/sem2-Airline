@@ -68,8 +68,8 @@ public class creditCardPopUp {
 
 
                 data.setPayment(cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
-               // data.setReservationStatus(id);
-                //window.close();
+                data.setReservationStatus(id);
+                window.close();
             }
         });
 
