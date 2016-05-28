@@ -3,12 +3,14 @@ package views;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.DataController;
@@ -92,10 +94,13 @@ public class searchResults extends Application {
             searchFlights flights1 = new searchFlights();
             flights1.start(primaryStage);
         });
+        StackPane stackPane= new StackPane(back);
+        stackPane.setAlignment(Pos.BOTTOM_CENTER);
 
         VBox sidebarWrapper = new VBox(20);
-        sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent, back);
-        sidebarWrapper.setAlignment(Pos.CENTER);
+        sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent, stackPane);
+        sidebarWrapper.setAlignment(Pos.TOP_CENTER);
+        sidebarWrapper.setPadding(new Insets(10,10,10,10));
 
         if(searchInfo.hasReturnDate()) {
             flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), searchInfo.getReturn_date(), searchInfo.getPassengers(), searchInfo.getClassType()));

@@ -79,28 +79,28 @@ public class manageReservations extends Application {
         tableView.setItems(data.getReservations(loginid,checkadmin,""));
 
         Button confirm = new Button("Confirm reservation ");
-        Button refresh = new Button("Refresh");
         Button cancelButton  = new Button("Cancel reservation");
-
-
+        Button back = new Button("Back to menu");
 
         confirm.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
             creditCardPopUp popup = new creditCardPopUp();
-            popup.start(i);
+            popup.start(i,tableView,checkadmin);
         });
 
-        refresh.setOnAction(event -> {
-            tableView.setItems(data.getReservations(loginid,checkadmin,""));
+        back.setOnAction(event -> {
+            searchFlights search = new searchFlights();
+            search.start(primaryStage);
         });
 
         cancelButton.setOnAction(event ->{
             int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
             data.cancelReservation(i);
+            tableView.setItems(data.getReservations(loginid,checkadmin,""));
         });
 
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(confirm,cancelButton,refresh);
+        hBox1.getChildren().addAll(confirm,cancelButton, back);
 
         if (checkadmin == true){
         hBox1.getChildren().add(search);
