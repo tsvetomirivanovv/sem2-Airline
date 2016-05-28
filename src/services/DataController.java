@@ -21,14 +21,14 @@ public class DataController {
     static Connection conn = SQLConfig.connect();
 
     // getReservations function
-    public ObservableList<Reservation> getReservations(int customerid, boolean checklogin) {
+    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin,String search) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
         String query = "";
         if (checklogin == false){
             query = ("SELECT id,flight_id,customer_id,status FROM Reservations WHERE  customer_id = '" + customerid + "'");
         } else if (checklogin == true){
-            query = ("SELECT * FROM Reservations ");
+            query = ("SELECT * FROM Reservations r, Customers c WHERE r.customer_id = c.account_id AND c.name like '%" + search + "%' ");
         }
 
         try {
@@ -49,7 +49,7 @@ public class DataController {
                     Flight flight = getFlight(flight_id);
                     passenger_list = getPassengers(reservation_id);
                     Double price = getReservationPrice(reservation_id);
-                    int total_passengers = getPassengers(reservation_id).size();
+                    int total_passengers = passenger_list.size();
 
                     Reservation reservation = new Reservation(flight, price, reservation_id, status, customer_id, passenger_list, total_passengers , customer_name);
                     reservations.add(reservation);
@@ -391,7 +391,7 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT p.id as passenger_id, p.name, p.birth_date, p.seat_no, p.baggage FROM Reservations r, Reservation_passengers rp, Passengers p WHERE p.id = rp.passenger_id AND rp.reservation_id = '" + reservationId + "'");
+            ResultSet rs = s.executeQuery("SELECT p.id as passenger_id, p.name, p.birth_date, p.seat_no, p.baggage FROM Reservations r, Reservation_passengers rp, Passengers p WHERE p.id = rp.passenger_id AND rp.reservation_id = "+ reservationId +" GROUP BY p.id");
 
             if (rs != null) {
                 while (rs.next()) {
@@ -591,7 +591,7 @@ public class DataController {
         }
     }
 
-   public static String setReservationStatus(int customerId) {
+   public static String setReservationStatus(int id) {
        String name = "";
 
        try {
@@ -599,7 +599,7 @@ public class DataController {
            s = conn.createStatement();
 
 
-           String query = "UPDATE Reservations set status  = 'confirmed' WHERE customer_id  = '" + customerId + "'";
+           String query = "UPDATE Reservations set status  = 'confirmed' WHERE id  = '" + id + "'";
            {
                s.executeUpdate(query);
            }
@@ -615,7 +615,7 @@ public class DataController {
        return name;
    }
 
-    public static String cancelReservation(int customerId) {
+    public static String cancelReservation(int id) {
         String name = "";
 
         try {
@@ -624,7 +624,9 @@ public class DataController {
 
 
             // ResultSet rs = s.executeQuery("SELECT status FROM Reservations WHERE customer_id = '" + customerId + "'");
-            String query = "UPDATE Reservations set status  = 'canceled' WHERE customer_id  = '" + customerId + "'";
+            String query = "UPDATE reservation_passengers rp, passengers p, reservations r " +
+                    "SET r.status = 'canceled', p.seat_no = -1 " +
+                    "WHERE rp.reservation_id = "+id+" AND rp.passenger_id = p.id AND r.id = rp.reservation_id;";
             {
                 s.executeUpdate(query);
             }
@@ -1091,11 +1093,8 @@ public class DataController {
             s = conn.createStatement();
             System.out.println(d1);
 
-
-            // String query = "UPDATE Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"'";
-            //String query = "INSERT INTO Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"' WHERE id  = '" + flightID + "'";
-            String query = "INSERT INTO `Payments` (`card_type`,`card_no`,`card_expiration`,`cardholder_name`) " +
-                    "VALUES ('"+cardType+"','"+cardNo+"',"+cardEXP+",'"+cardName+"');";
+            String query = "INSERT INTO Payments (card_type,card_no,card_expiration,cardholder_name) " +
+                    "VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"');";
             {
                 s.executeUpdate(query);
             }
@@ -1103,7 +1102,6 @@ public class DataController {
             try{
                 System.out.println(sqlex.getMessage());
                 conn.close();
-                System.exit(1);  // terminate program
             }
             catch(SQLException sql){}
         } catch (Exception e) {
