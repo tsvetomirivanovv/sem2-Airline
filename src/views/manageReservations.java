@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -27,8 +29,14 @@ public class manageReservations extends Application {
         BorderPane layout = new BorderPane();
         Scene scene = new Scene(layout, 1000, 600);
         primaryStage.setScene(scene);
+
+        TextField searchField = new TextField();
+        searchField.setPromptText("Search reservation");
+        Button searchButton = new Button("Search");
+
         int loginid = services.components.checkLogin.getAccount_id();
         boolean checkadmin = services.components.checkLogin.isAdmin();
+
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         status = new TableColumn<>("Status");
         status.setMinWidth(50);
@@ -62,7 +70,7 @@ public class manageReservations extends Application {
 
 
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
-        tableView.setItems(data.getReservations(loginid,checkadmin));
+        tableView.setItems(data.getReservations(loginid,checkadmin,""));
         //tableView.setEditable(true);
         //tableView.setItems(data.getCustomerReservations(data.getCustomerId())); // we need the password and the email
 
@@ -72,6 +80,8 @@ public class manageReservations extends Application {
         Button refresh = new Button("Refresh");
         Button cancelButton  = new Button("Cancel reservation");
 
+
+
         confirm.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
             creditCardPopUp popup = new creditCardPopUp();
@@ -79,7 +89,7 @@ public class manageReservations extends Application {
         });
 
         refresh.setOnAction(event -> {
-            tableView.setItems(data.getReservations(loginid,checkadmin));
+            tableView.setItems(data.getReservations(loginid,checkadmin,""));
         });
 
         cancelButton.setOnAction(event ->{
@@ -90,6 +100,15 @@ public class manageReservations extends Application {
         HBox hBox1 = new HBox(15);
         hBox1.getChildren().addAll(confirm,cancelButton,refresh);
 
+        if (checkadmin == true){
+        hBox1.getChildren().add(search);
+            hBox1.getChildren().add(searchButton);
+
+            searchButton.setOnAction(event -> {
+                String searchWord = search.getText();
+                tableView.setItems(data.getReservations(loginid,checkadmin,searchWord));
+            });
+        }
 
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));

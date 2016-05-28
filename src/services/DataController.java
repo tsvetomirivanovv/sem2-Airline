@@ -19,14 +19,14 @@ public class DataController {
     static Connection conn = SQLConfig.connect();
 
     // getReservations function
-    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin) {
+    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin,String search) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
         String query = "";
         if (checklogin == false){
             query = ("SELECT id,flight_id,customer_id,status FROM Reservations WHERE  customer_id = '" + customerid + "'");
         } else if (checklogin == true){
-            query = ("SELECT * FROM Reservations ");
+            query = ("SELECT * FROM Reservations r, Customers c WHERE r.customer_id = c.account_id AND c.name like '%"+search+"%' ");
         }
 
         try {

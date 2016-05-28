@@ -4,7 +4,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,6 +29,41 @@ public class creditCardPopUp {
         Stage window = new Stage();
         window.setTitle("   Confirm reservation & Payment");
 
+        int loginid = services.components.checkLogin.getAccount_id();
+
+
+        Button visa = new Button();
+        ImageView visaIcon = new ImageView(new Image("assets\\images\\visa.jpg"));
+        visaIcon.setFitWidth(50);
+        visaIcon.setFitHeight(50);
+        visa.setMaxHeight(50);
+        visa.setMaxWidth(50);
+        visa.setGraphic(visaIcon);
+
+        Button visaelectron = new Button();
+        ImageView visaelectronIcon = new ImageView(new Image("assets\\images\\visa-electron.png"));
+        visaelectronIcon.setFitWidth(50);
+        visaelectronIcon.setFitHeight(50);
+        visaelectron.setMaxHeight(50);
+        visaelectron.setMaxWidth(50);
+        visaelectron.setGraphic(visaelectronIcon);
+
+        Button mastercard = new Button();
+        ImageView mastercardIcon = new ImageView(new Image("assets\\images\\mastercard.png"));
+        mastercardIcon.setFitWidth(50);
+        mastercardIcon.setFitHeight(50);
+        mastercard.setMaxHeight(50);
+        mastercard.setMaxWidth(50);
+        mastercard.setGraphic(mastercardIcon);
+
+        Button maestro = new Button();
+        ImageView maestroIcon = new ImageView(new Image("assets\\images\\Maestro.png"));
+        maestroIcon.setFitWidth(50);
+        maestroIcon.setFitHeight(50);
+        maestro.setMaxHeight(50);
+        maestro.setMaxWidth(50);
+        maestro.setGraphic(maestroIcon);
+
         TextField cardType = new TextField();
         cardType.setPromptText("card type");
         cardType.setMaxWidth(150);
@@ -44,9 +82,10 @@ public class creditCardPopUp {
 
         HBox h1 = new HBox(5);
         h1.setAlignment(Pos.BASELINE_CENTER);
+        Label test = new Label();
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1);
+        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1,visa,visaelectron,mastercard,maestro,test);
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
@@ -73,7 +112,12 @@ public class creditCardPopUp {
             }
         });
 
-        window.setScene(new Scene(layout, 345, 689));
+        visa.setOnAction(event -> {
+       // test.setText(data.getPayment(loginid,loginid,visa.getText()));
+
+        });
+
+        window.setScene(new Scene(layout, 600, 600));
         window.showAndWait();
     }
 
