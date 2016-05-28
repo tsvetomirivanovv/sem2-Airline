@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -43,6 +44,7 @@ public class managePlanes extends Application{
 
         Button addButton = new Button("Create ");
         Button deleteButton = new Button("Delete ");
+        Button back = new Button("Back to menu ");
 
         addButton.setOnAction(event -> {
             addPlane addPlane = new addPlane();
@@ -53,8 +55,13 @@ public class managePlanes extends Application{
 
         });
 
-        VBox vBox1 = new VBox();
-        vBox1.getChildren().addAll(addButton);
+        back.setOnAction(event -> {
+            searchFlights search = new searchFlights();
+            search.start(primaryStage);
+        });
+
+        HBox vBox1 = new HBox(20);
+        vBox1.getChildren().addAll(addButton,back);
 
         mainPlanesTable.setItems(data.getPlanes());
         mainPlanesTable.getColumns().addAll(reg_num,model,seats,availability);

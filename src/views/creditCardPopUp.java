@@ -23,7 +23,7 @@ public class creditCardPopUp {
 
     DataController data = new DataController();
 
-    public void start(int id){
+    public void start(int id, TableView table, boolean checkadmin){
         Stage window = new Stage();
         window.setTitle("   Confirm reservation & Payment");
 
@@ -82,6 +82,7 @@ public class creditCardPopUp {
 
                 data.setPayment(loginid,cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
                 data.setReservationStatus(id);
+                table.setItems(data.getReservations(loginid,checkadmin,""));
                 window.close();
             }
         });
