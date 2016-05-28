@@ -86,8 +86,15 @@ public class searchResults extends Application {
         HBox sidebarContent = new HBox(20);
         sidebarContent.getChildren().addAll(sidebarLabels, sidebarValues);
 
+        Button back = new Button("Back");
+
+        back.setOnAction(event -> {
+            searchFlights flights1 = new searchFlights();
+            flights1.start(primaryStage);
+        });
+
         VBox sidebarWrapper = new VBox(20);
-        sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent);
+        sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent, back);
         sidebarWrapper.setAlignment(Pos.CENTER);
 
         if(searchInfo.hasReturnDate()) {
