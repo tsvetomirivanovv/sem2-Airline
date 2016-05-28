@@ -1,5 +1,6 @@
 package views;
 
+import com.sun.javafx.binding.StringFormatter;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -46,8 +47,7 @@ public class SelectedFlight extends Application {
     }
 
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("   Selected flight");
-
+        primaryStage.setTitle("Selected flight");
 
         Label flightdetails = new Label("Flight details");
         flightdetails.setAlignment(Pos.TOP_CENTER);
@@ -86,7 +86,9 @@ public class SelectedFlight extends Application {
         vlocations.getChildren().addAll(fromvalue, tovalue);
 
         Label durationvalue = new Label();
-        durationvalue.setText(data.getFlightDuration(flight.getDeparture_time().toString(), flight.getArrival_time().toString()));
+        String timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getDeparture_time());
+        String timeStamp1 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getArrival_time());
+        durationvalue.setText(data.getFlightDuration(timeStamp, timeStamp1));
 
         Label pricevalue = new Label(data.getFlightPrice(flight.getFlight_id())+" DKK");
 
@@ -110,58 +112,6 @@ public class SelectedFlight extends Application {
 
         VBox vfirst = new VBox(8);
         vfirst.getChildren().addAll(flightdetails, hout, houtboundflight);
-
-        //Label returner = new Label("RETURN");
-        //Label labelreturner = new Label();
-        //labelreturner.setText(searchInfo.getReturn_date());
-        //HBox hout2 = new HBox(10);
-        //hout2.getChildren().addAll(returner, labelreturner);
-
-
-        //Label reg_no2 = new Label(""+flight.getPlane().getReg_no());
-
-        /*Label datevalue3 = new Label(""+fl2.getDeparture_time());
-        Label datevalue4 = new Label(""+fl2.getArrival_time());
-        VBox vdates2 = new VBox(1);
-        vdates2.getChildren().addAll(datevalue3, datevalue4);
-
-        Label fromvalue2 = new Label(""+fl2.getDeparture_loc().getName());
-        Label tovalue2 = new Label(""+fl2.getArrival_loc().getName());
-        VBox vlocations2 = new VBox(1);
-        vlocations2.getChildren().addAll(fromvalue2, tovalue2);
-
-        Label durationvalue2 = new Label("2hr25min");
-
-        Label pricevalue2 = new Label(fl2.getFlight_price()+" DKK");
-
-        Label flight2 = new Label("Flight ID");
-        Label date2 = new Label("Date&Time");
-        Label fromto2 = new Label("From->To");
-        Label duration2 = new Label("Duration");
-        Label price2 = new Label("Price");
-
-        VBox vb1 = new VBox(5);
-        vb1.getChildren().addAll(flight2, reg_no2);
-
-        VBox vb2 = new VBox(5);
-        vb2.getChildren().addAll(date2, vdates2);
-
-        VBox vb3 = new VBox(5);
-        vb3.getChildren().addAll(fromto2, vlocations2);
-
-        VBox vb4 = new VBox(5);
-        vb4.getChildren().addAll(duration2, durationvalue2);
-
-        VBox vb5 = new VBox(5);
-        vb5.getChildren().addAll(price2, pricevalue2);
-
-        HBox houtboundflight2 = new HBox(16);
-        houtboundflight2.getChildren().addAll(vb1, vb2, vb3, vb4, vb5);
-
-        VBox vsecond = new VBox(8);
-        vsecond.getChildren().addAll(returner, houtboundflight2);
-*/
-
 
         vflights.getChildren().addAll(vfirst);
 
@@ -218,6 +168,7 @@ public class SelectedFlight extends Application {
 
         vbig.getChildren().addAll(wejustneed, passengerdetails);
 
+        VBox vbigger = new VBox(20);
         Label Payment = new Label("Payment info");
         Label note1 = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
         Label note2 = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
@@ -226,24 +177,31 @@ public class SelectedFlight extends Application {
         vpayment.getChildren().addAll(Payment, note1, note2);
 
         ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
-        ImageView visa = new ImageView(new Image("assets\\images\\visa.png"));
+        ImageView visa = new ImageView(new Image("assets\\images\\visa.jpg"));
         ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
         ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
 
+        HBox himages = new HBox(5);
+        himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
+
         Label holderName = new Label("Card holder name:");
         TextField holderField = new TextField();
+        holderField.setPromptText("Name");
         VBox holder = new VBox(20);
         holder.getChildren().addAll(holderName,holderField);
 
         Label cardNo = new Label("Card no:");
         TextField noField = new TextField();
+        noField.setPromptText("card number");
         VBox number = new VBox(20);
         number.getChildren().addAll(cardNo,noField);
 
         Label expirationDate= new Label("Expiration date:");
         TextField expirationYear = new TextField();
+        expirationYear.setPromptText("YYYY");
         Label dash = new Label("/");
         TextField expirationMounth = new TextField();
+        expirationMounth.setPromptText("MM");
         HBox fields = new HBox(5);
         fields.getChildren().addAll(expirationMounth,dash,expirationYear);
         VBox expiration = new VBox(20);
@@ -251,8 +209,51 @@ public class SelectedFlight extends Application {
 
         Label securityCode = new Label("Security code:");
         TextField cvv = new TextField();
+        cvv.setPromptText("CVV");
         VBox security = new VBox(20);
         security.getChildren().addAll(securityCode,cvv);
+
+        HBox hcard = new HBox(15);
+        hcard.getChildren().addAll(holder, number, expiration, security);
+
+        Label pricel = new Label("Price");
+
+        HBox hloc = new HBox(5);
+        Label arrowlabel = new Label("->");
+        hloc.getChildren().addAll(fromvalue, arrowlabel, tovalue);
+        HBox hedge = new HBox(35);
+        hedge.getChildren().addAll(hloc, pricevalue);
+
+        Label choiceboxlabel = new Label();
+        choiceboxlabel.setText(cbbaggage.getValue().toString());
+
+        ImageView line = new ImageView(new Image("assets//images//dash.png"));
+
+        Label totalprice = new Label("TOTAL PRICE:");
+
+        double totalpricevalue = data.getFlightPrice(flight.getFlight_id());
+
+        if (cbbaggage.getValue().equals("None - 0 DKK")) {
+            totalpricevalue+=0;
+        }
+        else if(cbbaggage.getValue().equals("Baggage, Max 15 Kg. - 50 DKK")) {
+            totalpricevalue+=50;
+        }
+        else if(cbbaggage.getValue().equals("Baggage, Max 20 Kg - 90 DKK")) {
+            totalpricevalue+=90;
+        }
+
+        Label bigvalue = new Label();
+        bigvalue.setText(totalpricevalue+"");
+
+        HBox htot = new HBox(30);
+        htot.getChildren().addAll(totalprice, bigvalue);
+
+        VBox vforprice = new VBox(5);
+        vforprice.getChildren().addAll(pricel, hedge, line, htot);
+
+        vbig.getChildren().addAll();
+
 
         Scene scene = new Scene(layout, 1200, 600);
         primaryStage.setScene(scene);

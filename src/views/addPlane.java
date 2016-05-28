@@ -4,10 +4,7 @@ package views;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,7 +20,7 @@ public class addPlane  {
 
  DataController data = new DataController();
 
-    public void start() {
+    public void start(TableView table) {
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -76,7 +73,7 @@ public class addPlane  {
 
         TextField coachPrice = new TextField("");
         coachPrice.setMaxWidth(220);
-        coachPrice.setPromptText("The price for business class");
+        coachPrice.setPromptText("The price for coach class");
 
         VBox vBox1 = new VBox();
         vBox1.getChildren().addAll(regNumLabel,regNum);
@@ -121,9 +118,9 @@ public class addPlane  {
                             Integer.parseInt(coachSeat.getText()),Integer.parseInt(economicSeat.getText()),
                             Double.parseDouble(businessPrice.getText()),Double.parseDouble(coachPrice.getText()));
                     primaryStage.close();
+                    table.setItems(data.getPlanes());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    System.out.println("da");
                 }
             }
 

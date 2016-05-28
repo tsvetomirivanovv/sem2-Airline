@@ -29,7 +29,7 @@ public class managePlanes extends Application{
         TableColumn<Plane, String> reg_num = new TableColumn<>("Registration Number");
         TableColumn<Plane, String> model = new TableColumn<>("Model");
         TableColumn<Plane, Integer> seats = new TableColumn<>("Total Seats");
-        TableColumn <Plane, Plane> availability = new TableColumn<>("Availability");
+        TableColumn <Plane, Plane> availability = new TableColumn<>("Details");
 
         // ATTACHING ACTION LISTENERS (Displaying the objects into the tableview)
 
@@ -46,7 +46,7 @@ public class managePlanes extends Application{
 
         addButton.setOnAction(event -> {
             addPlane addPlane = new addPlane();
-            addPlane.start();
+            addPlane.start(mainPlanesTable);
         });
 
         deleteButton.setOnAction(event -> {
@@ -54,7 +54,7 @@ public class managePlanes extends Application{
         });
 
         VBox vBox1 = new VBox();
-        vBox1.getChildren().addAll(addButton,deleteButton);
+        vBox1.getChildren().addAll(addButton);
 
         mainPlanesTable.setItems(data.getPlanes());
         mainPlanesTable.getColumns().addAll(reg_num,model,seats,availability);
