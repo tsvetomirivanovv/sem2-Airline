@@ -73,7 +73,7 @@ public class manageReservations extends Application {
         Button cancelButton  = new Button("Cancel reservation");
 
         confirm.setOnAction(event -> {
-            int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
+            int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
             creditCardPopUp popup = new creditCardPopUp();
             popup.start(i);
         });
@@ -83,7 +83,7 @@ public class manageReservations extends Application {
         });
 
         cancelButton.setOnAction(event ->{
-            int i = tableView.getSelectionModel().getSelectedItem().getCustomer_id();
+            int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
             data.cancelReservation(i);
         });
 
@@ -97,7 +97,7 @@ public class manageReservations extends Application {
         layout.setBottom(hBox1);
 
 
-        primaryStage.setTitle("Log in as Admin");
+        primaryStage.setTitle(null);
         primaryStage.show();
     }
 }
