@@ -47,7 +47,7 @@ public class DataController {
                     Flight flight = getFlight(flight_id);
                     passenger_list = getPassengers(reservation_id);
                     Double price = getReservationPrice(reservation_id);
-                    int total_passengers = getPassengers(reservation_id).size();
+                    int total_passengers = passenger_list.size();
 
                     Reservation reservation = new Reservation(flight, price, reservation_id, status, customer_id, passenger_list, total_passengers , customer_name);
                     reservations.add(reservation);
@@ -312,7 +312,7 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT p.id as passenger_id, p.name, p.birth_date, p.seat_no, p.baggage FROM Reservations r, Reservation_passengers rp, Passengers p WHERE p.id = rp.passenger_id AND rp.reservation_id = '" + reservationId + "'");
+            ResultSet rs = s.executeQuery("SELECT p.id as passenger_id, p.name, p.birth_date, p.seat_no, p.baggage FROM Reservations r, Reservation_passengers rp, Passengers p WHERE p.id = rp.passenger_id AND rp.reservation_id = "+ reservationId +" GROUP BY p.id");
 
             if (rs != null) {
                 while (rs.next()) {
@@ -545,9 +545,9 @@ public class DataController {
 
 
             // ResultSet rs = s.executeQuery("SELECT status FROM Reservations WHERE customer_id = '" + customerId + "'");
-            String query = "UPDATE reservation_passengers rp, passengers p, reservations r\n" +
-                    "SET r.status = 'canceled', p.seat_no = -1\n" +
-                    "WHERE rp.reservation_id = '"+id+"' AND rp.passenger_id = p.id AND r.id = rp.reservation_id\n";
+            String query = "UPDATE reservation_passengers rp, passengers p, reservations r " +
+                    "SET r.status = 'canceled', p.seat_no = -1 " +
+                    "WHERE rp.reservation_id = "+id+" AND rp.passenger_id = p.id AND r.id = rp.reservation_id;";
             {
                 s.executeUpdate(query);
             }
