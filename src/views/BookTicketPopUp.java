@@ -71,7 +71,8 @@ public class BookTicketPopUp {
         h1.getChildren().addAll(small);
 
         //everything for the first flight details box
-        Label outboundtitle = new Label("OUTBOUND - " + searchInfo.getStart_date());
+        String dep_date = new SimpleDateFormat("EEE, MMM d, yyyy").format(flight.getDeparture_time());
+        Label outboundtitle = new Label("OUTBOUND - " + dep_date);
 
         VBox flightPlaneBox = new VBox();
         Label flightPlaneLabel = new Label("Flight/Plane");
@@ -111,7 +112,10 @@ public class BookTicketPopUp {
         HBox firstFlightDetails = new HBox();
         firstFlightDetails.getChildren().addAll(flightPlaneBox, timeBox, locationBox, durationBox, arrivesBox, priceBox);
 
-        layout.getChildren().addAll(title, h1, checkroutes, firstFlightDetails, h4);
+        VBox firstFlightWrapper = new VBox();
+        firstFlightWrapper.getChildren().addAll(outboundtitle, firstFlightDetails);
+
+        layout.getChildren().addAll(title, h1, checkroutes, firstFlightWrapper, h4);
         layout.setAlignment(Pos.TOP_CENTER);
 
         //everything for the third horizontal box
