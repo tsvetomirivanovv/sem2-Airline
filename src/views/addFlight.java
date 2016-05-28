@@ -19,12 +19,9 @@ import services.DataController;
 
 import java.util.ArrayList;
 
-/**
- * Created by Paradox on 5/24/2016.
- */
 public class addFlight {
 
-    public  DataController controller = new DataController();
+    public  DataController data = new DataController();
     public ComboBox depBox;
     public ComboBox arrbox;
     public ComboBox planeBox;
@@ -40,28 +37,37 @@ public class addFlight {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
+        ObservableList<String> emptyPlanes = FXCollections.observableArrayList();
+        emptyPlanes.add("Please select departure and arrive date");
+
+
         depBox = new ComboBox();
         depBox.setMinWidth(240);
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
 
-        depBox.getItems().addAll(controller.getAllAirports(""));
-        arrbox.getItems().addAll(controller.getAllAirports(""));
+        depBox.getItems().addAll(data.getAllAirports(""));
+        depBox.setPromptText("Select departure location");
+        arrbox.getItems().addAll(data.getAllAirports(""));
+        arrbox.setPromptText("Select arrival location");
 
         depBox.setOnAction(event -> {
             arrbox.getItems().clear();
-            arrbox.getItems().addAll(controller.getAllAirports((String)depBox.getValue()));
+            arrbox.getItems().addAll(data.getAllAirports((String)depBox.getValue()));
         });
 
 
         planeBox = new ComboBox();
+        planeBox.setPromptText("Select plane");
         planeBox.setMinWidth(240);
 
         depTime = new TextField();
+        depTime.setPromptText("dd/mm/yyy hh:mm:ss");
         depTime.setMaxWidth(240);
 
         arrTime = new TextField();
+        arrTime.setPromptText("dd/mm/yyy hh:mm:ss");
         arrTime.setMaxWidth(240);
 
         depboxLabel = new Label("Departure location");
@@ -70,34 +76,51 @@ public class addFlight {
         arrTimeLabel = new Label("Arrival time");
         planeboxLabel = new Label("Plane");
 
+        Label priceLabel = new Label("Price");
+        priceLabel.setMaxWidth(240);
+        TextField priceValue = new TextField();
+        priceValue.setPromptText("eg: 1200.00");
+        priceValue.setMaxWidth(240);
+
         addFlight = new Button("Add flight");
         close = new Button("Close");
+        close.setOnAction(e -> primaryStage.close() );
 
 
 
 
         addFlight.setOnAction(event -> {
-            String test = depBox.getSelectionModel().getSelectedItem().toString();
 
-            System.out.println(test);
-                        if (depBox.getSelectionModel().isEmpty() || arrbox.getSelectionModel().isEmpty() || planeBox.getSelectionModel().isEmpty() || depTime.getText().isEmpty() || arrTime.getText().isEmpty()) {
+            System.err.println(depBox.getValue());
+            System.err.println(arrbox.getValue());
+            System.err.println(planeBox.getValue());
+            System.err.println(depTime.getText());
+            System.err.println(arrTime.getText());
 
-                            Alert granted = new Alert(Alert.AlertType.ERROR);
-                            granted.setTitle("Creating Denied!");
-                            granted.setContentText("Please fill all the required fields before creating a new flight");
-                            granted.setHeaderText(null);
-                            granted.show();
-                        }
+            if (depBox.getValue() == null || arrbox.getValue() == null || planeBox.getValue() == null || depTime.getText().equals("") || arrTime.getText().equals("") || priceValue.getText().equals("")) {
 
-                });
+                Alert granted = new Alert(Alert.AlertType.ERROR);
+                granted.setTitle("Error!");
+                granted.setContentText("Please fill all the required fields before creating a new flight");
+                granted.setHeaderText(null);
+                granted.show();
 
-            close.setOnAction(event -> {
+            } else {
+                //data.updateFlight(flight.getFlight_id(), depBox.getValue().toString(), arrbox.getValue().toString(), depTime.getText(), arrTime.getText(), planeBox.getValue().toString());
+                //primaryStage.close();
+                data.addFlight(depBox.getValue().toString(), arrbox.getValue().toString(), planeBox.getValue().toString(), depTime.getText(), arrTime.getText(), priceValue.getText());
+                System.err.println("Saved!");
+            }
 
-            primaryStage.close();
+        });
+
+        planeBox.setOnMouseClicked(e -> {
+            planeBox.getItems().clear();
+            planeBox.getItems().addAll(data.getAvailablePlanes(depTime.getText(), arrTime.getText()));
         });
 
         componentBox = new VBox(5);
-        componentBox.getChildren().addAll(depboxLabel,depBox,arrboxLabel,arrbox,planeboxLabel,planeBox,depTimeLable,depTime,arrTimeLabel,arrTime);
+        componentBox.getChildren().addAll(depboxLabel, depBox, arrboxLabel, arrbox, depTimeLable, depTime, arrTimeLabel, arrTime, planeboxLabel, planeBox, priceLabel, priceValue);
         componentBox.setAlignment(Pos.CENTER);
 
         buttonBox = new HBox(15);
