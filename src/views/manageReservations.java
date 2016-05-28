@@ -4,25 +4,26 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
-import models.Account;
 import models.Reservation;
 import services.DataController;
+import views.components.reservationsDetailsCell;
 
 public class manageReservations extends Application {
     Menu menu2 = new Menu("Manage reservations");
     TableColumn<Reservation,String> status, customerName;
     TableColumn<Reservation,Integer> reservationId, passengersNo;
+    TableColumn<Reservation, Reservation> details;
     Button viewDetails, cancel, confirm;
     TableView<Reservation> tableView = new TableView<>();
     TextField search = new TextField();
     HBox buttons = new HBox(20);
     DataController data = new DataController();
+    reservationsDetailsCell detailsCell = new reservationsDetailsCell();
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -67,14 +68,15 @@ public class manageReservations extends Application {
             (event.getTableView().getItems().get(event.getTablePosition().getRow())).setTotal_passengers(event.getNewValue());
         });
 
+        details = new TableColumn<>("Details");
+        details.setCellValueFactory(detailsCell.getCallback2());
+
+        details.setCellFactory(detailsCell.getCallback1());
 
 
-        tableView.getColumns().addAll(customerName, passengersNo, reservationId, status);
+
+        tableView.getColumns().addAll(customerName, passengersNo, reservationId, status, details);
         tableView.setItems(data.getReservations(loginid,checkadmin,""));
-        //tableView.setEditable(true);
-        //tableView.setItems(data.getCustomerReservations(data.getCustomerId())); // we need the password and the email
-
-        //buttons.getChildren().addAll(search, viewDetails, cancel, confirm);
 
         Button confirm = new Button("Confirm reservation ");
         Button refresh = new Button("Refresh");
@@ -116,7 +118,7 @@ public class manageReservations extends Application {
         layout.setBottom(hBox1);
 
 
-        primaryStage.setTitle(null);
+        primaryStage.setTitle("Manage reservations");
         primaryStage.show();
     }
 }
