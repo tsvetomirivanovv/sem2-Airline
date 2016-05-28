@@ -512,7 +512,7 @@ public class DataController {
         }
     }
 
-   public static String setReservationStatus(int customerId) {
+   public static String setReservationStatus(int id) {
        String name = "";
 
        try {
@@ -520,7 +520,7 @@ public class DataController {
            s = conn.createStatement();
 
 
-           String query = "UPDATE Reservations set status  = 'confirmed' WHERE customer_id  = '" + customerId + "'";
+           String query = "UPDATE Reservations set status  = 'confirmed' WHERE id  = '" + id + "'";
            {
                s.executeUpdate(query);
            }
@@ -536,7 +536,7 @@ public class DataController {
        return name;
    }
 
-    public static String cancelReservation(int customerId) {
+    public static String cancelReservation(int id) {
         String name = "";
 
         try {
@@ -545,7 +545,9 @@ public class DataController {
 
 
             // ResultSet rs = s.executeQuery("SELECT status FROM Reservations WHERE customer_id = '" + customerId + "'");
-            String query = "UPDATE Reservations set status  = 'canceled' WHERE customer_id  = '" + customerId + "'";
+            String query = "UPDATE reservation_passengers rp, passengers p, reservations r\n" +
+                    "SET r.status = 'canceled', p.seat_no = -1\n" +
+                    "WHERE rp.reservation_id = '"+id+"' AND rp.passenger_id = p.id AND r.id = rp.reservation_id\n";
             {
                 s.executeUpdate(query);
             }
@@ -1012,11 +1014,8 @@ public class DataController {
             s = conn.createStatement();
             System.out.println(d1);
 
-
-            // String query = "UPDATE Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"'";
-            //String query = "INSERT INTO Payments set card_type  = '"+cardType+"',set card_no = '"+cardNo+"',set card_expiration = '"+cardEXP+"',set cardholder_name = '"+cardName+"' WHERE id  = '" + flightID + "'";
-            String query = "INSERT INTO `Payments` (`card_type`,`card_no`,`card_expiration`,`cardholder_name`) " +
-                    "VALUES ('"+cardType+"','"+cardNo+"',"+cardEXP+",'"+cardName+"');";
+            String query = "INSERT INTO Payments (card_type,card_no,card_expiration,cardholder_name) " +
+                    "VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"');";
             {
                 s.executeUpdate(query);
             }
@@ -1024,7 +1023,7 @@ public class DataController {
             try{
                 System.out.println(sqlex.getMessage());
                 conn.close();
-                System.exit(1);  // terminate program
+//                System.exit(1);  // terminate program
             }
             catch(SQLException sql){}
         } catch (Exception e) {
