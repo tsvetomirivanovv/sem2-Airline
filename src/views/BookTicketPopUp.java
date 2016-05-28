@@ -108,7 +108,7 @@ public class BookTicketPopUp {
         Label priceValue = new Label((flight.getFlight_price() + data.getClassPrice(flight.getFlight_id(), searchInfo.getClassType()) )  + " DKK");
         priceBox.getChildren().addAll(priceLabel, priceValue);
 
-        HBox firstFlightDetails = new HBox();
+        HBox firstFlightDetails = new HBox(30);
         firstFlightDetails.getChildren().addAll(flightPlaneBox, timeBox, locationBox, durationBox, arrivesBox, priceBox);
 
         layout.getChildren().addAll(title, h1, checkroutes, firstFlightDetails, h4);
@@ -121,6 +121,7 @@ public class BookTicketPopUp {
         Button selectflight = new Button("Select flight");
         selectflight.setOnAction(e-> {
             SelectedFlight SelectedFlight = new SelectedFlight(flight, searchInfo);
+            //primaryStage.close();
             SelectedFlight.start(primaryStage);
         });
         Button close = new Button("Close");
