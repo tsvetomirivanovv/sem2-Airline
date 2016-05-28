@@ -1,5 +1,6 @@
 package views;
 
+import com.sun.javafx.binding.StringFormatter;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
@@ -46,7 +47,7 @@ public class SelectedFlight extends Application {
     }
 
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("   Selected flight");
+        primaryStage.setTitle("Selected flight");
 
 
         Label flightdetails = new Label("Flight details");
@@ -86,7 +87,9 @@ public class SelectedFlight extends Application {
         vlocations.getChildren().addAll(fromvalue, tovalue);
 
         Label durationvalue = new Label();
-        durationvalue.setText(data.getFlightDuration(flight.getDeparture_time().toString(), flight.getArrival_time().toString()));
+        String timeStamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getDeparture_time());
+        String timeStamp1 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(flight.getArrival_time());
+        durationvalue.setText(data.getFlightDuration(timeStamp, timeStamp1));
 
         Label pricevalue = new Label(data.getFlightPrice(flight.getFlight_id())+" DKK");
 
@@ -226,7 +229,7 @@ public class SelectedFlight extends Application {
         vpayment.getChildren().addAll(Payment, note1, note2);
 
         ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
-        ImageView visa = new ImageView(new Image("assets\\images\\visa.png"));
+        ImageView visa = new ImageView(new Image("assets\\images\\visa.jpg"));
         ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
         ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
 
