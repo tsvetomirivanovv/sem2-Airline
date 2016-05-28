@@ -2,10 +2,7 @@ package views;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,6 +14,7 @@ import services.DataController;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Created by Caseru on 5/25/2016.
@@ -40,30 +38,6 @@ public class creditCardPopUp {
         visa.setMaxWidth(50);
         visa.setGraphic(visaIcon);
 
-        Button visaelectron = new Button();
-        ImageView visaelectronIcon = new ImageView(new Image("assets\\images\\visa-electron.png"));
-        visaelectronIcon.setFitWidth(50);
-        visaelectronIcon.setFitHeight(50);
-        visaelectron.setMaxHeight(50);
-        visaelectron.setMaxWidth(50);
-        visaelectron.setGraphic(visaelectronIcon);
-
-        Button mastercard = new Button();
-        ImageView mastercardIcon = new ImageView(new Image("assets\\images\\mastercard.png"));
-        mastercardIcon.setFitWidth(50);
-        mastercardIcon.setFitHeight(50);
-        mastercard.setMaxHeight(50);
-        mastercard.setMaxWidth(50);
-        mastercard.setGraphic(mastercardIcon);
-
-        Button maestro = new Button();
-        ImageView maestroIcon = new ImageView(new Image("assets\\images\\Maestro.png"));
-        maestroIcon.setFitWidth(50);
-        maestroIcon.setFitHeight(50);
-        maestro.setMaxHeight(50);
-        maestro.setMaxWidth(50);
-        maestro.setGraphic(maestroIcon);
-
         TextField cardType = new TextField();
         cardType.setPromptText("card type");
         cardType.setMaxWidth(150);
@@ -85,7 +59,7 @@ public class creditCardPopUp {
         Label test = new Label();
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1,visa,visaelectron,mastercard,maestro,test);
+        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1,visa,test);
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
@@ -106,14 +80,27 @@ public class creditCardPopUp {
                 Payment aux = new Payment(cardType.getText(), Integer.parseInt(cardNo.getText()), cardEx.getText(), cardName.getText());
 
 
-                data.setPayment(cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
+                data.setPayment(loginid,cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
                 data.setReservationStatus(id);
                 window.close();
             }
         });
 
         visa.setOnAction(event -> {
-       // test.setText(data.getPayment(loginid,loginid,visa.getText()));
+            Alert granted = new Alert(Alert.AlertType.CONFIRMATION);
+            granted.setTitle("Existing payment method!");
+            granted.setContentText("Do you want to pay the reservation with your already saved credit card information.");
+            granted.setHeaderText(null);
+            Optional<ButtonType> result = granted.showAndWait();
+
+            if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+                granted.setContentText("Your reservation was confirmed. Have a nice flight");
+                granted.showAndWait();
+            }   else {
+                granted.setContentText("Please fill all the required fields for creating a new payment method and then click save.");
+                granted.showAndWait();
+            }
+
 
         });
 

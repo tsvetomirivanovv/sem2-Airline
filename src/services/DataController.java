@@ -1002,7 +1002,7 @@ public class DataController {
         return integers;
     }
 
-    public static void setPayment(String cardType,int cardNo,String cardEXP,String cardName){
+    public static void setPayment(int customerid,String cardType,int cardNo,String cardEXP,String cardName){
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         java.util.Date d1 = null;
@@ -1013,11 +1013,16 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
             System.out.println(d1);
+            Boolean exisitng ;
 
             String query = "INSERT INTO Payments (card_type,card_no,card_expiration,cardholder_name) " +
                     "VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"');";
+
+            String query2 = "UPDATE  Customers set payment_id = (SELECT id FROM Payments WHERE card_no = "+cardNo+") WHERE account_id = '"+customerid+"' ";
+
             {
                 s.executeUpdate(query);
+                s.executeUpdate(query2);
             }
         } catch (SQLException sqlex) {
             try{
