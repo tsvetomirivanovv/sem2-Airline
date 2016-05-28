@@ -202,7 +202,7 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
 
-            ResultSet rs = s.executeQuery("SELECT f.departure_time, f.arrival_time FROM Planes p, Flights f WHERE f.plane_id = '" + planeId + "'");
+            ResultSet rs = s.executeQuery("SELECT f.departure_time, f.arrival_time FROM Planes p, Flights f WHERE f.plane_id = " + planeId + " GROUP BY f.id");
 
             if (rs != null) {
                 while (rs.next()) {
