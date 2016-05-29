@@ -29,15 +29,6 @@ public class creditCardPopUp {
 
         int loginid = services.components.checkLogin.getAccount_id();
 
-
-        Button visa = new Button();
-        ImageView visaIcon = new ImageView(new Image("assets\\images\\visa.jpg"));
-        visaIcon.setFitWidth(50);
-        visaIcon.setFitHeight(50);
-        visa.setMaxHeight(50);
-        visa.setMaxWidth(50);
-        visa.setGraphic(visaIcon);
-
         TextField cardType = new TextField();
         cardType.setPromptText("card type");
         cardType.setMaxWidth(150);
@@ -52,7 +43,7 @@ public class creditCardPopUp {
 
         TextField cardExY = new TextField();
         cardExY.setPromptText("yyyy");
-        cardExY.setMaxWidth(50);
+        cardExY.setMaxWidth(100);
 
         HBox cardEx = new HBox(20);
         cardEx.getChildren().addAll(cardExM,cardExY);
@@ -67,7 +58,7 @@ public class creditCardPopUp {
         Label test = new Label();
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1, visa);
+        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1);
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
@@ -91,24 +82,6 @@ public class creditCardPopUp {
                 table.setItems(data.getReservations(loginid,checkadmin,""));
                 window.close();
             }
-        });
-
-        visa.setOnAction(event -> {
-            Alert granted = new Alert(Alert.AlertType.CONFIRMATION);
-            granted.setTitle("Existing payment method!");
-            granted.setContentText("Do you want to pay the reservation with your already saved credit card information.");
-            granted.setHeaderText(null);
-            Optional<ButtonType> result = granted.showAndWait();
-
-            if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
-                granted.setContentText("Your reservation was confirmed. Have a nice flight");
-                granted.showAndWait();
-            }   else {
-                granted.setContentText("Please fill all the required fields for creating a new payment method and then click save.");
-                granted.showAndWait();
-            }
-
-
         });
 
         window.setScene(new Scene(layout, 600, 600));
