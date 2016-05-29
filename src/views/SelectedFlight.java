@@ -22,6 +22,7 @@ public class SelectedFlight extends Application {
     DataController data = new DataController();
     double totalpricevalue;
     Label bigvalue = new Label();
+    HBox choiceboxesHBox = new HBox(5);
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -231,28 +232,34 @@ public class SelectedFlight extends Application {
         passengerDet4.getChildren().addAll(vpass14, vpass24, vpass34, vpass44);
         /////////////////////////////////////////////////////////////////////////////
 
+        // these are needed for the price down the scene, each of them has to be shown deppending on how many passengers were chosen
+        Label aa = new Label("P1: ");
+        Label firstpass = new Label("");
+        Label bb = new Label("P2: ");
+        Label secondpass = new Label("");
+        Label cc = new Label("P3: ");
+        Label thirdpass = new Label("");
+        Label dd = new Label("P4: ");
+        Label fourthpass = new Label("");
+
         VBox passengerDetVBox = new VBox(10);
 
         switch(searchInfo.getPassengers()) {
             case 1:
                 passengerDetVBox.getChildren().addAll(passengerDet);
-                System.err.println(searchInfo.getPassengers()+" passengers selected");
-                System.err.println("THIS IS CASE 1");
+                choiceboxesHBox.getChildren().addAll(aa, firstpass);
                 break;
             case 2:
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2);
-                System.err.println(searchInfo.getPassengers()+" passengers selected");
-                System.err.println("THIS IS CASE 2");
+                choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass);
                 break;
             case 3:
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2, passengerDet3);
-                System.err.println(searchInfo.getPassengers()+" passengers selected");
-                System.err.println("THIS IS CASE 3");
+                choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass, cc, thirdpass);
                 break;
             case 4:
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2, passengerDet3, passengerDet4);
-                System.err.println(searchInfo.getPassengers()+" passengers selected");
-                System.err.println("THIS IS CASE 4");
+                choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass, cc, thirdpass, dd, fourthpass);
                 break;
 
             default:
@@ -332,8 +339,6 @@ public class SelectedFlight extends Application {
         HBox hedge = new HBox(35);
         hedge.getChildren().addAll(hloc, pricevalue1);
 
-        Label choiceboxlabel = new Label("Empty");
-
         ImageView line = new ImageView(new Image("assets//images//dash.png"));
         line.setFitHeight(5);
         line.setFitWidth(400);
@@ -346,13 +351,13 @@ public class SelectedFlight extends Application {
         cbbaggage.setOnAction(e -> {
                     if (!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            choiceboxlabel.setText("None - 0 DKK");
+                            firstpass.setText("None - 0 DKK");
                             bigvalue.setText(totalpricevalue+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 15 Kg. - 50 DKK");
+                            firstpass.setText("Baggage, Max 15 Kg. - 50 DKK");
                             bigvalue.setText(totalpricevalue+50+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 20 Kg - 90 DKK");
+                            firstpass.setText("Baggage, Max 20 Kg - 90 DKK");
                             bigvalue.setText(totalpricevalue+90+"");
                         }
                     }
@@ -361,13 +366,13 @@ public class SelectedFlight extends Application {
         cbbaggage2.setOnAction(e -> {
                     if (!(cbbaggage2.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage2.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            choiceboxlabel.setText("None - 0 DKK");
+                            secondpass.setText("None - 0 DKK");
                             bigvalue.setText(totalpricevalue+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 15 Kg. - 50 DKK");
+                            secondpass.setText("Baggage, Max 15 Kg. - 50 DKK");
                             bigvalue.setText(totalpricevalue+50+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 20 Kg - 90 DKK");
+                            secondpass.setText("Baggage, Max 20 Kg - 90 DKK");
                             bigvalue.setText(totalpricevalue+90+"");
                         }
                     }
@@ -376,13 +381,13 @@ public class SelectedFlight extends Application {
        cbbaggage3.setOnAction(e -> {
                     if (!(cbbaggage3.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage3.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            choiceboxlabel.setText("None - 0 DKK");
+                            thirdpass.setText("None - 0 DKK");
                             bigvalue.setText(totalpricevalue+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 15 Kg. - 50 DKK");
+                            thirdpass.setText("Baggage, Max 15 Kg. - 50 DKK");
                             bigvalue.setText(totalpricevalue+50+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 20 Kg - 90 DKK");
+                            thirdpass.setText("Baggage, Max 20 Kg - 90 DKK");
                             bigvalue.setText(totalpricevalue+90+"");
                         }
                     }
@@ -391,13 +396,13 @@ public class SelectedFlight extends Application {
         cbbaggage4.setOnAction(e -> {
                     if (!(cbbaggage4.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage4.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            choiceboxlabel.setText("None - 0 DKK");
+                            fourthpass.setText("None - 0 DKK");
                             bigvalue.setText(totalpricevalue+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 15 Kg. - 50 DKK");
+                            fourthpass.setText("Baggage, Max 15 Kg. - 50 DKK");
                             bigvalue.setText(totalpricevalue+50+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            choiceboxlabel.setText("Baggage, Max 20 Kg - 90 DKK");
+                            fourthpass.setText("Baggage, Max 20 Kg - 90 DKK");
                             bigvalue.setText(totalpricevalue+90+"");
                         }
                     }
@@ -408,7 +413,7 @@ public class SelectedFlight extends Application {
         htot.getChildren().addAll(totalprice, bigvalue);
 
         VBox vforprice = new VBox(5);
-        vforprice.getChildren().addAll(pricel, hedge, choiceboxlabel, line, htot);
+        vforprice.getChildren().addAll(pricel, hedge, choiceboxesHBox, line, htot);
 
         vbig.getChildren().addAll(vbiggg, passengerDetVBox, vpayment, himages, hcard, vforprice);
 
