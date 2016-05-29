@@ -630,22 +630,6 @@ public class DataController {
             System.out.println("Logged in");
             checkLogin.setAccount_id(id);
             checkLogin.setAccount_email(account_email);
-
-            if (role == 1) {
-                checkLogin.setAdmin(true);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as admin!");
-                alert.setContentText("You can now manage planes, flights and reservations.");
-                alert.showAndWait();
-            } else if (role == 0) {
-                checkLogin.setAdmin(false);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as a customer!");
-                alert.setContentText("You can now search a flight and book a reservation.");
-                alert.showAndWait();
-            }
         }
 
         return loggedIn;
@@ -740,6 +724,27 @@ public class DataController {
         return airports;
     }
 
+    public static void registerAccount(String nameText, String addressText, String townText, String mobileText, String emailText, String passwordText) {
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs = null;
+
+            s.executeUpdate("INSERT INTO Accounts (role, email, password) VALUES (b'1','" + emailText + "','" + passwordText +"')");
+            rs = s.executeQuery("SELECT last_insert_id() AS last_id FROM Accounts");
+
+            if (rs != null)
+                while (rs.next()) {
+                    int lastid = rs.getInt("last_id");
+                    s = conn.createStatement();
+                    s.executeUpdate("INSERT INTO Customers SET account_id = " + lastid + ", name = '" + nameText + "', address = '" + addressText + "', city = '" + townText + "', phone = '" + mobileText + "'");
+                }
+        } catch (SQLException sqlex) {
+            System.err.println();
+        }
+    }
+
     public static ObservableList<String> getAllAirports(String exclude) {
         ObservableList<String> airports = FXCollections.observableArrayList();
         try {
@@ -748,9 +753,7 @@ public class DataController {
             ResultSet rs;
 
             if(exclude.length() > 0) {
-                exclude = codeCUT(exclude);
-
-                rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports WHERE airport_code != '" + exclude + "'");
+                rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports WHERE airport_code != '" + codeCUT(exclude) + "'");
             } else {
                 rs = s.executeQuery("SELECT airport_code, city as airport_city FROM Airports");
             }

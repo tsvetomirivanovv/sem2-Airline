@@ -11,11 +11,25 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Flight;
 import services.DataController;
+import services.components.checkLogin;
+import services.components.searchInfo;
 
 public class Login {
     DataController data = new DataController();
     boolean isAdmin = false;
+    Flight flight = new Flight();
+    searchInfo searchInfo = new searchInfo();
+    boolean redirect = false;
+
+
+    public Login(boolean admin, boolean redirectItem, Flight flightItem, searchInfo searchInfoItem) {
+        redirect = redirectItem;
+        flight = flightItem;
+        searchInfo = searchInfoItem;
+        isAdmin = admin;
+    }
 
     public Login(boolean admin) {
         isAdmin = admin;
@@ -71,8 +85,15 @@ public class Login {
         createAccount.getChildren().addAll(flow);
 
         hyperlink.setOnAction(event -> {
-            views.createAccount createAccount1 = new createAccount();
-            createAccount1.start();
+            if(redirect) {
+                views.createAccount createAccount1 = new createAccount(flight, searchInfo, true);
+                createAccount1.start(primaryStage);
+                primaryStage.close();
+            } else {
+                views.createAccount createAccount2 = new createAccount();
+                createAccount2.start(primaryStage);
+                primaryStage.close();
+            }
         });
 
         loginButton.setOnAction(e -> {
@@ -111,9 +132,32 @@ public class Login {
         userPassword = password.getText();
 
         if (data.login(userName, userPassword)) {
-            searchFlights searchFlights = new searchFlights();
-            searchFlights.start(parentStage);
-            primaryStage.close();
+
+            if (checkLogin.isAdmin()) {
+                checkLogin.setAdmin(true);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as admin!");
+                alert.setContentText("You can now manage planes, flights and reservations.");
+                alert.showAndWait();
+            } else {
+                checkLogin.setAdmin(false);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText("You have logged in as a customer!");
+                alert.setContentText("You can now search a flight and book a reservation.");
+                alert.showAndWait();
+            }
+
+            if(redirect) {
+                SelectedFlight SelectedFlight = new SelectedFlight(flight, searchInfo);
+                SelectedFlight.start(parentStage);
+                primaryStage.close();
+            } else {
+                searchFlights searchFlights = new searchFlights();
+                searchFlights.start(parentStage);
+                primaryStage.close();
+            }
         } else {
             Alert granted = new Alert(Alert.AlertType.ERROR);
             granted.setTitle("Access Denied!");
