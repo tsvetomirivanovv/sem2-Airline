@@ -25,7 +25,7 @@ public class creditCardPopUp {
 
     public void start(int id, TableView table, boolean checkadmin){
         Stage window = new Stage();
-        window.setTitle("   Confirm reservation & Payment");
+        window.setTitle("Confirm reservation & Payment");
 
         int loginid = services.components.checkLogin.getAccount_id();
 
@@ -46,9 +46,17 @@ public class creditCardPopUp {
         cardNo.setPromptText("card number");
         cardNo.setMaxWidth(150);
 
-        TextField cardEx = new TextField();
-        cardEx.setPromptText("card expiration date");
-        cardEx.setMaxWidth(200);
+        TextField cardExM = new TextField();
+        cardExM.setPromptText("MM");
+        cardExM.setMaxWidth(50);
+
+        TextField cardExY = new TextField();
+        cardExY.setPromptText("yyyy");
+        cardExY.setMaxWidth(50);
+
+        HBox cardEx = new HBox(20);
+        cardEx.getChildren().addAll(cardExM,cardExY);
+        cardEx.setAlignment(Pos.CENTER);
 
         TextField cardName = new TextField();
         cardName.setPromptText("card holder name");
@@ -59,7 +67,7 @@ public class creditCardPopUp {
         Label test = new Label();
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1,visa,test);
+        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1, visa);
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
@@ -70,17 +78,15 @@ public class creditCardPopUp {
         close.setOnAction(e -> window.close());
 
         save.setOnAction(e -> {
-            if (cardType.getText().equals("") || cardNo.getText().equals("") || cardEx.getText().equals("") || cardName.getText().equals("")) {
+            if (cardType.getText().equals("") || cardNo.getText().equals("") || cardExY.getText().equals("") ||cardExM.getText().equals("") || cardName.getText().equals("")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error.");
                 alert.setContentText("Please fill in all the required information!");
                 alert.showAndWait();
             }
             else {
-                Payment aux = new Payment(cardType.getText(), Integer.parseInt(cardNo.getText()), cardEx.getText(), cardName.getText());
-
-
-                data.setPayment(loginid,cardType.getText(),Integer.parseInt(cardNo.getText()),cardEx.getText(),cardName.getText());
+                String expiration = String.format("%s/%s/28",cardExY.getText(),cardExM.getText());
+                data.setPayment(loginid,cardType.getText(),Integer.parseInt(cardNo.getText()),expiration,cardName.getText());
                 data.setReservationStatus(id);
                 table.setItems(data.getReservations(loginid,checkadmin,""));
                 window.close();
