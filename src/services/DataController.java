@@ -1162,17 +1162,26 @@ public class DataController {
             Statement s = null;
             s = conn.createStatement();
             System.out.println(d1);
+            String query3 = "SELECT id From  Payments WHERE card_no  = '"+cardNo+"' AND cardholder_name = '"+cardName+"'";
             Boolean exisitng ;
+
+            ResultSet rs = s.executeQuery(query3);
 
             String query = "INSERT INTO Payments (card_type,card_no,card_expiration,cardholder_name) " +
                     "VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"');";
 
             String query2 = "UPDATE  Customers set payment_id = (SELECT id FROM Payments WHERE card_no = "+cardNo+") WHERE account_id = '"+customerid+"' ";
 
-            {
+
+            if (rs.next() == false){
                 s.executeUpdate(query);
+                System.out.println("new data created");
+            } else if (rs.next() == true){
                 s.executeUpdate(query2);
+                System.out.println("data updated");
             }
+
+            
         } catch (SQLException sqlex) {
             try{
                 System.out.println(sqlex.getMessage());
