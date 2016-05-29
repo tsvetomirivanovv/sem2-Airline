@@ -86,8 +86,13 @@ public class flightCell extends ListCell<Flight> {
         flightBox.setAlignment(Pos.CENTER);
 
         selectFlight.setOnAction(e -> {
-            SelectedFlight selectedFlightView = new SelectedFlight(flight, searchInfo);
-            selectedFlightView.start(window);
+            if(checkLogin.isLoggedIn()) {
+                SelectedFlight selectedFlightView = new SelectedFlight(flight, searchInfo);
+                selectedFlightView.start(window);
+            } else {
+                Login login = new Login(false, true, flight, searchInfo);
+                login.start(window);
+            }
         });
 
         details.setOnAction(event -> {
