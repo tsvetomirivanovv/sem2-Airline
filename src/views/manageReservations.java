@@ -83,9 +83,15 @@ public class manageReservations extends Application {
         Button back = new Button("Back to menu");
 
         confirm.setOnAction(event -> {
-            int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
-            creditCardPopUp popup = new creditCardPopUp();
-            popup.start(i,tableView,checkadmin);
+            if(tableView.getSelectionModel().getSelectedItem()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a row before!");
+            }else {
+                int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
+                creditCardPopUp popup = new creditCardPopUp();
+                popup.start(i, tableView, checkadmin);
+            }
         });
 
         back.setOnAction(event -> {
