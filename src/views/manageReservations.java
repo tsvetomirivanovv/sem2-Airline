@@ -13,14 +13,11 @@ import services.DataController;
 import views.components.reservationsDetailsCell;
 
 public class manageReservations extends Application {
-    Menu menu2 = new Menu("Manage reservations");
     TableColumn<Reservation,String> status, customerName;
     TableColumn<Reservation,Integer> reservationId, passengersNo;
     TableColumn<Reservation, Reservation> details;
-    Button viewDetails, cancel, confirm;
     TableView<Reservation> tableView = new TableView<>();
     TextField search = new TextField();
-    HBox buttons = new HBox(20);
     DataController data = new DataController();
     reservationsDetailsCell detailsCell = new reservationsDetailsCell();
 
@@ -78,11 +75,8 @@ public class manageReservations extends Application {
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status, details);
         tableView.setItems(data.getReservations(loginid,checkadmin,""));
 
-        Button confirm = new Button("Confirm reservation ");
-        Button refresh = new Button("Refresh");
-        Button cancelButton  = new Button("Cancel reservation");
-
-
+        Button confirm          = new Button("Confirm reservation ");
+        Button refund           = new Button("Refund reservation");
 
         confirm.setOnAction(event -> {
             int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
@@ -90,17 +84,13 @@ public class manageReservations extends Application {
             popup.start(i);
         });
 
-        refresh.setOnAction(event -> {
-            tableView.setItems(data.getReservations(loginid,checkadmin,""));
-        });
-
-        cancelButton.setOnAction(event ->{
-            int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
-            data.cancelReservation(i);
+        refund.setOnAction( e -> {
+            cancelReservation cancel = new cancelReservation();
+            cancel.start(tableView.getSelectionModel().getSelectedItem(), primaryStage);
         });
 
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(confirm,cancelButton,refresh);
+        hBox1.getChildren().addAll(confirm, refund);
 
         if (checkadmin == true){
         hBox1.getChildren().add(search);
@@ -108,16 +98,16 @@ public class manageReservations extends Application {
 
             searchButton.setOnAction(event -> {
                 String searchWord = search.getText();
-                tableView.setItems(data.getReservations(loginid,checkadmin,searchWord));
+                tableView.setItems(data.getReservations(loginid, checkadmin, searchWord));
             });
         }
 
         menu menu1 = new menu();
+
+
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
         layout.setBottom(hBox1);
-
-
         primaryStage.setTitle("Manage reservations");
         primaryStage.show();
     }
