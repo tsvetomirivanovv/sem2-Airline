@@ -40,6 +40,8 @@ public class SelectedFlight extends Application {
     Flight flight = new Flight();
     searchInfo searchInfo = new searchInfo();
     DataController data = new DataController();
+    double totalpricevalue;
+    Label bigvalue = new Label();
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -247,35 +249,41 @@ public class SelectedFlight extends Application {
         HBox hedge = new HBox(35);
         hedge.getChildren().addAll(hloc, pricevalue1);
 
-        Label choiceboxlabel = new Label();
-        choiceboxlabel.setText(cbbaggage.getValue()+"");
+        Label choiceboxlabel = new Label("Empty");
 
         ImageView line = new ImageView(new Image("assets//images//dash.png"));
         line.setFitHeight(5);
         line.setFitWidth(400);
 
-        Label totalprice = new Label("TOTAL PRICE:");
+        Label  totalprice = new Label("TOTAL PRICE:");
 
-        double totalpricevalue = data.getFlightPrice(flight.getFlight_id());
+        totalpricevalue = data.getFlightPrice(flight.getFlight_id());
 
-        if(!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
-            if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                totalpricevalue += 0;
-            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                totalpricevalue += 50;
-            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                totalpricevalue += 90;
-            }
-        }
-
-        Label bigvalue = new Label();
         bigvalue.setText(totalpricevalue+"");
+        cbbaggage.setOnAction(e -> {
+                    if (!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
+                        if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
+                            choiceboxlabel.setText("None - 0 DKK");
+                            bigvalue.setText(totalpricevalue+"");
+                        } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
+                            choiceboxlabel.setText("Baggage, Max 15 Kg. - 50 DKK");
+                            bigvalue.setText(totalpricevalue+50+"");
+                        } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
+                            choiceboxlabel.setText("Baggage, Max 20 Kg - 90 DKK");
+                            bigvalue.setText(totalpricevalue+90+"");
+                        }
+                    }
+                }
+        );
+
+
+
 
         HBox htot = new HBox(30);
         htot.getChildren().addAll(totalprice, bigvalue);
 
         VBox vforprice = new VBox(5);
-        vforprice.getChildren().addAll(pricel, hedge, line, htot);
+        vforprice.getChildren().addAll(pricel, hedge, choiceboxlabel, line, htot);
 
         vbig.getChildren().addAll(vbiggg, passengerDet, vpayment, himages, hcard, vforprice);
 
