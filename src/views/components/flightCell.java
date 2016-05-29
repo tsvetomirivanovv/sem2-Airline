@@ -12,8 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Flight;
+import services.components.checkLogin;
 import services.components.searchInfo;
 import views.BookTicketPopUp;
+import views.Login;
 import views.SelectedFlight;
 import java.text.SimpleDateFormat;
 
@@ -22,7 +24,7 @@ public class flightCell extends ListCell<Flight> {
     searchInfo searchInfo = new searchInfo();
 
 
-    public flightCell(Stage primaryStage,searchInfo srchInfo) {
+    public flightCell(Stage primaryStage, searchInfo srchInfo) {
         searchInfo = srchInfo;
         window  = primaryStage;
     }
@@ -84,8 +86,13 @@ public class flightCell extends ListCell<Flight> {
         flightBox.setAlignment(Pos.CENTER);
 
         selectFlight.setOnAction(e -> {
-            SelectedFlight selectedFlightView = new SelectedFlight(flight, searchInfo);
-            selectedFlightView.start(window);
+            if(checkLogin.isLoggedIn()) {
+                SelectedFlight selectedFlightView = new SelectedFlight(flight, searchInfo);
+                selectedFlightView.start(window);
+            } else {
+                Login login = new Login(false, true, flight, searchInfo);
+                login.start(window);
+            }
         });
 
         details.setOnAction(event -> {
