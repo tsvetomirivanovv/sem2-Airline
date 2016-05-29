@@ -101,9 +101,14 @@ public class SelectedFlight extends Application {
         vfirst.getChildren().addAll(flightdetails, hout, houtboundflight);
 
         Button bookreservation = new Button("Book reservation");
-        Button close = new Button("Close");
+        Button back = new Button("Back");
+        back.setOnAction(event -> {
+            searchResults results = new searchResults(searchInfo);
+            results.start(primaryStage);
+        });
+
         HBox hbuttons = new HBox(5);
-        hbuttons.getChildren().addAll(bookreservation, close);
+        hbuttons.getChildren().addAll(bookreservation, back);
         hbuttons.setAlignment(Pos.BASELINE_RIGHT);
 
 
