@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import models.Airport;
 import models.Flight;
 import models.Plane;
+import models.Reservation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class OscaServices {
 
     DataController x = new DataController();
 
+    //region coma separated values
     public void FlightToCSV () {
         PrintStream out = null;
         try {
@@ -65,4 +68,60 @@ public class OscaServices {
         }
         System.out.println("Done! Planes to Planes.csv");
     }
+    //endregion
+
+    //region Binary fixed format
+    public void ReservationsToBinary() throws IOException {
+        PrintStream out = new PrintStream(new File("ReservationsBinary"));
+        byte[] bytes;
+
+        for (Reservation one :x.getReservations(0,true,"")){
+            bytes = createRecord(one.getReservation_id(),
+                    one.getFlight().getFlight_id(),
+                    one.getCustomer_id(), one.getStatus());
+
+            out.write(bytes);
+        }
+    }
+
+    private static byte[] createRecord(int reservationId, int flightId, int customerId, String status)
+    {
+        byte[] rawRecord = new byte[4 + 4 + 4 + 1 + 50*2];
+
+        rawRecord[0] = (byte) (reservationId >> 24);
+        rawRecord[1] = (byte) (reservationId >> 16);
+        rawRecord[2] = (byte) (reservationId >> 8);
+        rawRecord[3] = (byte) reservationId;
+
+        rawRecord[4] = (byte) (flightId >> 24);
+        rawRecord[5] = (byte) (flightId >> 16);
+        rawRecord[6] = (byte) (flightId >> 8);
+        rawRecord[7] = (byte) flightId;
+
+        rawRecord[8] = (byte) (customerId >> 24);
+        rawRecord[9] = (byte) (customerId >> 16);
+        rawRecord[10] = (byte) (customerId >> 8);
+        rawRecord[11] = (byte) customerId;
+
+        rawRecord[12] = (byte) status.length();
+
+        int j = 13;
+        stringRecord(j,status,rawRecord);
+
+        return rawRecord;
+    }
+
+    private static void stringRecord(int j, String z, byte[] byte1){
+        for ( int i = 0;  i < z.length(); i++)
+        {
+            char ch = z.charAt(i);
+
+            byte1[j] = (byte) (ch >> 8);
+            j++;
+
+            byte1[j] = (byte) ch;
+            j++;
+        }
+    }
+    //endregion
 }
