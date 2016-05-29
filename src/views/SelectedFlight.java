@@ -41,6 +41,9 @@ public class SelectedFlight extends Application {
 
         layout.getChildren().addAll(vbig, vflights);
 
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(layout);
+
         //setting the content for the second vbox
 
         Label outbound = new Label("OUTBOUND");
@@ -409,7 +412,7 @@ public class SelectedFlight extends Application {
 
         vbig.getChildren().addAll(vbiggg, passengerDetVBox, vpayment, himages, hcard, vforprice);
 
-        Scene scene = new Scene(layout, 1200, 600);
+        Scene scene = new Scene(scrollPane, 1200, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
 
