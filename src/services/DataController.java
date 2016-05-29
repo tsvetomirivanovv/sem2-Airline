@@ -630,22 +630,6 @@ public class DataController {
             System.out.println("Logged in");
             checkLogin.setAccount_id(id);
             checkLogin.setAccount_email(account_email);
-
-            if (role == 1) {
-                checkLogin.setAdmin(true);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as admin!");
-                alert.setContentText("You can now manage planes, flights and reservations.");
-                alert.showAndWait();
-            } else if (role == 0) {
-                checkLogin.setAdmin(false);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as a customer!");
-                alert.setContentText("You can now search a flight and book a reservation.");
-                alert.showAndWait();
-            }
         }
 
         return loggedIn;
