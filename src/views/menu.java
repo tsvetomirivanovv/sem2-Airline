@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import services.OscaServices;
 import services.components.checkLogin;
 
+import java.io.IOException;
+
 
 public class menu {
 
@@ -32,6 +34,7 @@ public class menu {
         MenuItem manageReservations = new MenuItem("Manage Reservations");
         MenuItem flights = new MenuItem("Export flights");
         MenuItem planes = new MenuItem("Export planes");
+        MenuItem reservationsBinary = new MenuItem("Reservations to binary");
         MenuItem manageFlights = new MenuItem("Manage flights");
 
         logOut.setOnAction(event -> {
@@ -74,6 +77,14 @@ public class menu {
             OscaServices caos = new OscaServices();
             caos.PlaneToCSV();
         });
+        reservationsBinary.setOnAction(event -> {
+            OscaServices caos = new OscaServices();
+            try {
+                caos.ReservationsToBinary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         manageFlights.setOnAction(event -> {
             views.manageFlights manageFlights1 = new manageFlights();
@@ -84,7 +95,7 @@ public class menu {
         filemenu2.getItems().addAll(logOut);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
-        OSCA.getItems().addAll(flights,planes);
+        OSCA.getItems().addAll(flights,planes,reservationsBinary);
         flightsMenu.getItems().addAll(manageFlights);
         //Main menu bar
         MenuBar menuBar = new MenuBar();
