@@ -54,8 +54,8 @@ public class SelectedFlight extends Application {
 
         HBox layout = new HBox(2);
 
-        VBox vbig = new VBox(5);
-        VBox vflights = new VBox(20);
+        VBox vbig = new VBox(30);
+        VBox vflights = new VBox(400);
 
         layout.getChildren().addAll(vbig, vflights);
 
@@ -80,8 +80,8 @@ public class SelectedFlight extends Application {
         VBox vdates = new VBox(1);
         vdates.getChildren().addAll(datevalue1, datevalue2);
 
-        Label fromvalue = new Label(""+flight.getDeparture_loc().getName());
-        Label tovalue = new Label(""+flight.getArrival_loc().getName());
+        Label fromvalue = new Label(flight.getDeparture_loc().getName()+", "+flight.getDeparture_loc().getCity());
+        Label tovalue = new Label(flight.getArrival_loc().getName()+", "+flight.getArrival_loc().getCity());
         VBox vlocations = new VBox(1);
         vlocations.getChildren().addAll(fromvalue, tovalue);
 
@@ -113,7 +113,14 @@ public class SelectedFlight extends Application {
         VBox vfirst = new VBox(8);
         vfirst.getChildren().addAll(flightdetails, hout, houtboundflight);
 
-        vflights.getChildren().addAll(vfirst);
+        Button bookreservation = new Button("Book reservation");
+        Button close = new Button("Close");
+        HBox hbuttons = new HBox(5);
+        hbuttons.getChildren().addAll(bookreservation, close);
+        hbuttons.setAlignment(Pos.BASELINE_RIGHT);
+
+
+        vflights.getChildren().addAll(vfirst, hbuttons);
 
         // setting the content for the first vbox, vbig
         Label wejustneed = new Label("We just need a few more details. Who is traveling?");
@@ -124,7 +131,7 @@ public class SelectedFlight extends Application {
 
         Label passengername = new Label("Passenger name:");
         TextField tfpassengername = new TextField();
-        tfpassengername.setPromptText("Write the passenger's name here");
+        tfpassengername.setPromptText("Passenger's name");
         tfpassengername.setMaxWidth(178);
         VBox vpass1 = new VBox(4);
         vpass1.getChildren().addAll(passengername, tfpassengername);
@@ -134,9 +141,10 @@ public class SelectedFlight extends Application {
         VBox vpass2 = new VBox(4);
         vpass2.getChildren().addAll(birthdate, dpbirthdate);
 
-        Label seatno = new Label();
+        Label seatno = new Label("Seat no.");
         ChoiceBox cbseatno = new ChoiceBox();
-        cbseatno.setMaxWidth(30);
+        cbseatno.setMaxWidth(40);
+        ///////////////////////////////////////////////////////////////////////
         cbseatno.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
         VBox vpass3 = new VBox(4);
         vpass3.getChildren().addAll(seatno, cbseatno);
@@ -166,51 +174,63 @@ public class SelectedFlight extends Application {
                 break;
         }
 
-        vbig.getChildren().addAll(wejustneed, passengerdetails);
+        VBox vbiggg = new VBox(15);
+        vbiggg.getChildren().addAll(wejustneed, passengerdetails);
 
-        VBox vbigger = new VBox(20);
         Label Payment = new Label("Payment info");
         Label note1 = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
         Label note2 = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
 
-        VBox vpayment = new VBox(4);
+        VBox vpayment = new VBox(6);
         vpayment.getChildren().addAll(Payment, note1, note2);
 
         ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
+        mastercard.setFitHeight(100);
+        mastercard.setFitWidth(100);
         ImageView visa = new ImageView(new Image("assets\\images\\visa.jpg"));
+        visa.setFitHeight(100);
+        visa.setFitWidth(100);
         ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
+        visa_electron.setFitHeight(100);
+        visa_electron.setFitWidth(100);
         ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
+        maestro.setFitHeight(100);
+        maestro.setFitWidth(100);
 
-        HBox himages = new HBox(5);
+        HBox himages = new HBox(30);
         himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
 
         Label holderName = new Label("Card holder name:");
         TextField holderField = new TextField();
         holderField.setPromptText("Name");
-        VBox holder = new VBox(20);
+        VBox holder = new VBox(10);
         holder.getChildren().addAll(holderName,holderField);
 
         Label cardNo = new Label("Card no:");
         TextField noField = new TextField();
         noField.setPromptText("card number");
-        VBox number = new VBox(20);
+        VBox number = new VBox(10);
         number.getChildren().addAll(cardNo,noField);
 
         Label expirationDate= new Label("Expiration date:");
+        expirationDate.setAlignment(Pos.TOP_CENTER);
         TextField expirationYear = new TextField();
         expirationYear.setPromptText("YYYY");
+        expirationYear.setMaxWidth(50);
         Label dash = new Label("/");
         TextField expirationMounth = new TextField();
         expirationMounth.setPromptText("MM");
+        expirationMounth.setMaxWidth(35);
         HBox fields = new HBox(5);
         fields.getChildren().addAll(expirationMounth,dash,expirationYear);
-        VBox expiration = new VBox(20);
+        VBox expiration = new VBox(10);
         expiration.getChildren().addAll(expirationDate,fields);
 
         Label securityCode = new Label("Security code:");
         TextField cvv = new TextField();
         cvv.setPromptText("CVV");
-        VBox security = new VBox(20);
+        cvv.setMaxWidth(50);
+        VBox security = new VBox(10);
         security.getChildren().addAll(securityCode,cvv);
 
         HBox hcard = new HBox(15);
@@ -220,27 +240,32 @@ public class SelectedFlight extends Application {
 
         HBox hloc = new HBox(5);
         Label arrowlabel = new Label("->");
-        hloc.getChildren().addAll(fromvalue, arrowlabel, tovalue);
+        Label fromvalue1 = new Label(flight.getDeparture_loc().getCity());
+        Label tovalue1 = new Label(flight.getArrival_loc().getCity());
+        hloc.getChildren().addAll(fromvalue1, arrowlabel, tovalue1);
+        Label pricevalue1 = new Label(data.getFlightPrice(flight.getFlight_id())+" DKK");
         HBox hedge = new HBox(35);
-        hedge.getChildren().addAll(hloc, pricevalue);
+        hedge.getChildren().addAll(hloc, pricevalue1);
 
         Label choiceboxlabel = new Label();
-        choiceboxlabel.setText(cbbaggage.getValue().toString());
+        choiceboxlabel.setText(cbbaggage.getValue()+"");
 
         ImageView line = new ImageView(new Image("assets//images//dash.png"));
+        line.setFitHeight(5);
+        line.setFitWidth(400);
 
         Label totalprice = new Label("TOTAL PRICE:");
 
         double totalpricevalue = data.getFlightPrice(flight.getFlight_id());
 
-        if (cbbaggage.getValue().equals("None - 0 DKK")) {
-            totalpricevalue+=0;
-        }
-        else if(cbbaggage.getValue().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-            totalpricevalue+=50;
-        }
-        else if(cbbaggage.getValue().equals("Baggage, Max 20 Kg - 90 DKK")) {
-            totalpricevalue+=90;
+        if(!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
+            if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
+                totalpricevalue += 0;
+            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
+                totalpricevalue += 50;
+            } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
+                totalpricevalue += 90;
+            }
         }
 
         Label bigvalue = new Label();
@@ -252,8 +277,7 @@ public class SelectedFlight extends Application {
         VBox vforprice = new VBox(5);
         vforprice.getChildren().addAll(pricel, hedge, line, htot);
 
-        vbig.getChildren().addAll();
-
+        vbig.getChildren().addAll(vbiggg, passengerDet, vpayment, himages, hcard, vforprice);
 
         Scene scene = new Scene(layout, 1200, 600);
         primaryStage.setScene(scene);

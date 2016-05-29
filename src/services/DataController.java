@@ -3,19 +3,15 @@ package services;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import models.*;
 import services.components.checkLogin;
 
 import java.sql.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DataController {
     static Connection conn = SQLConfig.connect();
@@ -65,44 +61,7 @@ public class DataController {
 
         return reservations;
     }
-    public ObservableList<Reservation> getCustomerReservations(int id) {
-        ObservableList<Reservation> reservations = FXCollections.observableArrayList();
-        ArrayList<Passenger> passenger_list;
-
-        try {
-            Statement s = null;
-            s = conn.createStatement();
-
-            ResultSet rs = s.executeQuery("SELECT * FROM Reservations WHERE customer_id = '"+id+"'");
-
-            if (rs != null)
-                while (rs.next()) {
-
-                    int reservation_id = rs.getInt("id");
-                    int flight_id = rs.getInt("flight_id");
-                    int customer_id = rs.getInt("customer_id");
-                    String status = rs.getString("status");
-                    String customer_name = getCustomerName(customer_id);
-
-                    Flight flight = getFlight(flight_id);
-                    passenger_list = getPassengers(reservation_id);
-                    Double price = getReservationPrice(reservation_id);
-                    int total_passengers = getPassengers(reservation_id).size();
-
-                    Reservation reservation = new Reservation(flight, price, reservation_id, status, customer_id, passenger_list, total_passengers , customer_name);
-                    reservations.add(reservation);
-                }
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
-
-        return reservations;
-    }
+    
     public static Flight getFlight(int flightId) {
         Flight flight = null;
 
@@ -1189,7 +1148,7 @@ public class DataController {
     }
 
     public static void setPayment(int customerid,String cardType,int cardNo,String cardEXP,String cardName){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
         java.util.Date d1 = null;
 

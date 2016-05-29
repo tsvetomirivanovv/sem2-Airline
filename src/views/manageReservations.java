@@ -75,13 +75,25 @@ public class manageReservations extends Application {
         tableView.getColumns().addAll(customerName, passengersNo, reservationId, status, details);
         tableView.setItems(data.getReservations(loginid,checkadmin,""));
 
-        Button confirm          = new Button("Confirm reservation ");
-        Button refund           = new Button("Refund reservation");
+        Button confirm = new Button("Confirm reservation ");
+        Button refund  = new Button("Cancel reservation");
+        Button back = new Button("Back to menu");
 
         confirm.setOnAction(event -> {
-            int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
-            creditCardPopUp popup = new creditCardPopUp();
-            popup.start(i);
+            if(tableView.getSelectionModel().getSelectedItem()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setContentText("Please select a row before!");
+            }else {
+                int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
+                creditCardPopUp popup = new creditCardPopUp();
+                popup.start(i, tableView, checkadmin);
+            }
+        });
+
+        back.setOnAction(event -> {
+            searchFlights search = new searchFlights();
+            search.start(primaryStage);
         });
 
         refund.setOnAction( e -> {
@@ -90,7 +102,7 @@ public class manageReservations extends Application {
         });
 
         HBox hBox1 = new HBox(15);
-        hBox1.getChildren().addAll(confirm, refund);
+        hBox1.getChildren().addAll(confirm, refund, back);
 
         if (checkadmin == true){
         hBox1.getChildren().add(search);
