@@ -72,7 +72,7 @@ public class OscaServices {
 
     //region Binary fixed format
     public void ReservationsToBinary() throws IOException {
-        PrintStream out = new PrintStream(new File("ReservationsBinary"));
+        PrintStream out = new PrintStream(new File("ReservationsBinary.txt"));
         byte[] bytes;
 
         for (Reservation one :x.getReservations(0,true,"")){
