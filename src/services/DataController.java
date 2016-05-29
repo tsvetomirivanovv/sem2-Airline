@@ -1130,13 +1130,17 @@ public class DataController {
         Flight flighter = getFlight(flight_id);
         int seats = 0;
 
-        if (classe.equals("coach")) {
+        System.err.println("Flight:" + flight_id);
+        System.err.println("classe:" + classe);
+
+
+        if (classe.equals("Coach class")) {
             seats=(flighter.getPlane().getCoachSeats());
         }
-        else if (classe.equals("economy")) {
+        else if (classe.equals("Economy class")) {
             seats=(flighter.getPlane().getEconomySeats());
         }
-        else if (classe.equals("business")) {
+        else if (classe.equals("First class")) {
             seats=(flighter.getPlane().getBusinessSeats());
         }
 

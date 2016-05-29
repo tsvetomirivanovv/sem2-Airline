@@ -184,16 +184,16 @@ public class SelectedFlight extends Application {
         VBox vpayment = new VBox(6);
         vpayment.getChildren().addAll(Payment, note1, note2);
 
-        ImageView mastercard = new ImageView(new Image("assets\\images\\mastercard.png"));
+        ImageView mastercard = new ImageView(new Image("assets//images//mastercard.png"));
         mastercard.setFitHeight(100);
         mastercard.setFitWidth(100);
-        ImageView visa = new ImageView(new Image("assets\\images\\visa.jpg"));
+        ImageView visa = new ImageView(new Image("assets//images//visa.jpg"));
         visa.setFitHeight(100);
         visa.setFitWidth(100);
-        ImageView visa_electron = new ImageView(new Image("assets\\images\\visa-electron.png"));
+        ImageView visa_electron = new ImageView(new Image("assets//images//visa-electron.png"));
         visa_electron.setFitHeight(100);
         visa_electron.setFitWidth(100);
-        ImageView maestro = new ImageView(new Image("assets\\images\\Maestro.png"));
+        ImageView maestro = new ImageView(new Image("assets//images//Maestro.png"));
         maestro.setFitHeight(100);
         maestro.setFitWidth(100);
 
