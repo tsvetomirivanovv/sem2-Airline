@@ -5,9 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Created by Andrei on 5/16/2016.
- */
 public class Payment {
 
     private IntegerProperty payment_id;
@@ -29,6 +26,10 @@ public class Payment {
         this.card_no = new SimpleIntegerProperty(card_no);
         this.card_expiration = new SimpleStringProperty(card_expiration);
         this.cardHolder_name = new SimpleStringProperty(cardHolder_name);
+    }
+
+    public Payment() {
+
     }
 
     public int getPayment_id() {

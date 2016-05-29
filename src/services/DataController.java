@@ -1151,37 +1151,106 @@ public class DataController {
         return integers;
     }
 
-    public static void setPayment(int customerid,String cardType,int cardNo,String cardEXP,String cardName){
+    public static boolean checkPayment(int accountId) {
+        boolean payment = false;
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+
+            rs = s.executeQuery("SELECT payment_id FROM Customers WHERE account_id =  " + accountId);
+
+
+            if (rs != null)
+                while (rs.next()) {
+                    int payment_id = rs.getInt("payment_id");
+
+                    if (payment_id <= 0) {
+                        payment = false;
+                    } else {
+                        payment = true;
+                    }
+                 }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+            }
+            catch(SQLException sql){}
+        }
+
+        return payment;
+    }
+
+    public static Payment getPayment(int accountId) {
+        Payment payment = new Payment();
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+
+            rs = s.executeQuery("SELECT p.id as payment_id, p.card_type, p.card_no, p.card_expiration, p.cardholder_name FROM Customers c, payments p WHERE p.id = c.payment_id AND  c.account_id =  " + accountId);
+
+            //id | card_type | card_no | card_expiration     | cardholder_name |
+
+            if (rs != null)
+                while (rs.next()) {
+                    int payment_id = rs.getInt("payment_id");
+                    String card_type = rs.getString("card_type");
+                    int card_no = rs.getInt("card_no");
+                    String card_expiration = rs.getString("card_expiration");
+                    String cardholder_name = rs.getString("cardholder_name");
+
+                    System.err.println("id: " + payment_id );
+                    System.err.println("card_no: " + card_no );
+                    System.err.println("card_type: " + card_type );
+                    System.err.println("card_expiration: " + card_expiration);
+                    System.err.println("cardholder_name: " + cardholder_name );
+
+                    payment = new Payment(payment_id, card_type, card_no, card_expiration, cardholder_name);
+
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+            }
+            catch(SQLException sql){}
+        }
+
+        return payment;
+    }
+
+    public static void setPayment(int customerid, String cardType, int cardNo, String cardEXP, String cardName, int exists){
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
         java.util.Date d1 = null;
 
         try {
-            d1= format.parse(cardEXP);
-            System.out.println(d1);
             Statement s = null;
             s = conn.createStatement();
-            System.out.println(d1);
-            String query3 = "SELECT id From  Payments WHERE card_no  = '"+cardNo+"' AND cardholder_name = '"+cardName+"'";
-            Boolean exisitng ;
+            ResultSet rs = null;
 
-            ResultSet rs = s.executeQuery(query3);
+            if (exists > 0){
+                System.out.println("Update the actual one");
+                s.executeUpdate("UPDATE Payments SET card_type = '" + cardType + "', card_no = " + cardNo + ", card_expiration = '" + cardEXP + "', cardholder_name = '" + cardName + "'");
+            } else {
+                s.executeUpdate("INSERT INTO Payments (card_type, card_no, card_expiration, cardholder_name) VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"')");
+                rs = s.executeQuery("SELECT last_insert_id() AS last_id FROM Payments");
 
-            String query = "INSERT INTO Payments (card_type,card_no,card_expiration,cardholder_name) " +
-                    "VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"');";
+                if (rs != null)
+                    while (rs.next()) {
 
-            String query2 = "UPDATE  Customers set payment_id = (SELECT id FROM Payments WHERE card_no = "+cardNo+") WHERE account_id = '"+customerid+"' ";
-
-
-            if (rs.next() == false){
-                s.executeUpdate(query);
-                System.out.println("new data created");
-            } else if (rs.next() == true){
-                s.executeUpdate(query2);
-                System.out.println("data updated");
+                        int lastid = rs.getInt("last_id");
+                        s = conn.createStatement();
+                        s.executeUpdate("UPDATE Customers SET payment_id = " + lastid + " WHERE account_id = " + customerid);
+                        System.out.println("Create a new one " + lastid);
+                    }
             }
-
-            
         } catch (SQLException sqlex) {
             try{
                 System.out.println(sqlex.getMessage());
