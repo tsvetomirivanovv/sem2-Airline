@@ -445,19 +445,7 @@ public class DataController {
                     int plane_id = rs.getInt("plane_id");
                     int flight_id = rs.getInt("flight_id");
                     String baggage = rs.getString("baggage");
-                    Double baggagePrice = 0.0;
-
-                    switch (baggage) {
-                        case "none":
-                            baggagePrice = 0.0;
-                            break;
-                        case "small":
-                            baggagePrice = 50.0;
-                            break;
-                        case "large":
-                            baggagePrice = 90.0;
-                            break;
-                    }
+                    Double baggagePrice = getBaggagePrice(baggage);
 
                     Double seat_price = getPriceForSeat(seat_no, plane_id);
                     Double flight_price = getFlightPrice(flight_id);
@@ -974,6 +962,123 @@ public class DataController {
 
     public static String codeCUT(String fullString){
         return  fullString.substring(fullString.length() - 4, fullString.length() - 1);
+    }
+
+
+    // Get refund
+    public static ObservableList<Refund> getRefund(int reservationId) {
+        ObservableList<Refund> refundList = FXCollections.observableArrayList();
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+            rs = s.executeQuery("SELECT p.name, p.seat_no, p.baggage, f.plane_id, pl.firstclass_price, pl.coach_price, datediff(f.departure_time, NOW()) as days_left, f.flight_price FROM Reservation_passengers rp, Passengers p, Flights f, planes pl, Reservations r WHERE pl.id = f.plane_id AND r.id = rp.reservation_id AND r.flight_id = f.id AND rp.passenger_id = p.id AND rp.reservation_id = " + reservationId);
+
+
+            if (rs != null)
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    int seat_no = rs.getInt("seat_no");
+                    int plane_id = rs.getInt("plane_id");
+                    int days_left = rs.getInt("days_left");
+                    String baggage = rs.getString("baggage");
+                    Double flight_price = rs.getDouble("flight_price");
+                    String classType = getClassType(plane_id, seat_no);
+                    int percentange = 0;
+                    Double amount = 0.0;
+
+
+                    if(classType.equals("First class")) {
+                        Double firstclass_price = rs.getDouble("firstclass_price");
+                        percentange = 100;
+                        amount = flight_price + getBaggagePrice(baggage) + firstclass_price;
+                    }
+
+                    if(classType.equals("Coach class")) {
+                        Double coach_price = rs.getDouble("coach_price");
+                        percentange = 85;
+                        amount = (percentange * (flight_price + getBaggagePrice(baggage) + coach_price))/100;
+                    }
+
+                    if(classType.equals("Economy class")) {
+                        if(days_left > 14) {
+                            percentange = 70;
+                            amount = (percentange * (flight_price + getBaggagePrice(baggage)))/100;
+                        } else {
+                            percentange = 0;
+                            amount = 0.0;
+                        }
+                    }
+
+                    refundList.add(new Refund(name, classType, percentange, amount));
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return refundList;
+    }
+
+    public static Double getBaggagePrice(String baggageType) {
+        Double price = 0.0;
+
+        switch (baggageType) {
+            case "none":
+                price = 0.0;
+                break;
+            case "small":
+                price = 50.0;
+                break;
+            case "large":
+                price = 90.0;
+                break;
+        }
+
+        return price;
+    }
+
+    public static String getClassType(int planeId, int seatNo) {
+        String classType = "";
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+            ResultSet rs;
+
+
+            rs = s.executeQuery("SELECT firstclass_seats, coach_seats  FROM Planes WHERE id =  " + planeId);
+
+
+            if (rs != null)
+                while (rs.next()) {
+                    int firstclass_seats = rs.getInt("firstclass_seats");
+                    int coach_seats = rs.getInt("coach_seats");
+
+
+                    if(seatNo <= firstclass_seats) {
+                        classType = "First class";
+                    } else if (seatNo > coach_seats) {
+                        classType = "Economy class";
+                    } else {
+                        classType = "Coach class";
+                    }
+                }
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+            }
+            catch(SQLException sql){}
+        }
+
+        return classType;
     }
 
     public static Double getClassPrice(int flight_id, String classType) {
