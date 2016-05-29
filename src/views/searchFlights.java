@@ -113,10 +113,10 @@ public class searchFlights extends Application {
                         passengerNo = 2;
                         break;
                     case "3 Passengers":
-                        passengerNo = 1;
+                        passengerNo = 3;
                         break;
                     case "4 Passengers":
-                        passengerNo = 1;
+                        passengerNo = 4;
                         break;
                 }
 
