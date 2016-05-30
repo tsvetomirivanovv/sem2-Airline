@@ -33,18 +33,29 @@ public class searchResults extends Application {
     @Override
     public void start(Stage primaryStage)  {
         Label sidebarTitle = new Label("You are searching for:");
+        sidebarTitle.getStyleClass().add("sidebarTitle");
         ToggleGroup flightType = new ToggleGroup(); // Group the 2 radioboxes (One way / Return)
 
         Label departureLocLabel = new Label("Departure:");
+        departureLocLabel.getStyleClass().add("departureLocLabel");
+
         Label arrivalLocLabel = new Label("Arrival:");
+        arrivalLocLabel.getStyleClass().add("departureLocLabel");
+
         Label passengersLabel = new Label("For:");
+        passengersLabel.getStyleClass().add("departureLocLabel");
+
         Label classTypeLabel = new Label("At: ");
+        classTypeLabel.getStyleClass().add("departureLocLabel");
+
         RadioButton oneWay = new RadioButton("One way");
         oneWay.setToggleGroup(flightType);
         oneWay.setDisable(true);
         oneWay.setSelected(!searchInfo.hasReturnDate());
         Label startDateLabel = new Label("From:");
+        startDateLabel.getStyleClass().add("departureLocLabel");
         Label returnDateLabel = new Label("To:");
+        returnDateLabel.getStyleClass().add("departureLocLabel");
 
         VBox sidebarLabels = new VBox(20);
         sidebarLabels.getChildren().addAll(departureLocLabel, arrivalLocLabel, passengersLabel, classTypeLabel, oneWay, startDateLabel);
@@ -89,6 +100,10 @@ public class searchResults extends Application {
         sidebarContent.getChildren().addAll(sidebarLabels, sidebarValues);
 
         Button back = new Button("Back");
+        back.getStyleClass().add("back");
+
+        //assinging css for the list view
+        flights.getStyleClass().add("flights");
 
         back.setOnAction(event -> {
             searchFlights flights1 = new searchFlights();
@@ -117,6 +132,7 @@ public class searchResults extends Application {
         layout.setTop(menu1.display(primaryStage));
 
         primaryStage.setTitle("Search Results");
+        layout.getStylesheets().add("assets//styles//style_searchResults.css");
         primaryStage.setScene(new Scene(layout, 1000, 600));
         primaryStage.show();
     }

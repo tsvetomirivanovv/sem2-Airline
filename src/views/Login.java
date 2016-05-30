@@ -46,19 +46,29 @@ public class Login {
             title = new Label("Log in as customer");
         }
 
+        //adding css to the title label
+        title.getStyleClass().add("title");
+
         Label emailLabel = new Label("Email: ");
         emailLabel.setAlignment(Pos.CENTER_LEFT);
         emailLabel.setMaxWidth(220);
+        //adding the css to the labels, it is going to be the same for the emailLabel and the PasswordLabel
+        emailLabel.getStyleClass().add("labels");
 
         Label passwordLabel = new Label("Password:");
         passwordLabel.setAlignment(Pos.CENTER_LEFT);
         passwordLabel.setMaxWidth(220);
+        passwordLabel.getStyleClass().add("labels");
 
         TextField email = new TextField();
         email.setMaxWidth(220);
 
         PasswordField password = new PasswordField();
         password.setMaxWidth(220);
+
+        //assigning css to the textfields
+        email.getStyleClass().add("textfield");
+        password.getStyleClass().add("textfield");
 
         VBox vBox1 = new VBox();
         vBox1.getChildren().addAll(emailLabel,email);
@@ -74,6 +84,10 @@ public class Login {
         Button closeButton = new Button("Close");
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(loginButton,closeButton);
+
+        //assigning css to the buttons
+        loginButton.getStyleClass().add("loginButton");
+        closeButton.getStyleClass().add("closeButton");
 
         HBox createAccount = new HBox();
         createAccount.setAlignment(Pos.CENTER);
@@ -106,6 +120,7 @@ public class Login {
 
 
         VBox mainVbox =  new VBox(15);
+        mainVbox.getStylesheets().add("assets//styles//style_Login.css");
         mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
         if(!isAdmin) {
             mainVbox.getChildren().add(createAccount);
@@ -140,6 +155,7 @@ public class Login {
                 alert.setHeaderText("You have logged in as admin!");
                 alert.setContentText("You can now manage planes, flights and reservations.");
                 alert.showAndWait();
+                System.err.println("ADMIN IS: "+checkLogin.isAdmin());
             } else {
                 checkLogin.setAdmin(false);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -147,6 +163,7 @@ public class Login {
                 alert.setHeaderText("You have logged in as a customer!");
                 alert.setContentText("You can now search a flight and book a reservation.");
                 alert.showAndWait();
+                System.err.println("ADMIN IS: "+checkLogin.isAdmin());
             }
 
             if(redirect) {

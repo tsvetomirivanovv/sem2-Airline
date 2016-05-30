@@ -85,7 +85,31 @@
     -fx-prompt-text-fill: #ffffff;
 }
 
+.arrival {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
+    -fx-padding: 7px 15px 7px 15px;
+    -fx-border-radius: 6px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #ffffff;
+}
+
 .dropdown .list-view {
     -fx-background-color: transparent;
     -fx-text-fill: white;
+}
+
+.datePicker1 {
+    -fx-background-color: #bdc3c7;
+    -fx-text-fill: #2f4154;
+    -fx-font-size: 17px;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+.datePicker2 {
+    -fx-background-color: #bdc3c7;
+    -fx-text-fill: #2f4154;
+    -fx-font-size: 17px;
+    -fx-prompt-text-fill: #ffffff;
 }
