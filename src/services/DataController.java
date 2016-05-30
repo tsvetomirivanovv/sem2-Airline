@@ -343,6 +343,33 @@ public class DataController {
         return name;
     }
 
+    public static ArrayList<Integer> getReservedSeats () {
+        ArrayList<Integer> reserved = new ArrayList<>();
+
+        try{
+            Statement s = null;
+            s = conn.createStatement();
+
+            ResultSet rs = s.executeQuery("SELECT seat_no FROM Passengers");
+
+            if (rs != null) {
+                while (rs.next()) {
+                    int seat = rs.getInt("passenger_id");
+                    reserved.add(seat);
+                }
+            }
+        }catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+
+        return reserved;
+    }
+
     public static ArrayList<Passenger> getPassengers(int reservationId) {
         ArrayList<Passenger> passengers_list = new ArrayList<>();
 
