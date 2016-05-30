@@ -354,7 +354,7 @@ public class DataController {
 
             if (rs != null) {
                 while (rs.next()) {
-                    int seat = rs.getInt("passenger_id");
+                    int seat = rs.getInt("seat_no");
                     reserved.add(seat);
                 }
             }
