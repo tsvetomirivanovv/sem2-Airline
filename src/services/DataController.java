@@ -1160,10 +1160,6 @@ public class DataController {
         Flight flighter = getFlight(flight_id);
         int seats = 0;
 
-        System.err.println("Flight:" + flight_id);
-        System.err.println("classe:" + classe);
-
-
         if (classe.equals("Coach class")) {
             seats=(flighter.getPlane().getCoachSeats());
         }
@@ -1176,12 +1172,10 @@ public class DataController {
 
         for (int i=1; i <= seats; i++) {
             if (exclude.size() > 0) {
-                System.out.println("In if");
                 int ok = 0;
                 for(int j = 0; j < exclude.size(); j++) {
 
                     if(exclude.get(j) == i ) {
-                        System.out.println("In loop - if /// J:" + exclude.get(j) + " I: " + i);
                         ok = 1;
                     }
                 }
@@ -1190,7 +1184,6 @@ public class DataController {
                     integers.add(i);
                 }
             } else {
-                System.out.println("In lse I: " + i);
                 integers.add(i);
             }
         }
@@ -1309,25 +1302,71 @@ public class DataController {
         }
     }
 
-    public static void createReservation (String status, int flight_id, int customer_id) {
+    public static void createReservation (String status, int flight_id, int customer_id, ArrayList<Passenger> passenegerList) {
+
+        System.err.println("seat No: " + passenegerList.get(1).getName());
+        System.err.println();
 
         try {
             Statement s = null;
             s = conn.createStatement();
 
-            String query = "INSERT INTO Reservations (status, customer_id, flight_id) VALUES ('" + status + "', " + customer_id + ", "+ flight_id +" );";
-            s.executeUpdate(query);
+            s.executeUpdate("INSERT INTO Reservations (status, customer_id, flight_id) VALUES ('" + status + "', " + customer_id + ", "+ flight_id +" )");
+
+            ResultSet rs = s.executeQuery("SELECT last_insert_id() AS last_reservation_id FROM Reservations");
+
+            if (rs != null)
+                while (rs.next()) {
+                    int last_reservation_id = rs.getInt("last_reservation_id");
+                    System.err.println("last_reservation_id No: " + last_reservation_id);
+                    s = conn.createStatement();
+
+                    for(int i = 0; i < passenegerList.size(); i++) {
+                        System.err.println("I: " + i );
+                        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(passenegerList.get(i).getBirth_date());
+                        System.err.println("Name: " + passenegerList.get(i).getName());
+                        System.err.println("Birth Date: " + formattedDate);
+                        System.err.println("Seat No: " + passenegerList.get(i).getSeat_no());
+                        System.err.println("Baggage: " + getBaggageType(passenegerList.get(i).getBaggage()));
+
+                        s.executeUpdate("INSERT INTO Passengers SET name = '" + passenegerList.get(i).getName() + "', birth_date = '" + formattedDate + "', seat_no = " + passenegerList.get(i).getSeat_no() + ", baggage = '" + getBaggageType(passenegerList.get(i).getBaggage()) + "'");
+
+                        rs = s.executeQuery("SELECT last_insert_id() AS last_passenger_id FROM Passengers");
+
+                        if (rs != null)
+                            while (rs.next()) {
+                                int last_passenger_id = rs.getInt("last_passenger_id");
+                                s = conn.createStatement();
+                                System.err.println("last_passenger_id No: " + last_passenger_id);
+                                System.err.println();
+
+                                s.executeUpdate("INSERT INTO reservation_passengers (reservation_id, passenger_id) VALUES (" + last_reservation_id + ", " + last_passenger_id + ")");
+                            }
+                    }
+                }
         } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
+
         }
     }
 
-    public static void createPassenger (String name,String birthday, int seat, String baggage){
+    public static String getBaggageType(int baggageType) {
+        String baggage = "";
+
+        switch (baggageType) {
+            case 0:
+                baggage = "none";
+            case 1:
+                baggage = "small";
+                break;
+            case 2:
+                baggage = "large";
+                break;
+        }
+
+        return baggage;
+    }
+
+    public static void createPassenger (String name, String birthday, int seat, String baggage){
 
         try {
             Statement s = null;
