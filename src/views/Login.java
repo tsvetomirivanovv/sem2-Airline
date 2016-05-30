@@ -133,7 +133,7 @@ public class Login {
 
         if (data.login(userName, userPassword)) {
 
-            if (checkLogin.isAdmin()) {
+            if (isAdmin) {
                 checkLogin.setAdmin(true);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
