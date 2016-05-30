@@ -484,26 +484,18 @@ public class SelectedFlight extends Application {
 
             ArrayList<Passenger> passengersList = new ArrayList<>();
 
-            String selectedBaggage = null;
-
-
-            System.err.println("Baggage: " + getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()));
-            System.err.println("Date formatted: " + formatBirthDate(dpbirthdate.getValue().toString()));
-            System.err.println("Name: " + tfpassengername.getText());
-            System.err.println("Seat: " + Integer.parseInt(cbseatno.getValue().toString()));
-
-
             passengersList.add(new Passenger(0, getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate.getValue().toString()), tfpassengername.getText(), Integer.parseInt(cbseatno.getValue().toString())));
-
-            //setPassenger(cbbaggage,selectedBaggage,tfpassengername,dpbirthdate,cbseatno);
-
-            if (searchInfo.getPassengers()==2) {
+            System.out.println("Nr1" + searchInfo.getPassengers());
+            if (searchInfo.getPassengers() >= 2) {
+                System.out.println("Nr2" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage2.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate2.getValue().toString()), tfpassengername2.getText(), Integer.parseInt(cbseatno2.getValue().toString())));
             }
-            if (searchInfo.getPassengers()==3) {
+            if (searchInfo.getPassengers() >= 3) {
+                System.out.println("Nr3" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage3.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate3.getValue().toString()), tfpassengername3.getText(), Integer.parseInt(cbseatno3.getValue().toString())));
             }
-            if (searchInfo.getPassengers()==4) {
+            if (searchInfo.getPassengers() >= 4) {
+                System.out.println("Nr4" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
             }
 

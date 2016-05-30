@@ -1304,7 +1304,7 @@ public class DataController {
 
     public static void createReservation (String status, int flight_id, int customer_id, ArrayList<Passenger> passenegerList) {
 
-        System.err.println("seat No: " + passenegerList.get(1).getName());
+        System.err.println("name: " + passenegerList.get(1).getName());
         System.err.println();
 
         try {
@@ -1315,14 +1315,15 @@ public class DataController {
 
             ResultSet rs = s.executeQuery("SELECT last_insert_id() AS last_reservation_id FROM Reservations");
 
+            int k = 1;
             if (rs != null)
-                while (rs.next()) {
+                while (rs.next() && k == 1) {
                     int last_reservation_id = rs.getInt("last_reservation_id");
                     System.err.println("last_reservation_id No: " + last_reservation_id);
                     s = conn.createStatement();
 
                     for(int i = 0; i < passenegerList.size(); i++) {
-                        System.err.println("I: " + i );
+                        System.err.println("I: " + i + " Test " + passenegerList.size());
                         String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(passenegerList.get(i).getBirth_date());
                         System.err.println("Name: " + passenegerList.get(i).getName());
                         System.err.println("Birth Date: " + formattedDate);
@@ -1332,20 +1333,23 @@ public class DataController {
                         s.executeUpdate("INSERT INTO Passengers SET name = '" + passenegerList.get(i).getName() + "', birth_date = '" + formattedDate + "', seat_no = " + passenegerList.get(i).getSeat_no() + ", baggage = '" + getBaggageType(passenegerList.get(i).getBaggage()) + "'");
 
                         rs = s.executeQuery("SELECT last_insert_id() AS last_passenger_id FROM Passengers");
-
-                        if (rs != null)
-                            while (rs.next()) {
+                        int ok = 1; // Flag to avoid overriding the last insert and break the function.
+                        if (rs != null) {
+                            while (rs.next() && ok == 1) {
                                 int last_passenger_id = rs.getInt("last_passenger_id");
                                 s = conn.createStatement();
                                 System.err.println("last_passenger_id No: " + last_passenger_id);
                                 System.err.println();
 
                                 s.executeUpdate("INSERT INTO reservation_passengers (reservation_id, passenger_id) VALUES (" + last_reservation_id + ", " + last_passenger_id + ")");
+                                ok = 0;
                             }
+                        }
                     }
+                    k = 0; // Flag to avoid sending the request 2 times.
                 }
         } catch (SQLException sqlex) {
-
+            System.err.println(sqlex.getMessage());
         }
     }
 
