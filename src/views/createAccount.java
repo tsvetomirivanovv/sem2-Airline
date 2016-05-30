@@ -38,42 +38,41 @@ public class createAccount  {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         Label title                     = new Label("Register");
+        title.setAlignment(Pos.CENTER);
+        title.setMaxWidth(220);
+        title.getStyleClass().add("title");
 
         Label fullName                  = new Label("Full name: ");
-        fullName.setAlignment(Pos.CENTER_LEFT);
+        fullName.setAlignment(Pos.CENTER);
         fullName.setMaxWidth(220);
+        fullName.getStyleClass().add("labels");
 
         Label address                   = new Label("Address: ");
-        address.setAlignment(Pos.CENTER_LEFT);
+        address.setAlignment(Pos.CENTER);
         address.setMaxWidth(220);
+        address.getStyleClass().add("labels");
 
-        Label townCity                  = new Label("Town/City: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
+        Label townCity                  = new Label("Town / City: ");
+        townCity.setAlignment(Pos.CENTER);
         townCity.setMaxWidth(220);
+        townCity.getStyleClass().add("labels");
 
-        Label country                   = new Label("Country: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
 
         Label mobilephone               = new Label("Mobile phone: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
+        mobilephone.getStyleClass().add("labels");
 
         Label email                     = new Label("Email: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
+        email.getStyleClass().add("labels");
+
 
         Label confirmemail              = new Label("Confirm email: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
+        confirmemail.getStyleClass().add("labels");
 
         Label password                  = new Label("Password: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
+        password.getStyleClass().add("labels");
 
         Label confirmpassword           = new Label("Confirm password: ");
-        townCity.setAlignment(Pos.CENTER_LEFT);
-        townCity.setMaxWidth(220);
+        confirmpassword.getStyleClass().add("labels");
 
         TextField nametext              = new TextField();
         nametext.setMaxWidth(220);
@@ -90,7 +89,7 @@ public class createAccount  {
         TextField emailtext             = new TextField();
         emailtext.setMaxWidth(220);
 
-        TextField confirmemailtext= new TextField();
+        TextField confirmemailtext      = new TextField();
         confirmemailtext.setMaxWidth(220);
 
         TextField passwordtext          = new TextField();
@@ -175,6 +174,10 @@ public class createAccount  {
             primaryStage.close();
         });
 
+        //setting css for the buttons
+        close.getStyleClass().add("close");
+        register.getStyleClass().add("register");
+
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(register, close);
 
@@ -182,8 +185,10 @@ public class createAccount  {
         mainVbox.getChildren().addAll(title,vBox1,vBox2,vBox3,vBox5,vBox6,vBox7,vBox8,vBox9,ButtonHbox);
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
+        mainVbox.getStylesheets().add("assets//styles//style_createAccount.css");
 
-        Scene scene = new Scene(mainVbox, 1000, 800);
+        Scene scene = new Scene(mainVbox, 400, 600);
+        primaryStage.setTitle("                          Create an account");
         primaryStage.setScene(scene);
         primaryStage.showAndWait();
 

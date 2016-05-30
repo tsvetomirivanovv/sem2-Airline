@@ -1,0 +1,64 @@
+.layout {
+    -fx-background-color: aliceblue;
+}
+
+.flightdetails {
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-font: 13px Tahoma;
+}
+
+.outbound {
+    -fx-text-fill: black;
+    -fx-font: 13px Tahoma;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-alignment: center;
+}
+
+.labeloutbound {
+    -fx-text-fill: black;
+    -fx-font: 13px Tahoma;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-text-fill: black;
+    -fx-font: 13px Tahoma;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-alignment: center;
+}
+
+.wejustneed {
+    -fx-text-fill: black;
+    -fx-alignment: center;
+    -fx-font: 15px Tahoma;
+}
+
+.passengerdetails {
+    -fx-text-fill: black;
+    -fx-font: 15px Tahoma;
+    -fx-font-family: Helvetica, Arial, sans-serif;
+    -fx-alignment: center;
+}
+
+.bookreservation {
+    -fx-background-color: forestgreen;
+    -fx-color: #ffffff;
+    -fx-border-radius: 4px;
+    -fx-font-size: 15px;
+    -fx-color: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 400;
+    -fx-padding: 10px 19px;
+}
+
+.back {
+    -fx-background-color: #e74c3c;
+    -fx-border-radius: 4px;
+    -fx-font-size: 15px;
+    -fx-color: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 400;
+    -fx-padding: 10px 19px;
+}

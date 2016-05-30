@@ -3,6 +3,7 @@ package views;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.*;
 import services.DataController;
@@ -26,11 +28,6 @@ public class SelectedFlight extends Application {
     double totalpricevalue;
     double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
 
-//    Label bigvalue = new Label();
-//    HBox choiceboxesHBox = new HBox(5);
-//    String excludeSeats = "";
-
-
     Label bigvalue          = new Label();
     HBox choiceboxesHBox    = new HBox(5);
     ArrayList<Integer> excludeSeats      = new ArrayList<>();
@@ -44,14 +41,16 @@ public class SelectedFlight extends Application {
         primaryStage.setTitle("Selected flight");
 
         Label flightdetails = new Label("Flight details");
-        flightdetails.setAlignment(Pos.TOP_CENTER);
+        flightdetails.getStyleClass().add("flightdetails");
+        flightdetails.setAlignment(Pos.CENTER);
 
         HBox layout = new HBox(2);
 
         VBox vbig = new VBox(30);
-        VBox vflights = new VBox(400);
+        VBox vflights = new VBox(450);
 
         layout.getChildren().addAll(vbig, vflights);
+        layout.getStyleClass().add("layout");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(layout);
@@ -61,6 +60,11 @@ public class SelectedFlight extends Application {
         Label outbound = new Label("OUTBOUND");
         Label labeloutbound = new Label();
         labeloutbound.setText(searchInfo.getStart_date());
+
+        //setting css to the outbound label, and for the value of the labeloutbound
+        outbound.getStyleClass().add("outbound");
+        labeloutbound.getStyleClass().add("labeloutbound");
+
         HBox hout = new HBox(10);
         hout.getChildren().addAll(outbound, labeloutbound);
 
@@ -69,6 +73,13 @@ public class SelectedFlight extends Application {
         Label fromto = new Label("From->To");
         Label duration = new Label("Duration");
         Label price = new Label("Price/Person");
+
+        //setting css to the labels declared aboce
+        flightlabel.getStyleClass().add("label");
+        date.getStyleClass().add("label");
+        fromto.getStyleClass().add("label");
+        duration.getStyleClass().add("label");
+        price.getStyleClass().add("label");
 
         Label reg_no = new Label(""+flight.getFlight_id());
 
@@ -121,15 +132,21 @@ public class SelectedFlight extends Application {
         hbuttons.getChildren().addAll(bookreservation, back);
         hbuttons.setAlignment(Pos.BASELINE_RIGHT);
 
+        //asigning css to the buttons
+        bookreservation.getStyleClass().add("bookreservation");
+        back.getStyleClass().add("back");
+
 
         vflights.getChildren().addAll(vfirst, hbuttons);
 
         // setting the content for the first vbox, vbig
         Label wejustneed = new Label("We just need a few more details. Who is traveling?");
         wejustneed.setAlignment(Pos.TOP_CENTER);
+        wejustneed.getStyleClass().add("wejustneed");
 
         Label passengerdetails = new Label("Passenger(s) details");
         passengerdetails.setAlignment(Pos.CENTER);
+        passengerdetails.getStyleClass().add("passengerdetails");
 
         /* =========================
                 Passenger row 1
@@ -284,10 +301,54 @@ public class SelectedFlight extends Application {
         passengerDet4.getChildren().addAll(vpass14, vpass24, vpass34, vpass44);
         /////////////////////////////////////////////////////////////////////////////
 
+        /* Assinging CSS to all the labels,
+           for as many passenger HBoxes as needed in the interface
+         */
+
+        passengername.getStyleClass().addAll("label");
+        passengerDet2.getStyleClass().addAll("label");
+        passengerDet3.getStyleClass().addAll("label");
+        passengerDet4.getStyleClass().addAll("label");
+
+        tfpassengername.getStyleClass().addAll("label");
+        tfpassengername2.getStyleClass().addAll("label");
+        tfpassengername3.getStyleClass().addAll("label");
+        tfpassengername4.getStyleClass().addAll("label");
+
+        birthdate.getStyleClass().add("label");
+        birthdate2.getStyleClass().addAll("label");
+        birthdate3.getStyleClass().addAll("label");
+        birthdate4.getStyleClass().addAll("label");
+
+        dpbirthdate.getStyleClass().add("label");
+        dpbirthdate2.getStyleClass().addAll("label");
+        dpbirthdate3.getStyleClass().addAll("label");
+        dpbirthdate4.getStyleClass().addAll("label");
+
+        seatno.getStyleClass().add("label");
+        seatno2.getStyleClass().addAll("label");
+        seatno3.getStyleClass().addAll("label");
+        seatno4.getStyleClass().addAll("label");
+
+        cbseatno.getStyleClass().add("label");
+        cbseatno2.getStyleClass().addAll("label");
+        cbseatno3.getStyleClass().addAll("label");
+        cbseatno4.getStyleClass().addAll("label");
+
+        checkedbaggage.getStyleClass().add("label");
+        checkedbaggage2.getStyleClass().addAll("label");
+        checkedbaggage3.getStyleClass().addAll("label");
+        checkedbaggage4.getStyleClass().addAll("label");
+
+        cbbaggage.getStyleClass().add("label");
+        cbbaggage2.getStyleClass().addAll("label");
+        cbbaggage3.getStyleClass().addAll("label");
+        cbbaggage4.getStyleClass().addAll("label");
+
 
 
         // Update the seats dropboxes here because declaration position issue.
-        // Here all of them are decalred.
+        // Here all of them are declared.
 
 
         // First seats dropdown
@@ -389,25 +450,12 @@ public class SelectedFlight extends Application {
         vbiggg.getChildren().addAll(wejustneed, passengerdetails);
 
         Label Payment           = new Label("Payment info");
+        Payment.getStyleClass().add("label");
         Label note1             = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
         Label note2             = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
 
         VBox vpayment           = new VBox(6);
         vpayment.getChildren().addAll(Payment, note1, note2);
-
-
-//        ImageView mastercard = new ImageView(new Image("assets//images//mastercard.png"));
-//        mastercard.setFitHeight(100);
-//        mastercard.setFitWidth(100);
-//        ImageView visa = new ImageView(new Image("assets//images//visa.jpg"));
-//        visa.setFitHeight(100);
-//        visa.setFitWidth(100);
-//        ImageView visa_electron = new ImageView(new Image("assets//images//visa-electron.png"));
-//        visa_electron.setFitHeight(100);
-//        visa_electron.setFitWidth(100);
-//        ImageView maestro = new ImageView(new Image("assets//images//Maestro.png"));
-//        maestro.setFitHeight(100);
-//        maestro.setFitWidth(100);
 
         // declaring the radio buttons
         // by placing them in a ToggleGroup I make sure only one of them can be selected at a time
@@ -441,40 +489,25 @@ public class SelectedFlight extends Application {
             results.start(primaryStage);
         });
 
-//        ImageView mastercard    = new ImageView(new Image("assets//images//mastercard.png"));
-//        mastercard.setFitHeight(100);
-//        mastercard.setFitWidth(100);
-//
-//
-//        ImageView visa          = new ImageView(new Image("assets//images//visa.jpg"));
-//        visa.setFitHeight(100);
-//        visa.setFitWidth(100);
-//        ImageView visa_electron = new ImageView(new Image("assets//images//visa-electron.png"));
-//        visa_electron.setFitHeight(100);
-//        visa_electron.setFitWidth(100);
-//
-//
-//        ImageView maestro       = new ImageView(new Image("assets//images//Maestro.png"));
-//        maestro.setFitHeight(100);
-//        maestro.setFitWidth(100);
-//
-//
         HBox himages            = new HBox(30);
         himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
 
         Label holderName        = new Label("Card holder name:");
+        holderName.getStyleClass().add("label");
         TextField holderField   = new TextField();
         holderField.setPromptText("Name");
         VBox holder             = new VBox(10);
         holder.getChildren().addAll(holderName,holderField);
 
         Label cardNo            = new Label("Card no:");
+        cardNo.getStyleClass().add("label");
         TextField noField       = new TextField();
         noField.setPromptText("card number");
         VBox number             = new VBox(10);
         number.getChildren().addAll(cardNo,noField);
 
         Label expirationDate    = new Label("Expiration date:");
+        expirationDate.getStyleClass().add("label");
         expirationDate.setAlignment(Pos.TOP_CENTER);
         TextField expirationYear= new TextField();
         expirationYear.setPromptText("YYYY");
@@ -489,6 +522,7 @@ public class SelectedFlight extends Application {
         expiration.getChildren().addAll(expirationDate,fields);
 
         Label securityCode      = new Label("Security code:");
+        securityCode.getStyleClass().add("label");
         TextField cvv           = new TextField();
         cvv.setPromptText("CVV");
         cvv.setMaxWidth(50);
@@ -499,6 +533,7 @@ public class SelectedFlight extends Application {
         hcard.getChildren().addAll(holder, number, expiration, security);
 
         Label pricel            = new Label("Price for "+searchInfo.getPassengers()+" people:");
+        pricel.getStyleClass().add("label");
 
         HBox hloc               = new HBox(5);
         Label arrowlabel        = new Label("->");
@@ -514,95 +549,91 @@ public class SelectedFlight extends Application {
         line.setFitWidth(400);
 
         Label totalprice        = new Label("TOTAL PRICE:");
+        totalprice.getStyleClass().add("label");
 
         bigvalue.setText(price1+price2+price3+price4+"");
 
+        // functionality for the first passenger's choice box for the baggage
         cbbaggage.setOnAction(e -> {
             price1 = data.getFlightPrice(flight.getFlight_id());
             bigvalue.setText(price1+price2+price3+price4+"");
             if (!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
                             price1+=0;
-                            System.err.println("Baggage 1 - price 1: "+price1);
                             firstpass.setText("0 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
                             price1+=50;
-                            System.err.println("Baggage 1 - price 2: "+price1);
                             firstpass.setText("50 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
                             price1+=90;
-                            System.err.println("Baggage 1 - price 3: "+price1);
                             firstpass.setText("90 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
+
+        // functionality for the second passenger's choice box for the baggage
         cbbaggage2.setOnAction(e -> {
             price2 = data.getFlightPrice(flight.getFlight_id());
             bigvalue.setText(price1+price2+price3+price4+"");
             if (!(cbbaggage2.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage2.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
                             price2+=0;
-                            System.err.println("Baggage 2 - price 1: "+price2);
                             secondpass.setText("0 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
                             price2+=50;
-                            System.err.println("Baggage 2 - price 2: "+price2);
                             secondpass.setText("50 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
                             price2+=90;
-                            System.err.println("Baggage 2 - price 3: "+price2);
                             secondpass.setText("90 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
+
+        // functionality for the third passenger's choice box for the baggage
        cbbaggage3.setOnAction(e -> {
            price3 = data.getFlightPrice(flight.getFlight_id());
            bigvalue.setText(price1+price2+price3+price4+"");
            if (!(cbbaggage3.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage3.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
                             price3+=0;
-                            System.err.println("Baggage 3 - price 1: "+price3);
                             thirdpass.setText("0 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
                             price3+=50;
-                            System.err.println("Baggage 3 - price 2: "+price3);
                             thirdpass.setText("50 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
                             price3+=90;
-                            System.err.println("Baggage 3 - price 3: "+price3);
                             thirdpass.setText("90 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
+
+        // functionality for the fourth passenger's choice box for the baggage
         cbbaggage4.setOnAction(e -> {
             price4 = data.getFlightPrice(flight.getFlight_id());
             bigvalue.setText(price1+price2+price3+price4+"");
             if (!(cbbaggage4.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage4.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
                             price4+=0;
-                            System.err.println("Baggage 4 - price 1: "+price4);
                             fourthpass.setText("0 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
                             price4+=50;
-                            System.err.println("Baggage 4 - price 2: "+price4);
                             fourthpass.setText("50 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
                             price4+=90;
-                            System.err.println("Baggage 4 - price 3: "+price4);
                             fourthpass.setText("90 kr.");
                             bigvalue.setText(price1+price2+price3+price4+"");
                         }
@@ -618,7 +649,17 @@ public class SelectedFlight extends Application {
 
         vbig.getChildren().addAll(vbiggg, passengerDetVBox, vpayment, himages, hcard, vforprice);
 
-        Scene scene = new Scene(scrollPane, 1200, 600);
+        /*
+          This is to make the stage pop-up in the exact middle of the screen
+          taken from stack overflow : /questions/29558449/javafx-center-stage-on-screen
+          exciting snippet of code material :)
+        */
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+
+        Scene scene = new Scene(scrollPane, 1280, 700);
+        scrollPane.getStylesheets().add("assets//styles//style_selectedFlight.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 

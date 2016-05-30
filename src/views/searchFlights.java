@@ -45,6 +45,7 @@ public class searchFlights extends Application {
         });
 
         arrival.setPromptText("Search arrival location");
+        arrival.getStyleClass().add("arrival");
 
         new comboBoxAutocomplete<String>(departure);
         new comboBoxAutocomplete<String>(arrival);
@@ -53,11 +54,13 @@ public class searchFlights extends Application {
         Label returnTimeLabel = new Label("Return Date:");
 
         DatePicker datePicker1 = new DatePicker();
+        datePicker1.getStyleClass().add("datePicker1");
         datePicker1.setOnAction(e -> {
             LocalDate date = datePicker1.getValue();
         });
 
         DatePicker datePicker2 = new DatePicker();
+        datePicker2.getStyleClass().add("datePicker2");
         datePicker2.setOnAction( e -> {
             LocalDate date = datePicker2.getValue();
         });
@@ -88,7 +91,7 @@ public class searchFlights extends Application {
                 "First class"
         );
 
-        Button searchButton = new Button("Seach");
+        Button searchButton = new Button("Search");
         searchButton.getStyleClass().addAll("btn", "btn-info");
 
         // Search button - Switch the scene where you can see all the results
