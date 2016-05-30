@@ -1307,7 +1307,24 @@ public class DataController {
             s = conn.createStatement();
 
             String query = "INSERT INTO Passengers (name, birth_date, seat_no, baggage) VALUES ('"+name+"','"+birthday+"',"+seat+",'"+baggage+"');";
-//                           "INSERT INTO reservation_passengers (reservation_id,passenger_id) VALUES ("+getReservations(1,true,"").size()+",(SELECT id FROM Passengers WHERE name= '"+name+"'))";
+            s.executeUpdate(query);
+            connectPassAndRes(name);
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+    }
+
+    public static void connectPassAndRes (String name) {
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            String query ="insert into reservation_passengers (reservation_id, passenger_id) values ("+getReservations(0,true,"").size()+",(SELECT id FROM Passengers WHERE name='"+name+"'))";
             s.executeUpdate(query);
         } catch (SQLException sqlex) {
             try{
