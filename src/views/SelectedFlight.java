@@ -24,6 +24,7 @@ public class SelectedFlight extends Application {
     Label bigvalue = new Label();
     HBox choiceboxesHBox = new HBox(5);
     String excludeSeats = "";
+    double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -291,18 +292,28 @@ public class SelectedFlight extends Application {
 
         switch(searchInfo.getPassengers()) {
             case 1:
+                price1 = data.getFlightPrice(flight.getFlight_id());
                 passengerDetVBox.getChildren().addAll(passengerDet);
                 choiceboxesHBox.getChildren().addAll(aa, firstpass);
                 break;
             case 2:
+                price1 = data.getFlightPrice(flight.getFlight_id());
+                price2 = data.getFlightPrice(flight.getFlight_id());
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2);
                 choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass);
                 break;
             case 3:
+                price1 = data.getFlightPrice(flight.getFlight_id());
+                price2 = data.getFlightPrice(flight.getFlight_id());
+                price3 = data.getFlightPrice(flight.getFlight_id());
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2, passengerDet3);
                 choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass, cc, thirdpass);
                 break;
             case 4:
+                price1 = data.getFlightPrice(flight.getFlight_id());
+                price2 = data.getFlightPrice(flight.getFlight_id());
+                price3 = data.getFlightPrice(flight.getFlight_id());
+                price4 = data.getFlightPrice(flight.getFlight_id());
                 passengerDetVBox.getChildren().addAll(passengerDet, passengerDet2, passengerDet3, passengerDet4);
                 choiceboxesHBox.getChildren().addAll(aa, firstpass, bb, secondpass, cc, thirdpass, dd, fourthpass);
                 break;
@@ -422,78 +433,96 @@ public class SelectedFlight extends Application {
 
         Label totalprice        = new Label("TOTAL PRICE:");
 
-        totalpricevalue = data.getFlightPrice(flight.getFlight_id()*searchInfo.getPassengers());
-        System.err.print(data.getFlightPrice(flight.getFlight_id()*searchInfo.getPassengers()));
+        bigvalue.setText(price1+price2+price3+price4+"");
 
-        bigvalue.setText(totalpricevalue+"");
         cbbaggage.setOnAction(e -> {
-                    if (!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
+            price1 = data.getFlightPrice(flight.getFlight_id());
+            bigvalue.setText(price1+price2+price3+price4+"");
+            if (!(cbbaggage.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            totalpricevalue+=0;
+                            price1+=0;
+                            System.err.println("Baggage 1 - price 1: "+price1);
                             firstpass.setText("0 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            totalpricevalue+=50;
+                            price1+=50;
+                            System.err.println("Baggage 1 - price 2: "+price1);
                             firstpass.setText("50 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            totalpricevalue+=90;
+                            price1+=90;
+                            System.err.println("Baggage 1 - price 3: "+price1);
                             firstpass.setText("90 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
         cbbaggage2.setOnAction(e -> {
-                    if (!(cbbaggage2.getSelectionModel().getSelectedItem() == null)) {
+            price2 = data.getFlightPrice(flight.getFlight_id());
+            bigvalue.setText(price1+price2+price3+price4+"");
+            if (!(cbbaggage2.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage2.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            totalpricevalue+=0;
+                            price2+=0;
+                            System.err.println("Baggage 2 - price 1: "+price2);
                             secondpass.setText("0 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            totalpricevalue+=50;
+                            price2+=50;
+                            System.err.println("Baggage 2 - price 2: "+price2);
                             secondpass.setText("50 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage2.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            totalpricevalue+=90;
+                            price2+=90;
+                            System.err.println("Baggage 2 - price 3: "+price2);
                             secondpass.setText("90 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
        cbbaggage3.setOnAction(e -> {
-                    if (!(cbbaggage3.getSelectionModel().getSelectedItem() == null)) {
+           price3 = data.getFlightPrice(flight.getFlight_id());
+           bigvalue.setText(price1+price2+price3+price4+"");
+           if (!(cbbaggage3.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage3.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            totalpricevalue+=0;
+                            price3+=0;
+                            System.err.println("Baggage 3 - price 1: "+price3);
                             thirdpass.setText("0 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            totalpricevalue+=50;
+                            price3+=50;
+                            System.err.println("Baggage 3 - price 2: "+price3);
                             thirdpass.setText("50 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage3.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            totalpricevalue+=90;
+                            price3+=90;
+                            System.err.println("Baggage 3 - price 3: "+price3);
                             thirdpass.setText("90 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
         );
         cbbaggage4.setOnAction(e -> {
-                    if (!(cbbaggage4.getSelectionModel().getSelectedItem() == null)) {
+            price4 = data.getFlightPrice(flight.getFlight_id());
+            bigvalue.setText(price1+price2+price3+price4+"");
+            if (!(cbbaggage4.getSelectionModel().getSelectedItem() == null)) {
                         if (cbbaggage4.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-                            totalpricevalue+=0;
+                            price4+=0;
+                            System.err.println("Baggage 4 - price 1: "+price4);
                             fourthpass.setText("0 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")) {
-                            totalpricevalue+=50;
+                            price4+=50;
+                            System.err.println("Baggage 4 - price 2: "+price4);
                             fourthpass.setText("50 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         } else if (cbbaggage4.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")) {
-                            totalpricevalue+=90;
+                            price4+=90;
+                            System.err.println("Baggage 4 - price 3: "+price4);
                             fourthpass.setText("90 kr.");
-                            bigvalue.setText(totalpricevalue+"");
+                            bigvalue.setText(price1+price2+price3+price4+"");
                         }
                     }
                 }
