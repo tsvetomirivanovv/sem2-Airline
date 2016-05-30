@@ -24,7 +24,7 @@ public class menu {
         Menu planesMenus = new Menu("Manage Planes");
         Menu OSCA = new Menu("OSCA");
         Menu flightsMenu = new Menu("Manage flights");
-
+        Menu helpMenu = new Menu("Help");
 
         //MENU ITEMS
         MenuItem login1 = new MenuItem("Log in as Admin");
@@ -36,6 +36,9 @@ public class menu {
         MenuItem planes = new MenuItem("Export planes");
         MenuItem reservationsBinary = new MenuItem("Reservations to binary");
         MenuItem manageFlights = new MenuItem("Manage flights");
+        MenuItem contactus = new MenuItem("Contact us");
+        MenuItem faq = new MenuItem("FAQ");
+
 
         logOut.setOnAction(event -> {
             checkLogin.logOut();
@@ -91,6 +94,16 @@ public class menu {
             manageFlights1.start(primaryStage);
         });
 
+        contactus.setOnAction(event -> {
+            contactUS contactUS = new contactUS();
+            contactUS.start();
+        });
+
+        faq.setOnAction(event -> {
+            views.faq faq1 = new faq();
+            faq1.start();
+        });
+
         filemenu1.getItems().addAll(login1, login2);
         filemenu1.getStyleClass().add("menu-label");
         filemenu2.getItems().addAll(logOut);
@@ -98,18 +111,20 @@ public class menu {
         reservationsMenu.getItems().addAll(manageReservations);
         OSCA.getItems().addAll(flights,planes,reservationsBinary);
         flightsMenu.getItems().addAll(manageFlights);
+        helpMenu.getItems().addAll(contactus,faq);
+
         //Main menu bar
         MenuBar menuBar = new MenuBar();
         menuBar.getStyleClass().add("menu");
         if(!checkLogin.isLoggedIn()) {
-            menuBar.getMenus().addAll(filemenu1,OSCA);
+            menuBar.getMenus().addAll(filemenu1,OSCA,helpMenu);
         }
 
         if(checkLogin.isLoggedIn()) {
             if (checkLogin.isAdmin()) {
-                menuBar.getMenus().addAll(filemenu2, reservationsMenu, planesMenus, flightsMenu, OSCA);
+                menuBar.getMenus().addAll(filemenu2, reservationsMenu, planesMenus, flightsMenu, OSCA,helpMenu);
             } else {
-                menuBar.getMenus().addAll(filemenu2, reservationsMenu, OSCA);
+                menuBar.getMenus().addAll(filemenu2, reservationsMenu, OSCA,helpMenu);
             }
         }
         return menuBar;
