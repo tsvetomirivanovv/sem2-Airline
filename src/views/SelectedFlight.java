@@ -18,11 +18,13 @@ import services.DataController;
 import services.components.searchInfo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class SelectedFlight extends Application {
     Flight flight           = new Flight();
     searchInfo searchInfo   = new searchInfo();
-    DataController data     = new DataController();
+    static DataController data     = new DataController();
+    double totalpricevalue;
     double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
 
     Label bigvalue          = new Label();
@@ -453,6 +455,7 @@ public class SelectedFlight extends Application {
 
         // declaring the radio buttons
         // by placing them in a ToggleGroup I make sure only one of them can be selected at a time
+
         ToggleGroup group = new ToggleGroup();
 
         RadioButton mastercard = new RadioButton("MasterCard");
@@ -463,6 +466,24 @@ public class SelectedFlight extends Application {
         visa_electron.setToggleGroup(group);
         RadioButton maestro = new RadioButton("Maestro");
         maestro.setToggleGroup(group);
+        int test = services.components.checkLogin.getAccount_id();
+        bookreservation.setOnAction(event -> {
+            data.createReservation("booked",flight.getFlight_id(),test);
+            String selectedBaggage = null;
+            setPassenger(cbbaggage,selectedBaggage,tfpassengername,dpbirthdate,cbseatno);
+            if (searchInfo.getPassengers()>=2) {
+                setPassenger(cbbaggage2,selectedBaggage,tfpassengername2,dpbirthdate2,cbseatno2);
+            }
+            if (searchInfo.getPassengers()>=3) {
+                setPassenger(cbbaggage3,selectedBaggage,tfpassengername3,dpbirthdate3,cbseatno3);
+            }
+            if (searchInfo.getPassengers()>=4) {
+                setPassenger(cbbaggage4,selectedBaggage,tfpassengername4,dpbirthdate4,cbseatno4);
+            }
+
+            searchResults results = new searchResults(searchInfo);
+            results.start(primaryStage);
+        });
 
         HBox himages            = new HBox(30);
         himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
@@ -640,8 +661,17 @@ public class SelectedFlight extends Application {
 
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void setPassenger (ChoiceBox cbbaggage, String selectedBaggage, TextField tfpassengername, DatePicker dpbirthdate,ChoiceBox cbseatno) {
+        if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
+            selectedBaggage = "none";
+        } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")){
+            selectedBaggage = "small";
+        }else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")){
+            selectedBaggage = "large";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        data.createPassenger(tfpassengername.getText(),dpbirthdate.getValue().format(formatter),Integer.parseInt(cbseatno.getValue().toString()), selectedBaggage);
+
     }
 
 }

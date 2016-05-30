@@ -86,7 +86,7 @@ public class OscaServices {
 
     private static byte[] createRecord(int reservationId, int flightId, int customerId, String status)
     {
-        byte[] rawRecord = new byte[4 + 4 + 4 + 1 + 50*2];
+        byte[] rawRecord = new byte[4 + 4 + 4 + 1 + 18*2];
 
         rawRecord[0] = (byte) (reservationId >> 24);
         rawRecord[1] = (byte) (reservationId >> 16);

@@ -17,7 +17,7 @@ public class DataController {
     static Connection conn = SQLConfig.connect();
 
     // getReservations function
-    public ObservableList<Reservation> getReservations(int customerid,boolean checklogin,String search) {
+    public static ObservableList<Reservation> getReservations(int customerid, boolean checklogin, String search) {
         ObservableList<Reservation> reservations = FXCollections.observableArrayList();
         ArrayList<Passenger> passenger_list;
         String query = "";
@@ -1279,6 +1279,60 @@ public class DataController {
             catch(SQLException sql){}
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void createReservation (String status, int flight_id, int customer_id) {
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            String query = "INSERT INTO Reservations (status, customer_id, flight_id) VALUES ('" + status + "', " + customer_id + ", "+ flight_id +" );";
+            s.executeUpdate(query);
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+    }
+
+    public static void createPassenger (String name,String birthday, int seat, String baggage){
+
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            String query = "INSERT INTO Passengers (name, birth_date, seat_no, baggage) VALUES ('"+name+"','"+birthday+"',"+seat+",'"+baggage+"');";
+            s.executeUpdate(query);
+            connectPassAndRes(name);
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
+        }
+    }
+
+    public static void connectPassAndRes (String name) {
+        try {
+            Statement s = null;
+            s = conn.createStatement();
+
+            String query ="insert into reservation_passengers (reservation_id, passenger_id) values ("+getReservations(0,true,"").size()+",(SELECT id FROM Passengers WHERE name='"+name+"'))";
+            s.executeUpdate(query);
+        } catch (SQLException sqlex) {
+            try{
+                System.out.println(sqlex.getMessage());
+                conn.close();
+                System.exit(1);  // terminate program
+            }
+            catch(SQLException sql){}
         }
     }
 }
