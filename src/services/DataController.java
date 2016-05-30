@@ -1128,7 +1128,7 @@ public class DataController {
         return duration;
     }
 
-    public static ObservableList<Integer> getSeatsForClass(int flight_id, String classe) {
+    public static ObservableList<Integer> getSeatsForClass(int flight_id, String classe, ArrayList<Integer> exclude) {
         ObservableList<Integer> integers = FXCollections.observableArrayList();
         Flight flighter = getFlight(flight_id);
         int seats = 0;
@@ -1148,7 +1148,24 @@ public class DataController {
         }
 
         for (int i=1; i <= seats; i++) {
-            integers.add(i);
+            if (exclude.size() > 0) {
+                System.out.println("In if");
+                int ok = 0;
+                for(int j = 0; j < exclude.size(); j++) {
+
+                    if(exclude.get(j) == i ) {
+                        System.out.println("In loop - if /// J:" + exclude.get(j) + " I: " + i);
+                        ok = 1;
+                    }
+                }
+
+                if(ok == 0) {
+                    integers.add(i);
+                }
+            } else {
+                System.out.println("In lse I: " + i);
+                integers.add(i);
+            }
         }
 
         return integers;

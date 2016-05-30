@@ -1,17 +1,91 @@
 .root {
-    -fx-background-color: antiquewhite;
+    -fx-font-family: Helvetica, Arial, sans-serif;
 }
-#b1 {
-    -fx-background-image: "assets/images/mastercard.png";
-    -fx-arc-height: 20;
-    -fx-arc-width: 20;
+
+.h1 {
+    -fx-font-size: 60px;
 }
-#b2 {
-    -fx-background-image: "assets/images/Maestro.png";
+
+.h2 {
+    -fx-font-size: 53px;
 }
-#b3 {
-    -fx-background-image: "assets/images/visa.jpg";
+
+.h3 {
+    -fx-font-size: 40px;
 }
-#b4 {
-    -fx-background-image: "assets/images/visa-electron.png";
+
+.h4 {
+    -fx-font-size: 29px;
+}
+
+.h5 {
+    -fx-font-size: 28px;
+}
+
+.h6 {
+    -fx-font-size: 24px;
+}
+
+.text {
+    -fx-font-size: 18px;
+}
+
+.menu {
+    -fx-background-color: #2f4154;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-line-height: 23px;
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
+}
+
+.menu-label {
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
+}
+
+.btn-info {
+    -fx-background-color: #3498DB;
+    -fx-color: #ffffff;
+}
+
+.btn-warning {
+    -fx-background-color: #f1c40f;
+}
+
+.btn-danger {
+    -fx-background-color: #e74c3c;
+}
+
+.btn-default {
+    -fx-background-color: #bdc3c7;
+}
+
+.btn-disabled {
+    -fx-background-color: #bdc3c7;
+}
+
+.btn {
+    -fx-border-radius: 6px;
+    -fx-font-size: 17px;
+    -fx-color: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 400;
+    -fx-padding: 10px 19px;
+}
+
+.dropdown {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
+    -fx-padding: 7px 15px 7px 15px;
+    -fx-border-radius: 6px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+.dropdown .list-view {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
 }

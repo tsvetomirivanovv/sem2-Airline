@@ -92,6 +92,7 @@ public class menu {
         });
 
         filemenu1.getItems().addAll(login1, login2);
+        filemenu1.getStyleClass().add("menu-label");
         filemenu2.getItems().addAll(logOut);
         planesMenus.getItems().addAll(addPlane);
         reservationsMenu.getItems().addAll(manageReservations);
@@ -99,6 +100,7 @@ public class menu {
         flightsMenu.getItems().addAll(manageFlights);
         //Main menu bar
         MenuBar menuBar = new MenuBar();
+        menuBar.getStyleClass().add("menu");
         if(!checkLogin.isLoggedIn()) {
             menuBar.getMenus().addAll(filemenu1,OSCA);
         }

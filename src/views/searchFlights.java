@@ -89,7 +89,7 @@ public class searchFlights extends Application {
         );
 
         Button searchButton = new Button("Seach");
-
+        searchButton.getStyleClass().addAll("btn", "btn-info");
 
         // Search button - Switch the scene where you can see all the results
         searchButton.setOnAction(event -> {
@@ -182,6 +182,9 @@ public class searchFlights extends Application {
         v3.getChildren().addAll(h1, h2, h3, searchButton);
         v3.setAlignment(Pos.CENTER);
 
+        // Apply css
+        departure.getStyleClass().add("dropdown");
+
 
         layout = new BorderPane();
 
@@ -195,6 +198,7 @@ public class searchFlights extends Application {
 
 
         Scene scene = new Scene(layout, 1000, 600);
+        scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Search flights");
         primaryStage.show();
