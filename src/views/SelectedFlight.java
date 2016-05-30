@@ -15,15 +15,16 @@ import models.*;
 import services.DataController;
 import services.components.searchInfo;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class SelectedFlight extends Application {
-    Flight flight = new Flight();
-    searchInfo searchInfo = new searchInfo();
-    DataController data = new DataController();
+    Flight flight           = new Flight();
+    searchInfo searchInfo   = new searchInfo();
+    DataController data     = new DataController();
     double totalpricevalue;
-    Label bigvalue = new Label();
-    HBox choiceboxesHBox = new HBox(5);
-    String excludeSeats = "";
+    Label bigvalue          = new Label();
+    HBox choiceboxesHBox    = new HBox(5);
+    ArrayList<Integer> excludeSeats      = new ArrayList<>();
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -140,12 +141,9 @@ public class SelectedFlight extends Application {
         Label seatno                = new Label("Seat no.");
         ChoiceBox cbseatno          = new ChoiceBox();
         cbseatno.setMaxWidth(40);
-        cbseatno.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
+        cbseatno.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
         VBox vpass3                 = new VBox(4);
         vpass3.getChildren().addAll(seatno, cbseatno);
-        cbseatno.setOnAction(e -> {
-
-        });
 
 
         // Baggage dropdown
@@ -181,7 +179,7 @@ public class SelectedFlight extends Application {
         Label seatno2               = new Label("Seat no.");
         ChoiceBox cbseatno2         = new ChoiceBox();
         cbseatno2.setMaxWidth(40);
-        cbseatno2.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
+        cbseatno2.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
         VBox vpass32                = new VBox(4);
         vpass32.getChildren().addAll(seatno2, cbseatno2);
 
@@ -218,7 +216,7 @@ public class SelectedFlight extends Application {
         Label seatno3               = new Label("Seat no.");
         ChoiceBox cbseatno3         = new ChoiceBox();
         cbseatno3.setMaxWidth(40);
-        cbseatno3.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
+        cbseatno3.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
         VBox vpass33                = new VBox(4);
         vpass33.getChildren().addAll(seatno3, cbseatno3);
 
@@ -257,7 +255,7 @@ public class SelectedFlight extends Application {
         Label seatno4               = new Label("Seat no.");
         ChoiceBox cbseatno4         = new ChoiceBox();
         cbseatno4.setMaxWidth(40);
-        cbseatno4.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType()));
+        cbseatno4.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
         VBox vpass34                = new VBox(4);
         vpass34.getChildren().addAll(seatno4, cbseatno4);
 
@@ -271,6 +269,60 @@ public class SelectedFlight extends Application {
         HBox passengerDet4          = new HBox(20);
         passengerDet4.getChildren().addAll(vpass14, vpass24, vpass34, vpass44);
         /////////////////////////////////////////////////////////////////////////////
+
+
+
+        // Update the seats dropboxes here because declaration position issue.
+        // Here all of them are decalred.
+
+
+        // First seats dropdown
+        cbseatno.setOnAction(e -> {
+
+            // Create an exclude list
+            excludeSeats.clear();
+            excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
+
+            // Clear list and add a new one excluding the selected ones
+            cbseatno2.getItems().clear();
+            cbseatno2.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
+
+            System.out.println("Exclude: " + excludeSeats);
+        });
+
+        cbseatno2.setOnAction(e -> {
+            // Clear all items
+            //cbseatno2.getItems().clear();
+
+            // Add the list again but ignore the value selected in the first combobox
+            excludeSeats.clear();
+            excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
+            excludeSeats.add(Integer.parseInt(cbseatno2.getValue().toString()));
+
+            // Clear list and add a new one excluding the selected ones
+            cbseatno3.getItems().clear();
+            cbseatno3.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
+
+            System.out.println("Exclude: " + excludeSeats);
+        });
+
+        cbseatno3.setOnAction(e -> {
+            // Clear all items
+            //cbseatno2.getItems().clear();
+
+            // Add the list again but ignore the value selected in the first combobox
+            excludeSeats.clear();
+            excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
+            excludeSeats.add(Integer.parseInt(cbseatno2.getValue().toString()));
+            excludeSeats.add(Integer.parseInt(cbseatno3.getValue().toString()));
+
+            // Clear list and add a new one excluding the selected ones
+            cbseatno4.getItems().clear();
+            cbseatno4.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
+
+
+            System.out.println("Exclude: " + excludeSeats);
+        });
 
         // these are needed for the price down the scene, each of them has to be shown deppending on how many passengers were chosen
         Label aa = new Label("P1: ");
