@@ -1,6 +1,7 @@
 package views;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -295,6 +296,7 @@ public class SelectedFlight extends Application {
             // Create an exclude list
             excludeSeats.clear();
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
+            excludeSeats.addAll(FXCollections.observableArrayList(services.DataController.getReservedSeats()));
 
             // Clear list and add a new one excluding the selected ones
             cbseatno2.getItems().clear();
@@ -311,6 +313,7 @@ public class SelectedFlight extends Application {
             excludeSeats.clear();
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
             excludeSeats.add(Integer.parseInt(cbseatno2.getValue().toString()));
+            excludeSeats.addAll(FXCollections.observableArrayList(services.DataController.getReservedSeats()));
 
             // Clear list and add a new one excluding the selected ones
             cbseatno3.getItems().clear();
@@ -328,6 +331,7 @@ public class SelectedFlight extends Application {
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
             excludeSeats.add(Integer.parseInt(cbseatno2.getValue().toString()));
             excludeSeats.add(Integer.parseInt(cbseatno3.getValue().toString()));
+            excludeSeats.addAll(FXCollections.observableArrayList(services.DataController.getReservedSeats()));
 
             // Clear list and add a new one excluding the selected ones
             cbseatno4.getItems().clear();
