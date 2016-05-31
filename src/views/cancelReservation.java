@@ -74,6 +74,7 @@ public class cancelReservation {
         VBox layout = new VBox(20);
         layout.setPadding(new Insets(20,20,20,20));
         layout.getChildren().addAll(passengersTitle, passengersTable, refundNote, confirm, close);
+        layout.getStylesheets().add("assets//styles//style.css");
 
         window.setScene(new Scene(layout, 650, 400));
         window.showAndWait();

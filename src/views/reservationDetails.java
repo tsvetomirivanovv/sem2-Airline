@@ -168,6 +168,7 @@ public class reservationDetails {
         // Main layout
         VBox layout                 = new VBox(20);
         layout.getChildren().addAll(reservationHeader, reservationPassengers, firstFlightWrapper, close);
+        layout.getStylesheets().add("assets//styles//style.css");
 
         window.setScene(new Scene(layout, 600, 400));
         window.setTitle("Reservation details");

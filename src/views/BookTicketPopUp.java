@@ -1,8 +1,6 @@
 package views;
 
-import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -35,15 +33,14 @@ public class BookTicketPopUp {
         VBox layout = new VBox(20);
 
         HBox h1 = new HBox(5); // for the check ticket info
-        VBox h2 = new VBox(5); // for the OUTBOUND tableview
-        VBox h3 = new VBox(5); // for the RETURN tableview
         HBox h4 = new HBox(5); // for the Select Flight and Close Buttons
 
         //everything for the first horizontal box
         Label title = new Label("Book your ticket");
-        Label checkroutes = new Label("Check your routes");
+        title.getStyleClass().addAll("detailsTitle");
 
         Label checkticket = new Label("Check ticket info");
+        checkticket.getStyleClass().addAll("detailsSubtitle");
         String wayAndPassangers = "";
 
         if(searchInfo.getPassengers() == 1) {
@@ -59,6 +56,9 @@ public class BookTicketPopUp {
 
         Label total = new Label(totalPrice);
 
+        returnfor.getStyleClass().addAll("p");
+        total.getStyleClass().addAll("p");
+
         VBox small = new VBox(3);
         small.getChildren().addAll(checkticket, returnfor, total);
 
@@ -66,7 +66,8 @@ public class BookTicketPopUp {
 
         //everything for the first flight details box
         String dep_date = new SimpleDateFormat("EEE, MMM d, yyyy").format(flight.getDeparture_time());
-        Label outboundtitle = new Label("OUTBOUND - " + dep_date);
+        Label outboundtitle = new Label("Landing date: " + dep_date);
+        outboundtitle.getStyleClass().addAll("landingTitle");
 
         VBox flightPlaneBox = new VBox();
         Label flightPlaneLabel = new Label("Flight/Plane");
@@ -82,7 +83,7 @@ public class BookTicketPopUp {
 
         VBox locationBox = new VBox();
         Label locationLabel = new Label("Location");
-        Label locationValue = new Label(flight.getDeparture_loc().getCity() + "(" + flight.getDeparture_loc().getAirport_code() + ")" + "\n" + flight.getArrival_loc().getCity() + "(" + flight.getArrival_loc().getAirport_code() + ")");
+        Label locationValue = new Label(flight.getDeparture_loc().getCity() + " (" + flight.getDeparture_loc().getAirport_code() + ")" + "\n" + flight.getArrival_loc().getCity() + "(" + flight.getArrival_loc().getAirport_code() + ")");
         locationBox.getChildren().addAll(locationLabel, locationValue);
 
         VBox durationBox = new VBox();
@@ -103,17 +104,26 @@ public class BookTicketPopUp {
         Label priceValue = new Label((flight.getFlight_price() + data.getClassPrice(flight.getFlight_id(), searchInfo.getClassType()) )  + " DKK");
         priceBox.getChildren().addAll(priceLabel, priceValue);
 
+
+        // Apply css
+        flightPlaneLabel.getStyleClass().addAll("detailsTableTitle");
+        timeLabel.getStyleClass().addAll("detailsTableTitle");
+        locationLabel.getStyleClass().addAll("detailsTableTitle");
+        durationLabel.getStyleClass().addAll("detailsTableTitle");
+        arrivesLabel.getStyleClass().addAll("detailsTableTitle");
+        priceLabel.getStyleClass().addAll("detailsTableTitle");
+
+
         HBox firstFlightDetails = new HBox(30);
         firstFlightDetails.getChildren().addAll(flightPlaneBox, timeBox, locationBox, durationBox, arrivesBox, priceBox);
+        firstFlightDetails.getStyleClass().addAll("detailsTable");
 
         VBox firstFlightWrapper = new VBox();
         firstFlightWrapper.getChildren().addAll(outboundtitle, firstFlightDetails);
 
-        layout.getChildren().addAll(title, h1, checkroutes, firstFlightWrapper, h4);
-        layout.setAlignment(Pos.TOP_CENTER);
-
-        //everything for the third horizontal box
-        //Label returntitle = new Label("RETURN - Thursday, 19 May 2016");
+        layout.getChildren().addAll(title, h1, firstFlightWrapper, h4);
+        //layout.setAlignment(Pos.TOP_CENTER);
+        layout.setPadding(new Insets(20, 20, 20, 20));
 
         //everything for the fourth table
         Button selectflight = new Button("Select flight");
@@ -123,13 +133,16 @@ public class BookTicketPopUp {
             SelectedFlight.start(primaryStage);
         });
         Button close = new Button("Close");
+        close.getStyleClass().addAll("btn", "btn-danger");
+        selectflight.getStyleClass().addAll("btn", "btn-info");
         close.setOnAction(event -> primaryStage.close());
         h4.getChildren().addAll(selectflight, close);
         h4.setAlignment(Pos.BOTTOM_RIGHT);
 
-        Scene scene = new Scene(layout, 745, 520);
+        Scene scene = new Scene(layout, 710, 370);
+        scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Book ticket");
+        primaryStage.setTitle("Flight details");
         primaryStage.showAndWait();
 
     }

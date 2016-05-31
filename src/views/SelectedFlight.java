@@ -698,7 +698,7 @@ public class SelectedFlight extends Application {
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 
         Scene scene = new Scene(scrollPane, 1200, 500);
-        scrollPane.getStylesheets().add("assets//styles//style_selectedFlight.css");
+        scrollPane.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
 

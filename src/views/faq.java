@@ -42,6 +42,7 @@ public class faq {
         pane.add(pane4,0,8);
 
         Scene scene = new Scene(pane,700,400);
+        scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.showAndWait();
     }

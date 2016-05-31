@@ -83,6 +83,9 @@ public class flightCell extends ListCell<Flight> {
             popUp.start();
         });
 
+        // Apply CSS
+        selectFlight.getStyleClass().addAll("btn", "btn-small", "btn-info");
+
         HBox hBox2 = new HBox(20);
         hBox2.getChildren().addAll(flightVbox,flightBox);
         hBox2.setAlignment(Pos.CENTER);

@@ -69,6 +69,7 @@ public class creditCardPopUp {
         Label test = new Label();
 
         VBox layout = new VBox(10);
+        layout.getStylesheets().add("assets//styles//style.css");
         layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1);
         layout.setAlignment(Pos.CENTER);
 

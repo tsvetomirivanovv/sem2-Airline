@@ -33,32 +33,27 @@ public class searchResults extends Application {
     @Override
     public void start(Stage primaryStage)  {
         Label sidebarTitle = new Label("You are searching for:");
-        sidebarTitle.getStyleClass().add("sidebarTitle");
-        ToggleGroup flightType = new ToggleGroup(); // Group the 2 radioboxes (One way / Return)
-
         Label departureLocLabel = new Label("Departure:");
-        departureLocLabel.getStyleClass().add("departureLocLabel");
-
         Label arrivalLocLabel = new Label("Arrival:");
-        arrivalLocLabel.getStyleClass().add("departureLocLabel");
-
         Label passengersLabel = new Label("For:");
-        passengersLabel.getStyleClass().add("departureLocLabel");
-
         Label classTypeLabel = new Label("At: ");
-        classTypeLabel.getStyleClass().add("departureLocLabel");
-
         Label startDateLabel = new Label("From:");
-        startDateLabel.getStyleClass().add("departureLocLabel");
-        Label returnDateLabel = new Label("To:");
-        returnDateLabel.getStyleClass().add("departureLocLabel");
+        sidebarTitle.getStyleClass().addAll("h6", "bold");
+        departureLocLabel.getStyleClass().addAll("bold", "p");
+        arrivalLocLabel.getStyleClass().addAll("bold", "p");
+        passengersLabel.getStyleClass().addAll("bold", "p");
+        classTypeLabel.getStyleClass().addAll("bold", "p");
+        startDateLabel.getStyleClass().addAll("bold", "p");
 
-        VBox sidebarLabels = new VBox(20);
+
+        VBox sidebarLabels = new VBox(10);
         sidebarLabels.getChildren().addAll(departureLocLabel, arrivalLocLabel, passengersLabel, classTypeLabel, startDateLabel);
 
         Label departureLocValue = new Label(searchInfo.getDeparture_loc());
         Label arrivalLocValue = new Label(searchInfo.getArrival_loc());
         Label passengersValue = new Label();
+        Label classTypeValue = new Label(searchInfo.getClassType());
+        Label startDateValue = new Label(searchInfo.getStart_date());
 
         // Check passengers number to validate plural/singular for Passenger word
         if (searchInfo.getPassengers() == 1) {
@@ -67,37 +62,36 @@ public class searchResults extends Application {
             passengersValue = new Label(searchInfo.getPassengers() + " Passengers");
         }
 
-        Label classTypeValue = new Label(searchInfo.getClassType());
-
-
-        Label startDateValue = new Label(searchInfo.getStart_date());
-
+        departureLocValue.getStyleClass().addAll("p");
+        arrivalLocValue.getStyleClass().addAll("p");
+        passengersValue.getStyleClass().addAll("p");
+        classTypeValue.getStyleClass().addAll("p");
+        startDateValue.getStyleClass().addAll("p");
 
         // the vBox from the right side of the Sidebar (The values selected in the previous page)
-        VBox sidebarValues = new VBox(20);
+        VBox sidebarValues = new VBox(10);
         sidebarValues.getChildren().addAll(departureLocValue, arrivalLocValue, passengersValue, classTypeValue, startDateValue);
 
         // Hbox where we put both the labels and the values
-        HBox sidebarContent = new HBox(20);
+        HBox sidebarContent = new HBox(10);
         sidebarContent.getChildren().addAll(sidebarLabels, sidebarValues);
 
         Button back = new Button("Back");
-        back.getStyleClass().add("back");
+        back.getStyleClass().addAll("btn", "btn-danger");
 
         //assinging css for the list view
-        flights.getStyleClass().add("flights");
 
         back.setOnAction(event -> {
             searchFlights flights1 = new searchFlights();
             flights1.start(primaryStage);
         });
         StackPane stackPane= new StackPane(back);
-        stackPane.setAlignment(Pos.BOTTOM_CENTER);
+        stackPane.setAlignment(Pos.BOTTOM_LEFT);
 
-        VBox sidebarWrapper = new VBox(20);
+        VBox sidebarWrapper = new VBox(10);
         sidebarWrapper.getChildren().addAll(sidebarTitle, sidebarContent, stackPane);
         sidebarWrapper.setAlignment(Pos.TOP_CENTER);
-        sidebarWrapper.setPadding(new Insets(10,10,10,10));
+        sidebarWrapper.setPadding(new Insets(20,20,20,20));
 
         flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), searchInfo.getPassengers(), searchInfo.getClassType()));
         flights.setCellFactory(e -> new flightCell(primaryStage, searchInfo));
@@ -110,7 +104,7 @@ public class searchResults extends Application {
         layout.setTop(menu1.display(primaryStage));
 
         primaryStage.setTitle("Search Results");
-        layout.getStylesheets().add("assets//styles//style_searchResults.css");
+        layout.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(new Scene(layout, 1000, 600));
         primaryStage.show();
     }

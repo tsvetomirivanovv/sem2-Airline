@@ -127,6 +127,7 @@ public class manageReservations extends Application {
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(tableView);
         layout.setBottom(hBox1);
+        layout.getStylesheets().add("assets//styles//style.css");
         primaryStage.setTitle("Manage reservations");
         primaryStage.show();
     }

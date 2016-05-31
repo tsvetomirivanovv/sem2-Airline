@@ -2,7 +2,6 @@ package services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import models.*;
 import services.components.checkLogin;
 
@@ -668,95 +667,6 @@ public class DataController {
         return loggedIn;
     }
 
-    public static int getCustomerId(String email, String password) {
-        checkLogin checkLogin = new checkLogin();
-        Boolean loggedIn = false;
-        int id = -1;
-        int role = -1;
-        String account_email = "";
-        String account_password = "";
-
-
-        try {
-            Statement s = null;
-            s = conn.createStatement();
-
-            ResultSet rs = s.executeQuery("SELECT * from Accounts where email = '" + email + "' and password='" + password + "'");
-            if (rs != null) {
-                while (rs.next()) {
-                    id = rs.getInt("id");
-                    role = rs.getInt("role");
-                    account_email = rs.getString("email");
-                    account_password = rs.getString("password");
-                }
-            }
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
-
-        if(id == -1) {
-            loggedIn = false;
-        } else {
-            loggedIn = true;
-            checkLogin.setLoggedIn(true);
-            System.out.println("Logged in");
-            checkLogin.setAccount_id(id);
-            checkLogin.setAccount_email(account_email);
-
-            if (role == 1) {
-                checkLogin.setAdmin(true);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as admin!");
-                alert.setContentText("You can now manage planes, flights and reservations.");
-                alert.showAndWait();
-            } else if (role == 0) {
-                checkLogin.setAdmin(false);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(null);
-                alert.setHeaderText("You have logged in as a customer!");
-                alert.setContentText("You can now search a flight and book a reservation.");
-                alert.showAndWait();
-            }
-        }
-
-        return id;
-    }
-
-    public static ObservableList<Airport> getAirports() {
-        ObservableList<Airport> airports = FXCollections.observableArrayList();
-        try {
-            Statement s = null;
-            s = conn.createStatement();
-
-            ResultSet rs = s.executeQuery("SELECT a.airport_code as airport_code, a.name as airport_name, a.city as airport_city FROM Airports a");
-
-            if (rs != null)
-                while (rs.next()) {
-                    String airport_code = rs.getString("airport_code");
-                    String airport_name = rs.getString("airport_name");
-                    String airport_city = rs.getString("airport_city");
-
-                    Airport airport = new Airport(airport_name, airport_code, airport_city);
-                    airports.add(airport);
-                }
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
-
-        return airports;
-    }
-
     public static void registerAccount(String nameText, String addressText, String townText, String mobileText, String emailText, String passwordText) {
 
         try {
@@ -1131,7 +1041,6 @@ public class DataController {
     public static String getFlightDuration(String date1, String date2) {
         String duration = "";
 
-        //HH converts hour in 24 hours format (0-23), day calculation
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
         java.util.Date d1 = null;
@@ -1141,12 +1050,10 @@ public class DataController {
             d1 = format.parse(date1);
             d2 = format.parse(date2);
 
-            //in milliseconds
             long diff = d2.getTime() - d1.getTime();
 
             long diffMinutes = diff / (60 * 1000) % 60;
             long diffHours = diff / (60 * 60 * 1000) % 24;
-            //long diffDays = diff / (24 * 60 * 60 * 1000);
 
             if(diffHours > 0) {
                 duration = diffHours + "h " + diffMinutes + "m";
@@ -1251,8 +1158,6 @@ public class DataController {
 
             rs = s.executeQuery("SELECT p.id as payment_id, p.card_type, p.card_no, p.card_expiration, p.cardholder_name FROM Customers c, payments p WHERE p.id = c.payment_id AND  c.account_id =  " + accountId);
 
-            //id | card_type | card_no | card_expiration     | cardholder_name |
-
             if (rs != null)
                 while (rs.next()) {
                     int payment_id = rs.getInt("payment_id");
@@ -1260,12 +1165,6 @@ public class DataController {
                     int card_no = rs.getInt("card_no");
                     String card_expiration = rs.getString("card_expiration");
                     String cardholder_name = rs.getString("cardholder_name");
-
-                    System.err.println("id: " + payment_id );
-                    System.err.println("card_no: " + card_no );
-                    System.err.println("card_type: " + card_type );
-                    System.err.println("card_expiration: " + card_expiration);
-                    System.err.println("cardholder_name: " + cardholder_name );
 
                     payment = new Payment(payment_id, card_type, card_no, card_expiration, cardholder_name);
 
@@ -1384,41 +1283,5 @@ public class DataController {
         }
 
         return baggage;
-    }
-
-    public static void createPassenger (String name, String birthday, int seat, String baggage){
-
-        try {
-            Statement s = null;
-            s = conn.createStatement();
-
-            String query = "INSERT INTO Passengers (name, birth_date, seat_no, baggage) VALUES ('"+name+"','"+birthday+"',"+seat+",'"+baggage+"');";
-            s.executeUpdate(query);
-            connectPassAndRes(name);
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
-    }
-
-    public static void connectPassAndRes (String name) {
-        try {
-            Statement s = null;
-            s = conn.createStatement();
-
-            String query ="insert into reservation_passengers (reservation_id, passenger_id) values ("+getReservations(0,true,"").size()+",(SELECT id FROM Passengers WHERE name='"+name+"'))";
-            s.executeUpdate(query);
-        } catch (SQLException sqlex) {
-            try{
-                System.out.println(sqlex.getMessage());
-                conn.close();
-                System.exit(1);  // terminate program
-            }
-            catch(SQLException sql){}
-        }
     }
 }

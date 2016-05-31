@@ -138,10 +138,8 @@ public class addPlane  {
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
 
-        // BorderPane pane = new BorderPane();
-       // pane.setCenter(mainVbox);
-       // pane.setTop(title);
         Scene scene = new Scene(mainVbox, 600, 600);
+        scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.showAndWait();
     }

@@ -135,6 +135,7 @@ public class manageFlights extends Application{
 
 
         Scene scene = new Scene(layout, 1000, 600);
+        scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manage planes");
         primaryStage.show();

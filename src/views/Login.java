@@ -68,10 +68,10 @@ public class Login {
         password.setMaxWidth(220);
 
         //assigning css to the textfields
-        email.getStyleClass().add("textfield");
-        password.getStyleClass().add("textfield");
+        email.getStyleClass().add("text-field");
+        password.getStyleClass().add("text-field");
 
-        VBox vBox1 = new VBox();
+        VBox vBox1 = new VBox(10);
         vBox1.getChildren().addAll(emailLabel,email);
         vBox1.setAlignment(Pos.CENTER);
 
@@ -90,7 +90,7 @@ public class Login {
         loginButton.getStyleClass().add("loginButton");
         closeButton.getStyleClass().add("closeButton");
 
-        HBox createAccount = new HBox();
+        HBox createAccount = new HBox(15);
         createAccount.setAlignment(Pos.CENTER);
         TextFlow flow = new TextFlow();
         Text text = new Text("Don't have an account yet?");
@@ -129,7 +129,7 @@ public class Login {
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(mainVbox, 600, 600);
+        Scene scene = new Scene(mainVbox, 400, 400);
         scene.setOnKeyPressed(event -> {
             if(event.getCode()== KeyCode.ENTER){
                 onAc(primaryStage,parentStage,email,password);

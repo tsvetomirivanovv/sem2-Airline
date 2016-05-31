@@ -185,7 +185,7 @@ public class createAccount  {
         mainVbox.getChildren().addAll(title,vBox1,vBox2,vBox3,vBox5,vBox6,vBox7,vBox8,vBox9,ButtonHbox);
         mainVbox.setMaxWidth(240);
         mainVbox.setAlignment(Pos.CENTER);
-        mainVbox.getStylesheets().add("assets//styles//style_createAccount.css");
+        mainVbox.getStylesheets().add("assets//styles//style.css");
 
         Scene scene = new Scene(mainVbox, 400, 600);
         primaryStage.setTitle("                          Create an account");

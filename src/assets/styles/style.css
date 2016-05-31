@@ -27,8 +27,8 @@
     -fx-font-size: 24px;
 }
 
-.text {
-    -fx-font-size: 18px;
+.p {
+    -fx-font-size: 16px;
 }
 
 .bold {
@@ -65,6 +65,11 @@
     -fx-padding: 10px 19px;
 }
 
+.btn-small {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 15px;
+}
+
 .btn-search {
     -fx-min-width: 290px;
     -fx-background-color: #244978;
@@ -86,7 +91,7 @@
     -fx-color: #ffffff;
     -fx-padding: 7px 15px 7px 15px;
     -fx-border-radius: 6px;
-    -fx-font-size: 14px;
+    -fx-font-size: 17px;
     -fx-prompt-text-fill: #ffffff;
     -fx-min-width: 290px;
     -fx-max-width: 290px;
@@ -115,12 +120,15 @@
     -fx-prompt-text-fill: #ffffff;
     -fx-min-height: 47px;
     -fx-show-week-numbers: false;
+    -fx-border-width: 0;
 }
 
 .datepicker .text-field {
     -fx-padding: 7px 15px 7px 15px;
     -fx-font-size: 17px;
+    -fx-border-width: 0;
     -fx-prompt-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
     -fx-control-inner-background:  #3498DB;
 }
 
@@ -148,7 +156,81 @@
     -fx-color: #ffffff;
 }
 
-.menu-label {
+.menu-bar .label {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-line-height: 23px;
     -fx-text-fill: #ffffff;
     -fx-color: #ffffff;
+}
+
+.menu-bar .menu-button:hover,
+.menu-bar .menu-button:focused,
+.menu-bar .menu-button:showing {
+    -fx-background-color: #3498DB;
+}
+.menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-item:hover {
+    -fx-background-color: #3498DB;
+}
+
+.menu-item:hover > .label {
+    -fx-text-fill: #ffffff;
+}
+
+.menu-item >.label {
+    -fx-text-fill: #244978;;
+}
+
+/* Inputs */
+.text-field {
+    -fx-padding: 5px 17px;
+    -fx-font-size: 16px;
+    -fx-min-width: 290px;
+    -fx-max-width: 290px;
+    -fx-border-radius: 6px;
+}
+
+/* =======
+    INDEX
+  ========*/
+.indexTitles {
+    -fx-font-size: 18px;
+}
+
+/* =======
+   Details
+ ========= */
+.detailsTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 28px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+.detailsSubtitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+    -fx-text-alignment: left;
+}
+
+.detailsTable {
+    -fx-border-color: #000 transparent transparent transparent;
+    -fx-border-width: 2px;
+}
+
+.landingTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    -fx-text-alignment: left;
+    -fx-padding: 0 0 10px 0;
+}
+
+.detailsTableTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10px 0;
 }

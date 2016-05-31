@@ -18,8 +18,8 @@ public class menu {
 
         // Call the checkLogin class
 
-        Menu filemenu1 = new Menu("File");
-        Menu filemenu2 = new Menu("File");
+        Menu filemenu1 = new Menu("System");
+        Menu filemenu2 = new Menu("System");
         Menu reservationsMenu = new Menu("Manage reservations");
         Menu planesMenus = new Menu("Manage Planes");
         Menu OSCA = new Menu("OSCA");

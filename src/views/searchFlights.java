@@ -20,13 +20,14 @@ import java.time.LocalDate;
 public class searchFlights extends Application {
 
     static HBox h1,h2,h3,h4;
-    static VBox v1, v2, v3, v5, v6;
+    static VBox v1, v2, v3, v4, v5, v6;
     static BorderPane layout;
 
     DataController data = new DataController();
 
     public void start (Stage primaryStage) {
 
+        Label emptyLabel = new Label(" ");
         Label departureLocLabel = new Label("Leaving from:");
         Label arrivalLocLabel = new Label("Going to:");
 
@@ -53,6 +54,7 @@ public class searchFlights extends Application {
         Label departureTimeLabel = new Label("Departure Date:");
 
         DatePicker datePicker1 = new DatePicker();
+        datePicker1.setPromptText("mm/dd/yyyy");
         datePicker1.getStyleClass().add("datePicker1");
         datePicker1.setOnAction(e -> {
             LocalDate date = datePicker1.getValue();
@@ -126,6 +128,10 @@ public class searchFlights extends Application {
         v2.getChildren().addAll(arrivalLocLabel, arrival);
         v2.setAlignment(Pos.CENTER);
 
+        v4 = new VBox(7);
+        v4.getChildren().addAll(emptyLabel, searchButton);
+        v4.setAlignment(Pos.CENTER);
+
         v3 = new VBox(7);
         v3.getChildren().addAll(departureTimeLabel, datePicker1);
         v3.setAlignment(Pos.CENTER);
@@ -146,7 +152,7 @@ public class searchFlights extends Application {
         h1.setSpacing(20);
 
         h2 = new HBox(10);
-        h2.getChildren().addAll(v3, searchButton);
+        h2.getChildren().addAll(v3, v4);
         h2.setAlignment(Pos.CENTER);
         h2.setPadding(new Insets(20, 20, 20, 20));
         h2.setSpacing(20);
@@ -169,11 +175,11 @@ public class searchFlights extends Application {
         datePicker1.getStyleClass().add("datepicker");
         searchButton.getStyleClass().add("btn-search");
 
-        departureTimeLabel.getStyleClass().add("bold");
-        departureLocLabel.getStyleClass().add("bold");
-        arrivalLocLabel.getStyleClass().add("bold");
-        classLabel.getStyleClass().add("bold");
-        passengersLabel.getStyleClass().add("bold");
+        departureTimeLabel.getStyleClass().addAll("bold", "indexTitles");
+        departureLocLabel.getStyleClass().addAll("bold", "indexTitles");
+        arrivalLocLabel.getStyleClass().addAll("bold", "indexTitles");
+        classLabel.getStyleClass().addAll("bold", "indexTitles");
+        passengersLabel.getStyleClass().addAll("bold", "indexTitles");
 
 
         layout = new BorderPane();
