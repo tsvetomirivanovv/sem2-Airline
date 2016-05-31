@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import services.DataController;
 import services.components.comboBoxAutocomplete;
 import services.components.searchInfo;
+import views.components.errorAlert;
 
 import java.time.LocalDate;
 
@@ -98,11 +99,8 @@ public class searchFlights extends Application {
         searchButton.setOnAction(event -> {
 
             if(departure.getValue() == null || arrival.getValue() == null || datePicker1.getValue() == null || passengers.getValue() == null || classType.getValue() == null) {
-                Alert granted = new Alert(Alert.AlertType.ERROR);
-                granted.setTitle("Error!");
-                granted.setContentText("Please fill all the required fields before searching a flight");
-                granted.setHeaderText(null);
-                granted.show();
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please fill in all the required fields!");
             } else {
                 String date1 = datePicker1.getValue().toString();
                 int passengerNo = 0;

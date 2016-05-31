@@ -30,7 +30,7 @@ public class menu {
         MenuItem login1 = new MenuItem("Log in as Admin");
         MenuItem login2 = new MenuItem("Log in as Customer");
         MenuItem logOut = new MenuItem("Log out");
-        MenuItem addPlane = new MenuItem("Add Plane");
+        MenuItem addPlane = new MenuItem("Manage Plane");
         MenuItem manageReservations = new MenuItem("Manage Reservations");
         MenuItem flights = new MenuItem("Export flights");
         MenuItem planes = new MenuItem("Export planes");

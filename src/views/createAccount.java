@@ -92,10 +92,10 @@ public class createAccount  {
         TextField confirmemailtext      = new TextField();
         confirmemailtext.setMaxWidth(220);
 
-        TextField passwordtext          = new TextField();
+        PasswordField passwordtext          = new PasswordField();
         passwordtext.setMaxWidth(220);
 
-        TextField confirmpasswordtext   = new TextField();
+        PasswordField confirmpasswordtext   = new PasswordField();
         confirmpasswordtext.setMaxWidth(220);
 
 

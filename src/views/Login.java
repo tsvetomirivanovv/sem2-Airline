@@ -15,6 +15,7 @@ import models.Flight;
 import services.DataController;
 import services.components.checkLogin;
 import services.components.searchInfo;
+import views.components.errorAlert;
 
 public class Login {
     DataController data = new DataController();
@@ -148,8 +149,8 @@ public class Login {
 
         if (data.login(userName, userPassword)) {
 
-            if (isAdmin) {
-                checkLogin.setAdmin(true);
+            if (checkLogin.isAdmin()) {
+//                checkLogin.setAdmin(true);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
                 alert.setHeaderText("You have logged in as admin!");
@@ -157,7 +158,7 @@ public class Login {
                 alert.showAndWait();
                 System.err.println("ADMIN IS: "+checkLogin.isAdmin());
             } else {
-                checkLogin.setAdmin(false);
+//                checkLogin.setAdmin(false);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
                 alert.setHeaderText("You have logged in as a customer!");
@@ -176,11 +177,8 @@ public class Login {
                 primaryStage.close();
             }
         } else {
-            Alert granted = new Alert(Alert.AlertType.ERROR);
-            granted.setTitle("Access Denied!");
-            granted.setContentText("You need to enter a valid Email and Password");
-            granted.setHeaderText(null);
-            granted.show();
+            views.components.errorAlert alert = new errorAlert();
+            alert.display(null,"You need to enter a valid username and password!");
         }
     }
 }

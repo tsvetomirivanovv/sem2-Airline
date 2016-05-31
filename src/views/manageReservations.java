@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import models.Reservation;
 import services.DataController;
+import views.components.errorAlert;
 import views.components.reservationsDetailsCell;
 
 public class manageReservations extends Application {
@@ -81,14 +82,20 @@ public class manageReservations extends Application {
 
         confirm.setOnAction(event -> {
             if(tableView.getSelectionModel().getSelectedItem()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Please select a row before!");
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please select a row before!");
             }else {
                 int i = tableView.getSelectionModel().getSelectedItem().getReservation_id();
                 creditCardPopUp popup = new creditCardPopUp();
                 popup.start(i, tableView, checkadmin);
             }
+        });
+
+        tableView.setOnMouseClicked(event -> {
+            if ( tableView.getSelectionModel().getSelectedItem() != null)
+                if(tableView.getSelectionModel().getSelectedItem().getStatus().equals("confirmed")){
+                    confirm.setDisable(true);
+                }
         });
 
         back.setOnAction(event -> {

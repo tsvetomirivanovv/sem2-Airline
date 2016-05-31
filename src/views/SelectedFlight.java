@@ -53,9 +53,8 @@ public class SelectedFlight extends Application {
         HBox layout = new HBox(2);
 
         VBox vbig = new VBox(30);
-        VBox vflights = new VBox(450);
 
-        layout.getChildren().addAll(vbig, vflights);
+        layout.getChildren().addAll(vbig);
         layout.getStyleClass().add("layout");
 
         ScrollPane scrollPane = new ScrollPane();
@@ -141,9 +140,6 @@ public class SelectedFlight extends Application {
         //asigning css to the buttons
         bookreservation.getStyleClass().add("bookreservation");
         back.getStyleClass().add("back");
-
-
-        vflights.getChildren().addAll(vfirst, hbuttons);
 
         // setting the content for the first vbox, vbig
         Label wejustneed = new Label("We just need a few more details. Who is traveling?");
@@ -455,30 +451,6 @@ public class SelectedFlight extends Application {
         VBox vbiggg             = new VBox(15);
         vbiggg.getChildren().addAll(wejustneed, passengerdetails);
 
-        Label Payment           = new Label("Payment info");
-        Payment.getStyleClass().add("label");
-        Label note1             = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
-        Label note2             = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
-
-        VBox vpayment           = new VBox(6);
-        vpayment.getChildren().addAll(Payment, note1, note2);
-
-        // declaring the radio buttons
-        // by placing them in a ToggleGroup I make sure only one of them can be selected at a time
-
-        ToggleGroup group           = new ToggleGroup();
-
-        RadioButton mastercard      = new RadioButton("MasterCard");
-        mastercard.setToggleGroup(group);
-        RadioButton visa            = new RadioButton("Visa");
-        visa.setToggleGroup(group);
-        RadioButton visa_electron   = new RadioButton("Visa Electron");
-        visa_electron.setToggleGroup(group);
-        RadioButton maestro         = new RadioButton("Maestro");
-        maestro.setToggleGroup(group);
-
-
-
         // Book reservation
         bookreservation.setOnAction(event -> {
 
@@ -499,59 +471,18 @@ public class SelectedFlight extends Application {
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
             }
 
-
             // Change this if we have data in payment shit!
             String status = "booked";
 
             // Call createReservation
             data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
 
-//            searchResults results = new searchResults(searchInfo);
-//            results.start(primaryStage);
+            creditCardPopUp popUp = new creditCardPopUp();
+            popUp.start(data.getReservations(1,true,"").size(),null,false);
+
+            searchResults results = new searchResults(searchInfo);
+            results.start(primaryStage);
         });
-
-        HBox himages            = new HBox(30);
-        himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
-
-        Label holderName        = new Label("Card holder name:");
-        holderName.getStyleClass().add("label");
-        TextField holderField   = new TextField();
-        holderField.setPromptText("Name");
-        VBox holder             = new VBox(10);
-        holder.getChildren().addAll(holderName,holderField);
-
-        Label cardNo            = new Label("Card no:");
-        cardNo.getStyleClass().add("label");
-        TextField noField       = new TextField();
-        noField.setPromptText("card number");
-        VBox number             = new VBox(10);
-        number.getChildren().addAll(cardNo,noField);
-
-        Label expirationDate    = new Label("Expiration date:");
-        expirationDate.getStyleClass().add("label");
-        expirationDate.setAlignment(Pos.TOP_CENTER);
-        TextField expirationYear= new TextField();
-        expirationYear.setPromptText("YYYY");
-        expirationYear.setMaxWidth(50);
-        Label dash              = new Label("/");
-        TextField expirationMounth = new TextField();
-        expirationMounth.setPromptText("MM");
-        expirationMounth.setMaxWidth(35);
-        HBox fields             = new HBox(5);
-        fields.getChildren().addAll(expirationMounth,dash,expirationYear);
-        VBox expiration         = new VBox(10);
-        expiration.getChildren().addAll(expirationDate,fields);
-
-        Label securityCode      = new Label("Security code:");
-        securityCode.getStyleClass().add("label");
-        TextField cvv           = new TextField();
-        cvv.setPromptText("CVV");
-        cvv.setMaxWidth(50);
-        VBox security           = new VBox(10);
-        security.getChildren().addAll(securityCode,cvv);
-
-        HBox hcard              = new HBox(15);
-        hcard.getChildren().addAll(holder, number, expiration, security);
 
         Label pricel            = new Label("Price for "+searchInfo.getPassengers()+" people:");
         pricel.getStyleClass().add("label");
@@ -668,7 +599,7 @@ public class SelectedFlight extends Application {
         VBox vforprice = new VBox(5);
         vforprice.getChildren().addAll(pricel, hedge, choiceboxesHBox, line, htot);
 
-        vbig.getChildren().addAll(vbiggg, passengerDetVBox, vpayment, himages, hcard, vforprice);
+        vbig.getChildren().addAll(vbiggg, vfirst, passengerDetVBox, vforprice, hbuttons);
 
         /*
           This is to make the stage pop-up in the exact middle of the screen
@@ -679,7 +610,7 @@ public class SelectedFlight extends Application {
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 
-        Scene scene = new Scene(scrollPane, 1280, 700);
+        Scene scene = new Scene(scrollPane, 700, 600);
         scrollPane.getStylesheets().add("assets//styles//style_selectedFlight.css");
         primaryStage.setScene(scene);
         primaryStage.show();

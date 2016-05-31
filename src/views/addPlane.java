@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Plane;
 import services.DataController;
+import views.components.errorAlert;
 
 import java.util.Objects;
 
@@ -107,9 +108,8 @@ public class addPlane  {
             if (Objects.equals(regNum.getText(), "") || Objects.equals(model.getText(), "") ||  Objects.equals(businessSeat.getText(), "") ||
                     Objects.equals(coachSeat.getText(), "") || Objects.equals(economicSeat.getText(), "") ||
                     Objects.equals(businessPrice.getText(), "") || Objects.equals(coachPrice.getText(), "")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Complete all fields!");
-                alert.showAndWait();
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Complete all the fields!");
             }else {
 
                 try {
