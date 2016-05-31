@@ -113,9 +113,11 @@ public class menu {
         flightsMenu.getItems().addAll(manageFlights);
         helpMenu.getItems().addAll(contactus,faq);
 
+        filemenu1.getStyleClass().add("test");
+
         //Main menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getStyleClass().add("menu");
+        menuBar.getStyleClass().add("menu-bar");
         if(!checkLogin.isLoggedIn()) {
             menuBar.getMenus().addAll(filemenu1,OSCA,helpMenu);
         }

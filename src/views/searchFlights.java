@@ -46,13 +46,11 @@ public class searchFlights extends Application {
         });
 
         arrival.setPromptText("Search arrival location");
-        arrival.getStyleClass().add("arrival");
 
         new comboBoxAutocomplete<String>(departure);
         new comboBoxAutocomplete<String>(arrival);
 
         Label departureTimeLabel = new Label("Departure Date:");
-        Label returnTimeLabel = new Label("Return Date:");
 
         DatePicker datePicker1 = new DatePicker();
         datePicker1.getStyleClass().add("datePicker1");
@@ -113,10 +111,7 @@ public class searchFlights extends Application {
                         break;
                 }
 
-
                 info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, passengerNo, (String) classType.getValue());
-
-
 
                 searchResults results = new searchResults(info);
                 results.start(primaryStage);
@@ -151,7 +146,7 @@ public class searchFlights extends Application {
         h1.setSpacing(20);
 
         h2 = new HBox(10);
-        h2.getChildren().addAll(v3);
+        h2.getChildren().addAll(v3, searchButton);
         h2.setAlignment(Pos.CENTER);
         h2.setPadding(new Insets(20, 20, 20, 20));
         h2.setSpacing(20);
@@ -163,19 +158,28 @@ public class searchFlights extends Application {
         h3.setSpacing(20);
 
         v3 = new VBox(20);
-        v3.getChildren().addAll(h1, h2, h3, searchButton);
+        v3.getChildren().addAll(h1, h3, h2);
         v3.setAlignment(Pos.CENTER);
 
-        // Apply css
+        //  ----- Apply css ----- //
         departure.getStyleClass().add("dropdown");
+        arrival.getStyleClass().add("dropdown");
+        passengers.getStyleClass().add("dropdown");
+        classType.getStyleClass().add("dropdown");
+        datePicker1.getStyleClass().add("datepicker");
+        searchButton.getStyleClass().add("btn-search");
+
+        departureTimeLabel.getStyleClass().add("bold");
+        departureLocLabel.getStyleClass().add("bold");
+        arrivalLocLabel.getStyleClass().add("bold");
+        classLabel.getStyleClass().add("bold");
+        passengersLabel.getStyleClass().add("bold");
 
 
         layout = new BorderPane();
 
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
-
-
 
         layout.setTop(menu1.display(primaryStage));
         layout.setCenter(v3);
