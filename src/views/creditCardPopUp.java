@@ -90,12 +90,16 @@ public class creditCardPopUp {
                     String expiration = String.format("%s/%s/28",cardExY.getText(),cardExM.getText());
                     data.setPayment(loginid, cardType.getText(), Integer.parseInt(cardNo.getText()), expiration, cardName.getText(), payment.getPayment_id());
                     data.setReservationStatus(id);
-                    table.setItems(data.getReservations(loginid,checkadmin,""));
+                    if (table != null) {
+                        table.setItems(data.getReservations(loginid,checkadmin,""));
+                    }
                 } else {
                     String expiration = String.format("%s/%s/28",cardExY.getText(),cardExM.getText());
                     data.setPayment(loginid, cardType.getText(), Integer.parseInt(cardNo.getText()), expiration, cardName.getText(), 0);
                     data.setReservationStatus(id);
-                    table.setItems(data.getReservations(loginid,checkadmin,""));
+                    if (table!=null) {
+                        table.setItems(data.getReservations(loginid,checkadmin,""));
+                    }
                 }
 
                 window.close();

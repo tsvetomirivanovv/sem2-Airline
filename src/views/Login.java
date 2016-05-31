@@ -148,8 +148,8 @@ public class Login {
 
         if (data.login(userName, userPassword)) {
 
-            if (isAdmin) {
-                checkLogin.setAdmin(true);
+            if (checkLogin.isAdmin()) {
+//                checkLogin.setAdmin(true);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
                 alert.setHeaderText("You have logged in as admin!");
@@ -157,7 +157,7 @@ public class Login {
                 alert.showAndWait();
                 System.err.println("ADMIN IS: "+checkLogin.isAdmin());
             } else {
-                checkLogin.setAdmin(false);
+//                checkLogin.setAdmin(false);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle(null);
                 alert.setHeaderText("You have logged in as a customer!");
