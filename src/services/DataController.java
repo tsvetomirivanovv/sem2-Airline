@@ -837,7 +837,7 @@ public class DataController {
         return planes;
     }
 
-    public static ObservableList<Flight> searchFlights(String departure, String date1, String arrival, String date2, int passengers, String classType) {
+    public static ObservableList<Flight> searchFlights(String departure, String date1, String arrival, int passengers, String classType) {
         ObservableList<Flight> flights = FXCollections.observableArrayList();
         departure  = codeCUT(departure);
         arrival  = codeCUT(arrival);
@@ -1158,19 +1158,29 @@ public class DataController {
     public static ObservableList<Integer> getSeatsForClass(int flight_id, String classe, ArrayList<Integer> exclude) {
         ObservableList<Integer> integers = FXCollections.observableArrayList();
         Flight flighter = getFlight(flight_id);
-        int seats = 0;
+
+        int firstClassSeats = (flighter.getPlane().getBusinessSeats());
+        int coachClassSeats = (flighter.getPlane().getCoachSeats());
+        int economyClassSeats = (flighter.getPlane().getEconomySeats());
+
+        int startNr = 0;
+        int endNr = 0;
 
         if (classe.equals("Coach class")) {
-            seats=(flighter.getPlane().getCoachSeats());
+            startNr = firstClassSeats + 1;
+            endNr = coachClassSeats;
         }
         else if (classe.equals("Economy class")) {
-            seats=(flighter.getPlane().getEconomySeats());
+            startNr = coachClassSeats + 1;
+            endNr = economyClassSeats;
+
         }
         else if (classe.equals("First class")) {
-            seats=(flighter.getPlane().getBusinessSeats());
+            startNr = 1;
+            endNr = firstClassSeats;
         }
 
-        for (int i=1; i <= seats; i++) {
+        for (int i = startNr; i <= endNr; i++) {
             if (exclude.size() > 0) {
                 int ok = 0;
                 for(int j = 0; j < exclude.size(); j++) {
