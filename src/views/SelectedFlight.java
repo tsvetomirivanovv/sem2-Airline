@@ -18,6 +18,7 @@ import models.*;
 import services.DataController;
 import services.components.checkLogin;
 import services.components.searchInfo;
+import views.components.errorAlert;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -33,9 +34,11 @@ public class SelectedFlight extends Application {
     static DataController data     = new DataController();
     double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
 
+    static String cardType;
     Label bigvalue          = new Label();
     HBox choiceboxesHBox    = new HBox(5);
     ArrayList<Integer> excludeSeats      = new ArrayList<>();
+    static int ok;
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
         flight = flightItem;
@@ -465,43 +468,17 @@ public class SelectedFlight extends Application {
 
         RadioButton mastercard      = new RadioButton("MasterCard");
         mastercard.setToggleGroup(group);
+        mastercard.setOnAction(event -> cardType = "mastercard");
         RadioButton visa            = new RadioButton("Visa");
         visa.setToggleGroup(group);
+        visa.setOnAction(event -> cardType = "visa");
         RadioButton visa_electron   = new RadioButton("Visa Electron");
         visa_electron.setToggleGroup(group);
+        visa_electron.setOnAction(event -> cardType = "visaelectron");
         RadioButton maestro         = new RadioButton("Maestro");
         maestro.setToggleGroup(group);
+        maestro.setOnAction(event -> cardType = "maestro");
 
-
-        // Book reservation
-        bookreservation.setOnAction(event -> {
-
-            ArrayList<Passenger> passengersList = new ArrayList<>();
-
-            passengersList.add(new Passenger(0, getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate.getValue().toString()), tfpassengername.getText(), Integer.parseInt(cbseatno.getValue().toString())));
-            System.out.println("Nr1" + searchInfo.getPassengers());
-            if (searchInfo.getPassengers() >= 2) {
-                System.out.println("Nr2" + searchInfo.getPassengers());
-                passengersList.add(new Passenger(0, getBaggageType(cbbaggage2.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate2.getValue().toString()), tfpassengername2.getText(), Integer.parseInt(cbseatno2.getValue().toString())));
-            }
-            if (searchInfo.getPassengers() >= 3) {
-                System.out.println("Nr3" + searchInfo.getPassengers());
-                passengersList.add(new Passenger(0, getBaggageType(cbbaggage3.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate3.getValue().toString()), tfpassengername3.getText(), Integer.parseInt(cbseatno3.getValue().toString())));
-            }
-            if (searchInfo.getPassengers() >= 4) {
-                System.out.println("Nr4" + searchInfo.getPassengers());
-                passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
-            }
-
-            // Change this if we have data in payment shit!
-            String status = "booked";
-
-            // Call createReservation
-            data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
-
-            searchResults results = new searchResults(searchInfo);
-            results.start(primaryStage);
-        });
 
         HBox himages            = new HBox(30);
         himages.getChildren().addAll(mastercard, visa, visa_electron, maestro);
@@ -535,6 +512,52 @@ public class SelectedFlight extends Application {
         VBox expiration         = new VBox(10);
         expiration.getChildren().addAll(expirationDate,fields);
 
+        // Book reservation
+        bookreservation.setOnAction(event -> {
+
+            ArrayList<Passenger> passengersList = new ArrayList<>();
+
+            passengersList.add(new Passenger(0, getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate.getValue().toString()), tfpassengername.getText(), Integer.parseInt(cbseatno.getValue().toString())));
+            System.out.println("Nr1" + searchInfo.getPassengers());
+            if (searchInfo.getPassengers() >= 2) {
+                System.out.println("Nr2" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage2.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate2.getValue().toString()), tfpassengername2.getText(), Integer.parseInt(cbseatno2.getValue().toString())));
+            }
+            if (searchInfo.getPassengers() >= 3) {
+                System.out.println("Nr3" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage3.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate3.getValue().toString()), tfpassengername3.getText(), Integer.parseInt(cbseatno3.getValue().toString())));
+            }
+            if (searchInfo.getPassengers() >= 4) {
+                System.out.println("Nr4" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
+            }
+            String status;
+
+            int loginid = services.components.checkLogin.getAccount_id();
+
+            // Change this if we have data in payment shit!
+            if (noField.getText().equals("") || expirationYear.getText().equals("") ||expirationMounth.getText().equals("") || holderField.getText().equals("")) {
+                status = "booked";
+            } else {
+
+                if (ok != 1) {
+                    if(data.checkPayment(checkLogin.getAccount_id())) {
+                        String expirationD = String.format("%s/%s/28",expirationYear.getText(),expirationMounth.getText());
+                        data.setPayment(loginid, cardType, Integer.parseInt(noField.getText()), expirationD, holderField.getText(), data.getPayment(loginid).getPayment_id());
+                    } else {
+                        String expirationD = String.format("%s/%s/28",expirationYear.getText(),expirationMounth.getText());
+                        data.setPayment(loginid, cardType, Integer.parseInt(noField.getText()), expirationD, holderField.getText(), 0);
+                    }
+                }
+                status = "confirmed";
+            }
+
+            // Call createReservation
+            data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
+
+            searchResults results = new searchResults(searchInfo);
+            results.start(primaryStage);
+        });
         if(data.checkPayment(checkLogin.getAccount_id())) {
             System.err.println("We have shit");
              Payment payment = data.getPayment(checkLogin.getAccount_id());
@@ -547,12 +570,15 @@ public class SelectedFlight extends Application {
                     break;
                 case "mastercard":
                     mastercard.setSelected(true);
+                    cardType = "mastercard";
                     break;
                 case "visa_electron":
                     visa_electron.setSelected(true);
+                    cardType = "visaelectron";
                     break;
                 case "maestro":
                     maestro.setSelected(true);
+                    cardType = "maestro";
                     break;
             }
 
@@ -560,6 +586,7 @@ public class SelectedFlight extends Application {
             expirationYear.setText(payment.getCard_expiration().substring(0, 4));
             expirationMounth.setText(payment.getCard_expiration().substring(5, 7));
             holderField.setText(payment.getCardHolder_name());
+            ok = 1;
 
         }
 
