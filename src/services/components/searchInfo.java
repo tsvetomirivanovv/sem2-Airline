@@ -5,15 +5,13 @@ public class searchInfo {
     private String departure_loc;
     private String arrival_loc;
     private String start_date; // Start date
-    private String return_date; // Return date (It might be null if the reservation is one way)
     private int passengers;
     private String classType;
 
-    public searchInfo(String departure, String arrival, String date1, String date2, int passengers_no, String class_type) {
+    public searchInfo(String departure, String arrival, String date1, int passengers_no, String class_type) {
         this.departure_loc = departure;
         this.arrival_loc = arrival;
         this.start_date = date1;
-        this.return_date = date2;
         this.passengers = passengers_no;
         this.classType = class_type;
     }
@@ -22,7 +20,6 @@ public class searchInfo {
         this.departure_loc = "";
         this.arrival_loc = "";
         this.start_date = "";
-        this.return_date = "";
         this.passengers = 0;
         this.classType = "";
     }
@@ -65,21 +62,5 @@ public class searchInfo {
 
     public void setStart_date(String start_date) {
         this.start_date = start_date;
-    }
-
-    public String getReturn_date() {
-        return return_date;
-    }
-
-    public void setReturn_date(String return_date) {
-        this.return_date = return_date;
-    }
-
-    public boolean hasReturnDate() {
-        if(getReturn_date() == "") {
-            return false;
-        } else {
-            return true;
-        }
     }
 }

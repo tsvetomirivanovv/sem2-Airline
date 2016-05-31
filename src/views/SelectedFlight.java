@@ -31,7 +31,6 @@ public class SelectedFlight extends Application {
     Flight flight           = new Flight();
     searchInfo searchInfo   = new searchInfo();
     static DataController data     = new DataController();
-    double totalpricevalue;
     double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
 
     Label bigvalue          = new Label();
@@ -478,8 +477,8 @@ public class SelectedFlight extends Application {
             data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
 
             creditCardPopUp popUp = new creditCardPopUp();
-            popUp.start(data.getReservations(1,true,"").size(),null,false);
-
+            popUp.start(data.getReservations(checkLogin.getAccount_id() ,true,"").size(),null,false);
+ 
             searchResults results = new searchResults(searchInfo);
             results.start(primaryStage);
         });
@@ -614,19 +613,6 @@ public class SelectedFlight extends Application {
         scrollPane.getStylesheets().add("assets//styles//style_selectedFlight.css");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-    }
-
-    public static void setPassenger (ChoiceBox cbbaggage, String selectedBaggage, TextField tfpassengername, DatePicker dpbirthdate,ChoiceBox cbseatno) {
-        if (cbbaggage.getSelectionModel().getSelectedItem().equals("None - 0 DKK")) {
-            selectedBaggage = "none";
-        } else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 15 Kg. - 50 DKK")){
-            selectedBaggage = "small";
-        }else if (cbbaggage.getSelectionModel().getSelectedItem().equals("Baggage, Max 20 Kg - 90 DKK")){
-            selectedBaggage = "large";
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        data.createPassenger(tfpassengername.getText(),dpbirthdate.getValue().format(formatter),Integer.parseInt(cbseatno.getValue().toString()), selectedBaggage);
 
     }
 

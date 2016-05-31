@@ -44,13 +44,7 @@ public class BookTicketPopUp {
         Label checkroutes = new Label("Check your routes");
 
         Label checkticket = new Label("Check ticket info");
-        String wayAndPassangers;
-
-        if(searchInfo.hasReturnDate()) {
-            wayAndPassangers = "Return for ";
-        } else {
-            wayAndPassangers = "One way for ";
-        }
+        String wayAndPassangers = "";
 
         if(searchInfo.getPassengers() == 1) {
             wayAndPassangers += searchInfo.getPassengers() + " Passenger";

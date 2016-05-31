@@ -31,12 +31,11 @@ public class flightCell extends ListCell<Flight> {
 
     @Override
     protected void updateItem(Flight t, boolean bln) {
-        // don't omit this!!!
         super.updateItem(t, bln);
         if (bln) {
             setGraphic(null);
         } else {
-            this.setGraphic(getFlightCell(t));  // ***set the content of the graphic
+            this.setGraphic(getFlightCell(t));
         }
     }
     private Node getFlightCell(Flight flight) {
@@ -56,22 +55,6 @@ public class flightCell extends ListCell<Flight> {
         HBox flightHbox = new HBox(20);
         flightHbox.getChildren().addAll(departureVbox,imageView1,arrivalVbox);
         flightHbox.setAlignment(Pos.CENTER);
-
-
-//        Label label21211 = new Label("Time");
-//        Label label21212 = new Label(flight.getArrival_loc().getAirport_code());
-//        VBox vBox2121 = new VBox(20);
-//        vBox2121.getChildren().addAll(label21211,label21212);
-//
-//        Label label21221 = new Label("Time");
-//        Label label21222 = new Label(flight.getDeparture_loc().getAirport_code());
-//        VBox vBox2122 = new VBox(20);
-//        vBox2122.getChildren().addAll(label21221,label21222);
-//
-//        ImageView imageView2 = new ImageView();
-//        HBox hBox212 = new HBox(20);
-//        hBox212.getChildren().addAll(vBox2121,imageView2,vBox2122);
-
 
         VBox flightVbox = new VBox(20);
         flightVbox.getChildren().addAll(flightHbox);

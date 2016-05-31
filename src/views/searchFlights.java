@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class searchFlights extends Application {
 
     static HBox h1,h2,h3,h4;
-    static VBox v1, v2, v3, v4, v5, v6;
+    static VBox v1, v2, v3, v5, v6;
     static BorderPane layout;
 
     DataController data = new DataController();
@@ -59,14 +59,6 @@ public class searchFlights extends Application {
         datePicker1.setOnAction(e -> {
             LocalDate date = datePicker1.getValue();
         });
-
-        DatePicker datePicker2 = new DatePicker();
-        datePicker2.getStyleClass().add("datePicker2");
-        datePicker2.setOnAction( e -> {
-            LocalDate date = datePicker2.getValue();
-        });
-
-        datePicker2.setPromptText("One way");
 
         // ------------------------
         // Class type & Passengers number
@@ -121,14 +113,9 @@ public class searchFlights extends Application {
                         break;
                 }
 
-                if(datePicker2.getValue() == null) {
-                    //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), "", (String) passengers.getValue(), (String) classType.getValue());
-                    info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1,  "", passengerNo, (String) classType.getValue());
-                } else {
-                    String date2 = datePicker2.getValue().toString();
-                    //data.searchFlights((String)departure.getValue(), date1, (String)arrival.getValue(), date2, (String) passengers.getValue(), (String) classType.getValue());
-                    info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, date2, passengerNo, (String) classType.getValue());
-                }
+
+                info = new searchInfo((String)departure.getValue(), (String)arrival.getValue(), date1, passengerNo, (String) classType.getValue());
+
 
 
                 searchResults results = new searchResults(info);
@@ -148,10 +135,6 @@ public class searchFlights extends Application {
         v3.getChildren().addAll(departureTimeLabel, datePicker1);
         v3.setAlignment(Pos.CENTER);
 
-        v4 = new VBox(7);
-        v4.getChildren().addAll(returnTimeLabel, datePicker2);
-        v4.setAlignment(Pos.CENTER);
-
         v5 = new VBox(7);
         v5.getChildren().addAll(passengersLabel, passengers);
         v5.setAlignment(Pos.CENTER);
@@ -168,7 +151,7 @@ public class searchFlights extends Application {
         h1.setSpacing(20);
 
         h2 = new HBox(10);
-        h2.getChildren().addAll(v3, v4);
+        h2.getChildren().addAll(v3);
         h2.setAlignment(Pos.CENTER);
         h2.setPadding(new Insets(20, 20, 20, 20));
         h2.setSpacing(20);

@@ -48,22 +48,13 @@ public class searchResults extends Application {
         Label classTypeLabel = new Label("At: ");
         classTypeLabel.getStyleClass().add("departureLocLabel");
 
-        RadioButton oneWay = new RadioButton("One way");
-        oneWay.setToggleGroup(flightType);
-        oneWay.setDisable(true);
-        oneWay.setSelected(!searchInfo.hasReturnDate());
         Label startDateLabel = new Label("From:");
         startDateLabel.getStyleClass().add("departureLocLabel");
         Label returnDateLabel = new Label("To:");
         returnDateLabel.getStyleClass().add("departureLocLabel");
 
         VBox sidebarLabels = new VBox(20);
-        sidebarLabels.getChildren().addAll(departureLocLabel, arrivalLocLabel, passengersLabel, classTypeLabel, oneWay, startDateLabel);
-
-        // Add return date just if we selected one
-        if (searchInfo.hasReturnDate()) {
-            sidebarLabels.getChildren().add(returnDateLabel);
-        }
+        sidebarLabels.getChildren().addAll(departureLocLabel, arrivalLocLabel, passengersLabel, classTypeLabel, startDateLabel);
 
         Label departureLocValue = new Label(searchInfo.getDeparture_loc());
         Label arrivalLocValue = new Label(searchInfo.getArrival_loc());
@@ -77,23 +68,14 @@ public class searchResults extends Application {
         }
 
         Label classTypeValue = new Label(searchInfo.getClassType());
-        RadioButton returnWay = new RadioButton("Return");
-        oneWay.setToggleGroup(flightType);
-        returnWay.setDisable(true);
-        returnWay.setSelected(searchInfo.hasReturnDate());
+
+
         Label startDateValue = new Label(searchInfo.getStart_date());
-        Label returnDateValue = new Label(searchInfo.getReturn_date());
 
 
         // the vBox from the right side of the Sidebar (The values selected in the previous page)
         VBox sidebarValues = new VBox(20);
-        sidebarValues.getChildren().addAll(departureLocValue, arrivalLocValue, passengersValue, classTypeValue, returnWay, startDateValue);
-
-        // Add return date just if we selected one
-        if (searchInfo.hasReturnDate()) {
-            sidebarValues.getChildren().add(returnDateValue);
-        }
-
+        sidebarValues.getChildren().addAll(departureLocValue, arrivalLocValue, passengersValue, classTypeValue, startDateValue);
 
         // Hbox where we put both the labels and the values
         HBox sidebarContent = new HBox(20);
@@ -117,11 +99,7 @@ public class searchResults extends Application {
         sidebarWrapper.setAlignment(Pos.TOP_CENTER);
         sidebarWrapper.setPadding(new Insets(10,10,10,10));
 
-        if(searchInfo.hasReturnDate()) {
-            flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), searchInfo.getReturn_date(), searchInfo.getPassengers(), searchInfo.getClassType()));
-        } else {
-            flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), "", searchInfo.getPassengers(), searchInfo.getClassType()));
-        }
+        flights.setItems(data.searchFlights(searchInfo.getDeparture_loc(), searchInfo.getStart_date(), searchInfo.getArrival_loc(), searchInfo.getPassengers(), searchInfo.getClassType()));
         flights.setCellFactory(e -> new flightCell(primaryStage, searchInfo));
 
         BorderPane layout = new BorderPane();
