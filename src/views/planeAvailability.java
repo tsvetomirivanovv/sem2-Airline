@@ -27,6 +27,7 @@ public class planeAvailability {
         window.initModality(Modality.APPLICATION_MODAL);
 
         Button closeBut = new Button("close");
+        closeBut.getStyleClass().addAll("btn","btn-danger");
         StackPane close = new StackPane(closeBut);
         close.setAlignment(Pos.CENTER_RIGHT);
         closeBut.setOnAction(event -> {

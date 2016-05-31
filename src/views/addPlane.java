@@ -2,6 +2,7 @@ package views;
 
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -100,8 +101,10 @@ public class addPlane  {
 
 
         HBox ButtonHbox = new HBox(25);
+        ButtonHbox.setPadding(new Insets(10,10,10,10));
 
         Button addPlane = new Button("Add Plane");
+        addPlane.getStyleClass().addAll("btn","btn-info");
 
         addPlane.setOnAction(event -> {
 
@@ -127,6 +130,7 @@ public class addPlane  {
         });
 
         Button close = new Button("Close");
+        close.getStyleClass().addAll("btn","btn-danger");
 
         close.setOnAction(event -> primaryStage.close());
 

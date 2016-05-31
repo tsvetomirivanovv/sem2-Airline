@@ -4,6 +4,7 @@ package views;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -43,8 +44,11 @@ public class managePlanes extends Application{
         // TO DO: We need that fucking button in here (See availability).
 
         Button addButton = new Button("Create ");
+        addButton.getStyleClass().addAll("btn", "btn-info");
         Button deleteButton = new Button("Delete ");
+        deleteButton.getStyleClass().addAll("btn", "btn-danger");
         Button back = new Button("Back to menu ");
+        back.getStyleClass().addAll("btn", "btn-danger");
 
         addButton.setOnAction(event -> {
             addPlane addPlane = new addPlane();
@@ -62,6 +66,7 @@ public class managePlanes extends Application{
 
         HBox vBox1 = new HBox(20);
         vBox1.getChildren().addAll(addButton,back);
+        vBox1.setPadding(new Insets(10,10,10,10));
 
         mainPlanesTable.setItems(data.getPlanes());
         mainPlanesTable.getColumns().addAll(reg_num,model,seats,availability);

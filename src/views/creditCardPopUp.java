@@ -74,7 +74,9 @@ public class creditCardPopUp {
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
+        close.getStyleClass().addAll("btn","btn-danger");
         Button save = new Button("Save");
+        save.getStyleClass().addAll("btn","btn-info");
 
         h1.getChildren().addAll(save, close);
 

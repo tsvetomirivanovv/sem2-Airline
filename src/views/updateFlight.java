@@ -3,6 +3,7 @@ package views;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -57,11 +58,13 @@ public class updateFlight {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         depBox = new ComboBox();
+        depBox.getStyleClass().addAll("dropdown");
         depBox.setMinWidth(240);
         depBox.setPromptText("Select departure location");
 
 
         arrbox = new ComboBox();
+        arrbox.getStyleClass().addAll("dropdown");
         arrbox.setMinWidth(240);
         arrbox.setPromptText("Select arrival location");
 
@@ -88,6 +91,7 @@ public class updateFlight {
         });
 
         planeBox = new ComboBox();
+        planeBox.getStyleClass().addAll("dropdown");
         planeBox.setMinWidth(240);
         planeBox.setItems(data.getAllPlanes());
         String initPlane = flight.getPlane().getReg_no() + " (" + flight.getPlane().getModel() + ")";
@@ -110,7 +114,9 @@ public class updateFlight {
         planeboxLabel = new Label("Plane");
 
         addFlight = new Button("Update flight");
+        addFlight.getStyleClass().addAll("btn","btn-info");
         close = new Button("Close");
+        close.getStyleClass().addAll("btn","btn-danger");
 
         addFlight.setOnAction(event -> {
 
@@ -138,6 +144,7 @@ public class updateFlight {
         buttonBox = new HBox(15);
         buttonBox.getChildren().addAll(addFlight,close);
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
+        buttonBox.setPadding(new Insets(10,10,10,10));
 
         mainVbox = new VBox(20);
         mainVbox.getChildren().addAll(componentBox,buttonBox);

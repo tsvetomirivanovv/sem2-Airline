@@ -6,6 +6,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -94,9 +95,12 @@ public class manageFlights extends Application{
         mainFlightsTable.setItems(DataController.getFlights());
 
         addFlight = new Button("Add Flight");
-       // deleteFlights = new Button("Delete Flight");
+        addFlight.getStyleClass().addAll("btn","btn-info");
+        // deleteFlights = new Button("Delete Flight");
         updateFlight = new Button("Update Flight");
+        updateFlight.getStyleClass().addAll("btn","btn-info");
         back = new Button("Back to first page");
+        back.getStyleClass().addAll("btn","btn-danger");
 
         back.setOnAction(event -> {
             searchFlights flights = new searchFlights();
@@ -125,7 +129,7 @@ public class manageFlights extends Application{
         
         HBox hBox1 = new HBox(15);
         hBox1.getChildren().addAll(addFlight,updateFlight,back);
-
+        hBox1.setPadding(new Insets(10,10,10,10));
 
         BorderPane layout = new BorderPane();
         menu menu1 = new menu();
@@ -137,7 +141,7 @@ public class manageFlights extends Application{
         Scene scene = new Scene(layout, 1000, 600);
         scene.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Manage planes");
+        primaryStage.setTitle("Manage flights");
         primaryStage.show();
     }
 }

@@ -29,6 +29,7 @@ public class cancelReservation {
 
         // Close button
         Button closeBut = new Button("Close");
+        closeBut.getStyleClass().addAll("btn","btn-danger");
         StackPane close = new StackPane(closeBut);
         close.setAlignment(Pos.CENTER_RIGHT);
         closeBut.setOnAction( e -> window.close());
@@ -64,6 +65,7 @@ public class cancelReservation {
         reservationPassengers.getChildren().addAll(passengersTitle, passengersTable, refundNote);
 
         Button confirm = new Button("Confirm");
+        confirm.getStyleClass().addAll("btn","btn-info");
         confirm.setOnAction(e -> {
             data.cancelReservation(reservation.getReservation_id());
             manageReservations manageReservations = new manageReservations();

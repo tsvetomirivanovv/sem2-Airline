@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -44,9 +45,11 @@ public class addFlight {
 
         depBox = new ComboBox();
         depBox.setMinWidth(240);
+        depBox.getStyleClass().addAll("dropdown");
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
+        arrbox.getStyleClass().addAll("dropdown");
 
         depBox.getItems().addAll(data.getAllAirports(""));
         depBox.setPromptText("Select departure location");
@@ -60,6 +63,7 @@ public class addFlight {
 
 
         planeBox = new ComboBox();
+        planeBox.getStyleClass().addAll("dropdown");
         planeBox.setPromptText("Select plane");
         planeBox.setMinWidth(240);
 
@@ -84,7 +88,9 @@ public class addFlight {
         priceValue.setMaxWidth(240);
 
         addFlight = new Button("Add flight");
+        addFlight.getStyleClass().addAll("btn","btn-info");
         close = new Button("Close");
+        close.getStyleClass().addAll("btn","btn-danger");
         close.setOnAction(e -> primaryStage.close() );
 
 
@@ -123,6 +129,7 @@ public class addFlight {
 
         buttonBox = new HBox(15);
         buttonBox.getChildren().addAll(addFlight,close);
+        buttonBox.setPadding(new Insets(10,10,10,10));
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
 
         mainVbox = new VBox(20);

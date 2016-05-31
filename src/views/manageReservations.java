@@ -1,6 +1,7 @@
 package views;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -32,6 +33,7 @@ public class manageReservations extends Application {
         TextField searchField = new TextField();
         searchField.setPromptText("Search reservation");
         Button searchButton = new Button("Search");
+        searchButton.getStyleClass().addAll("btn","btn-info");
 
         int loginid = services.components.checkLogin.getAccount_id();
         boolean checkadmin = services.components.checkLogin.isAdmin();
@@ -77,9 +79,11 @@ public class manageReservations extends Application {
         tableView.setItems(data.getReservations(loginid,checkadmin,""));
 
         Button confirm = new Button("Confirm reservation ");
+        confirm.getStyleClass().addAll("btn","btn-info");
         Button refund  = new Button("Cancel reservation");
+        refund.getStyleClass().addAll("btn","btn-info");
         Button back = new Button("Back to menu");
-
+        back.getStyleClass().addAll("btn","btn-danger");
         confirm.setOnAction(event -> {
             if(tableView.getSelectionModel().getSelectedItem()==null){
                 views.components.errorAlert alert = new errorAlert();
@@ -95,8 +99,15 @@ public class manageReservations extends Application {
             if ( tableView.getSelectionModel().getSelectedItem() != null)
                 if(tableView.getSelectionModel().getSelectedItem().getStatus().equals("confirmed")){
                     confirm.setDisable(true);
+                    confirm.getStyleClass().addAll("btn","btn-disabled");
                 }else if (tableView.getSelectionModel().getSelectedItem().getStatus().equals("canceled")){
                     refund.setDisable(true);
+                    refund.getStyleClass().addAll("btn","btn-disabled");
+                }else if (tableView.getSelectionModel().getSelectedItem().getStatus().equals("booked")){
+                    confirm.setDisable(false);
+                    refund.setDisable(false);
+                    confirm.getStyleClass().addAll("btn","btn-info");
+                    refund.getStyleClass().addAll("btn","btn-info");
                 }
         });
 
@@ -112,6 +123,7 @@ public class manageReservations extends Application {
 
         HBox hBox1 = new HBox(15);
         hBox1.getChildren().addAll(confirm, refund, back);
+        hBox1.setPadding(new Insets(10,10,10,10));
 
         if (checkadmin == true){
         hBox1.getChildren().add(search);
