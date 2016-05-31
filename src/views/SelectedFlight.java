@@ -499,9 +499,6 @@ public class SelectedFlight extends Application {
             // Call createReservation
             data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
 
-            //creditCardPopUp popUp = new creditCardPopUp();
-            //popUp.start(data.getReservations(checkLogin.getAccount_id() ,true,"").size(),null,false);
-
             searchResults results = new searchResults(searchInfo);
             results.start(primaryStage);
         });
@@ -538,16 +535,36 @@ public class SelectedFlight extends Application {
         VBox expiration         = new VBox(10);
         expiration.getChildren().addAll(expirationDate,fields);
 
-        Label securityCode      = new Label("Security code:");
-        securityCode.getStyleClass().add("label");
-        TextField cvv           = new TextField();
-        cvv.setPromptText("CVV");
-        cvv.setMaxWidth(50);
-        VBox security           = new VBox(10);
-        security.getChildren().addAll(securityCode,cvv);
+        if(data.checkPayment(checkLogin.getAccount_id())) {
+            System.err.println("We have shit");
+             Payment payment = data.getPayment(checkLogin.getAccount_id());
+
+
+            // mastercard, visa, visa_electron, maestro
+            switch(payment.getCard_type()) {
+                case "visa":
+                    visa.setSelected(true);
+                    break;
+                case "mastercard":
+                    mastercard.setSelected(true);
+                    break;
+                case "visa_electron":
+                    visa_electron.setSelected(true);
+                    break;
+                case "maestro":
+                    maestro.setSelected(true);
+                    break;
+            }
+
+            noField.setText(Integer.toString(payment.getCard_no()));
+            expirationYear.setText(payment.getCard_expiration().substring(0, 4));
+            expirationMounth.setText(payment.getCard_expiration().substring(5, 7));
+            holderField.setText(payment.getCardHolder_name());
+
+        }
 
         HBox hcard              = new HBox(15);
-        hcard.getChildren().addAll(holder, number, expiration, security);
+        hcard.getChildren().addAll(holder, number, expiration);
 
         Label pricel            = new Label("Price for "+searchInfo.getPassengers()+" people:");
         pricel.getStyleClass().add("label");
@@ -668,7 +685,7 @@ public class SelectedFlight extends Application {
         footer.getChildren().addAll(vforprice, hbuttons);
 
         //vbig.getChildren().addAll(vbiggg, vfirst, passengerDetVBox, vforprice, hbuttons);
-        vbig.getChildren().addAll(vbiggg, passengerDetVBox, vpayment, himages, hcard, footer);
+        vbig.getChildren().addAll(vbiggg, vfirst, passengerDetVBox, vpayment, himages, hcard, footer);
 
 
         /*
