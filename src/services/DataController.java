@@ -649,6 +649,12 @@ public class DataController {
             catch(SQLException sql){}
         }
 
+        if (role == 0){
+            checkLogin.setAdmin(false);
+        }else {
+            checkLogin.setAdmin(true);
+        }
+
         if(id == -1) {
             loggedIn = false;
         } else {
