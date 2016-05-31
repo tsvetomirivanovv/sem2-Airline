@@ -83,6 +83,19 @@
     -fx-margin-top: 50px;
 }
 
+.titles {
+    -fx-text-fill: black;
+    -fx-font-size: 28px;
+    -fx-alignment: center;
+}
+
+.labels {
+    -fx-text-fill: #2f4154;
+    -fx-font-weight: 900;
+    -fx-alignment: center;
+    -fx-padding: 0 0 5px 0;
+}
+
 /* DROPDOWNS */
 
 .dropdown {
@@ -95,6 +108,11 @@
     -fx-prompt-text-fill: #ffffff;
     -fx-min-width: 290px;
     -fx-max-width: 290px;
+}
+
+.smallDD {
+    -fx-min-width: 40px;
+    -fx-max-width: 40px;
 }
 
 .dropdown > .arrow-button > .arrow {
@@ -248,4 +266,34 @@
     -fx-font-weight: bold;
     -fx-font-size: 22px;
     -fx-text-alignment: left;
+}
+
+.cardHolderInput,
+.noInput {
+    -fx-min-width: 250px;
+    -fx-max-width: 250px;
+}
+
+.expMoInput {
+    -fx-min-width: 70px;
+    -fx-max-width: 70px;
+}
+
+.expYearInput {
+    -fx-min-width: 80px;
+    -fx-max-width: 80px;
+}
+
+.scroll-pane > .viewport {
+    -fx-background: aliceblue;
+    -fx-background-color: aliceblue;
+}
+
+.scroll-pane {
+    -fx-background: aliceblue;
+    -fx-background-color: aliceblue;
+}
+
+.scroll-pane:focused {
+    -fx-background: aliceblue;
 }

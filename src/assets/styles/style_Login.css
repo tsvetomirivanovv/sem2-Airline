@@ -1,42 +1,42 @@
-.root {
-    -fx-background-color: aliceblue;
-    -fx-text-fill: hotpinkz;
-}
+/*.root {*/
+    /*-fx-background-color: aliceblue;*/
+    /*-fx-text-fill: hotpinkz;*/
+/*}*/
 
-.labels {
-    -fx-text-fill: #2f4154;
-    -fx-font-weight: 900;
-    -fx-font-family: Helvetica, Arial, sans-serif;
-    -fx-alignment: center;
-}
+/*.labels {*/
+    /*-fx-text-fill: #2f4154;*/
+    /*-fx-font-weight: 900;*/
+    /*-fx-font-family: Helvetica, Arial, sans-serif;*/
+    /*-fx-alignment: center;*/
+/*}*/
 
-.title {
-    -fx-text-fill: black;
-    -fx-alignment: center;
-    -fx-font: 20px Tahoma;
-}
+/*.title {*/
+    /*-fx-text-fill: black;*/
+    /*-fx-alignment: center;*/
+    /*-fx-font: 20px Tahoma;*/
+/*}*/
 
-.textfield {
-    -fx-font-weight: 800;
-}
+/*.textfield {*/
+    /*-fx-font-weight: 800;*/
+/*}*/
 
-.loginButton {
-    -fx-background-color: #3498DB;
-    -fx-color: #ffffff;
-    -fx-border-radius: 4px;
-    -fx-font-size: 15px;
-    -fx-color: #ffffff;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: 400;
-    -fx-padding: 10px 19px;
-}
+/*.loginButton {*/
+    /*-fx-background-color: #3498DB;*/
+    /*-fx-color: #ffffff;*/
+    /*-fx-border-radius: 4px;*/
+    /*-fx-font-size: 15px;*/
+    /*-fx-color: #ffffff;*/
+    /*-fx-text-fill: #ffffff;*/
+    /*-fx-font-weight: 400;*/
+    /*-fx-padding: 10px 19px;*/
+/*}*/
 
-.closeButton {
-    -fx-background-color: #e74c3c;
-    -fx-border-radius: 4px;
-    -fx-font-size: 15px;
-    -fx-color: #ffffff;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: 400;
-    -fx-padding: 10px 19px;
-}
+/*.closeButton {*/
+    /*-fx-background-color: #e74c3c;*/
+    /*-fx-border-radius: 4px;*/
+    /*-fx-font-size: 15px;*/
+    /*-fx-color: #ffffff;*/
+    /*-fx-text-fill: #ffffff;*/
+    /*-fx-font-weight: 400;*/
+    /*-fx-padding: 10px 19px;*/
+/*}*/

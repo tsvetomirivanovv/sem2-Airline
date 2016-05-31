@@ -40,7 +40,7 @@ public class createAccount  {
         Label title                     = new Label("Register");
         title.setAlignment(Pos.CENTER);
         title.setMaxWidth(220);
-        title.getStyleClass().add("title");
+        title.getStyleClass().add("titles");
 
         Label fullName                  = new Label("Full name: ");
         fullName.setAlignment(Pos.CENTER);
@@ -175,8 +175,8 @@ public class createAccount  {
         });
 
         //setting css for the buttons
-        close.getStyleClass().add("close");
-        register.getStyleClass().add("register");
+        close.getStyleClass().addAll("btn", "btn-danger");
+        register.getStyleClass().addAll("btn", "btn-info");
 
         ButtonHbox.setAlignment(Pos.CENTER);
         ButtonHbox.getChildren().addAll(register, close);
@@ -187,8 +187,8 @@ public class createAccount  {
         mainVbox.setAlignment(Pos.CENTER);
         mainVbox.getStylesheets().add("assets//styles//style.css");
 
-        Scene scene = new Scene(mainVbox, 400, 600);
-        primaryStage.setTitle("                          Create an account");
+        Scene scene = new Scene(mainVbox, 400, 650);
+        primaryStage.setTitle("Create an account");
         primaryStage.setScene(scene);
         primaryStage.showAndWait();
 

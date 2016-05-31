@@ -48,7 +48,7 @@ public class Login {
         }
 
         //adding css to the title label
-        title.getStyleClass().add("title");
+        title.getStyleClass().add("titles");
 
         Label emailLabel = new Label("Email: ");
         emailLabel.setAlignment(Pos.CENTER_LEFT);
@@ -67,10 +67,6 @@ public class Login {
         PasswordField password = new PasswordField();
         password.setMaxWidth(220);
 
-        //assigning css to the textfields
-        email.getStyleClass().add("text-field");
-        password.getStyleClass().add("text-field");
-
         VBox vBox1 = new VBox(10);
         vBox1.getChildren().addAll(emailLabel,email);
         vBox1.setAlignment(Pos.CENTER);
@@ -87,8 +83,8 @@ public class Login {
         ButtonHbox.getChildren().addAll(loginButton,closeButton);
 
         //assigning css to the buttons
-        loginButton.getStyleClass().add("loginButton");
-        closeButton.getStyleClass().add("closeButton");
+        loginButton.getStyleClass().addAll("btn", "btn-info");
+        closeButton.getStyleClass().addAll("btn", "btn-danger");
 
         HBox createAccount = new HBox(15);
         createAccount.setAlignment(Pos.CENTER);
@@ -121,7 +117,7 @@ public class Login {
 
 
         VBox mainVbox =  new VBox(15);
-        mainVbox.getStylesheets().add("assets//styles//style_Login.css");
+        mainVbox.getStylesheets().add("assets//styles//style.css");
         mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
         if(!isAdmin) {
             mainVbox.getChildren().add(createAccount);
