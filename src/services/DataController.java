@@ -1293,7 +1293,7 @@ public class DataController {
 
             if (exists > 0){
                 System.out.println("Update the actual one");
-                s.executeUpdate("UPDATE Payments SET card_type = '" + cardType + "', card_no = " + cardNo + ", card_expiration = '" + cardEXP + "', cardholder_name = '" + cardName + "'");
+                s.executeUpdate("UPDATE Payments SET card_type = '" + cardType + "', card_no = " + cardNo + ", card_expiration = '" + cardEXP + "', cardholder_name = '" + cardName + "' WHERE id ="+exists+";");
             } else {
                 s.executeUpdate("INSERT INTO Payments (card_type, card_no, card_expiration, cardholder_name) VALUES ('"+cardType+"','"+cardNo+"','"+cardEXP+"','"+cardName+"')");
                 rs = s.executeQuery("SELECT last_insert_id() AS last_id FROM Payments");
