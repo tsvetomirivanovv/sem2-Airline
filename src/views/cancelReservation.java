@@ -28,7 +28,7 @@ public class cancelReservation {
         window.initModality(Modality.APPLICATION_MODAL);
 
         // Close button
-        Button closeBut = new Button("close");
+        Button closeBut = new Button("Close");
         StackPane close = new StackPane(closeBut);
         close.setAlignment(Pos.CENTER_RIGHT);
         closeBut.setOnAction( e -> window.close());
@@ -75,7 +75,7 @@ public class cancelReservation {
         layout.setPadding(new Insets(20,20,20,20));
         layout.getChildren().addAll(passengersTitle, passengersTable, refundNote, confirm, close);
 
-        window.setScene(new Scene(layout, 600, 400));
+        window.setScene(new Scene(layout, 650, 400));
         window.showAndWait();
     }
 }
