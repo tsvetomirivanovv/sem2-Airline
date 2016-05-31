@@ -500,7 +500,7 @@ public class SelectedFlight extends Application {
             }
 
 
-            // Change this if we have data in payment shit!
+
             String status = "booked";
 
             // Call createReservation
