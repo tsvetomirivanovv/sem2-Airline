@@ -1310,7 +1310,7 @@ public class DataController {
 
     public static void createReservation (String status, int flight_id, int customer_id, ArrayList<Passenger> passenegerList) {
 
-        System.err.println("name: " + passenegerList.get(1).getName());
+        System.err.println("name: " + passenegerList.get(0).getName());
         System.err.println();
 
         try {
