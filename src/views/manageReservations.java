@@ -95,6 +95,8 @@ public class manageReservations extends Application {
             if ( tableView.getSelectionModel().getSelectedItem() != null)
                 if(tableView.getSelectionModel().getSelectedItem().getStatus().equals("confirmed")){
                     confirm.setDisable(true);
+                }else if (tableView.getSelectionModel().getSelectedItem().getStatus().equals("canceled")){
+                    refund.setDisable(true);
                 }
         });
 
