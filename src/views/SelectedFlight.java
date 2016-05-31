@@ -506,8 +506,8 @@ public class SelectedFlight extends Application {
             // Call createReservation
             data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
 
-//            searchResults results = new searchResults(searchInfo);
-//            results.start(primaryStage);
+            searchResults results = new searchResults(searchInfo);
+            results.start(primaryStage);
         });
 
         HBox himages            = new HBox(30);
