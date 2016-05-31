@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.Airport;
 import services.DataController;
+import views.components.errorAlert;
 
 import java.util.ArrayList;
 
@@ -99,11 +100,8 @@ public class addFlight {
 
             if (depBox.getValue() == null || arrbox.getValue() == null || planeBox.getValue() == null || depTime.getText().equals("") || arrTime.getText().equals("") || priceValue.getText().equals("")) {
 
-                Alert granted = new Alert(Alert.AlertType.ERROR);
-                granted.setTitle("Error!");
-                granted.setContentText("Please fill all the required fields before creating a new flight");
-                granted.setHeaderText(null);
-                granted.show();
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please fill all the required fields!");
 
             } else {
                 //data.updateFlight(flight.getFlight_id(), depBox.getValue().toString(), arrbox.getValue().toString(), depTime.getText(), arrTime.getText(), planeBox.getValue().toString());

@@ -21,6 +21,7 @@ import models.Flight;
 import models.Plane;
 import services.DataController;
 import services.components.checkLogin;
+import views.components.errorAlert;
 
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
@@ -108,9 +109,8 @@ public class manageFlights extends Application{
 
         updateFlight.setOnAction(event -> {
             if(mainFlightsTable.getSelectionModel().getSelectedItem()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Please select a row before!");
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please select a row!");
             }else {
                 views.updateFlight updateFlight = new updateFlight(tempFlight);
                 updateFlight.start();

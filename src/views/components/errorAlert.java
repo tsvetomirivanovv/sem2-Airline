@@ -9,6 +9,6 @@ public class errorAlert {
         granted.setTitle(title);
         granted.setContentText(message);
         granted.setHeaderText(null);
-        granted.show();
+        granted.showAndWait();
     }
 }

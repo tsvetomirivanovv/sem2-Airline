@@ -18,6 +18,7 @@ import models.Airport;
 import models.Flight;
 import models.Plane;
 import services.DataController;
+import views.components.errorAlert;
 
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
@@ -115,11 +116,8 @@ public class updateFlight {
 
             if (depBox.getValue().toString().equals("") || arrbox.getValue().toString().equals("") || planeBox.getValue().toString().equals("") || depTime.getText().equals("") || arrTime.getText().equals("")) {
 
-                Alert granted = new Alert(Alert.AlertType.ERROR);
-                granted.setTitle("Error!");
-                granted.setContentText("Please fill all the required fields before creating a new flight");
-                granted.setHeaderText(null);
-                granted.show();
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please fill in all the required fields!");
 
             } else {
                 data.updateFlight(flight.getFlight_id(), depBox.getValue().toString(), arrbox.getValue().toString(), depTime.getText(), arrTime.getText(), planeBox.getValue().toString());

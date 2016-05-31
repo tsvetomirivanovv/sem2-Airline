@@ -15,6 +15,7 @@ import models.Flight;
 import services.DataController;
 import services.components.checkLogin;
 import services.components.searchInfo;
+import views.components.errorAlert;
 
 public class Login {
     DataController data = new DataController();
@@ -176,11 +177,8 @@ public class Login {
                 primaryStage.close();
             }
         } else {
-            Alert granted = new Alert(Alert.AlertType.ERROR);
-            granted.setTitle("Access Denied!");
-            granted.setContentText("You need to enter a valid Email and Password");
-            granted.setHeaderText(null);
-            granted.show();
+            views.components.errorAlert alert = new errorAlert();
+            alert.display(null,"You need to enter a valid username and password!");
         }
     }
 }

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import models.Payment;
 import services.DataController;
 import services.components.checkLogin;
+import views.components.errorAlert;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -80,10 +81,8 @@ public class creditCardPopUp {
 
         save.setOnAction(e -> {
             if (cardType.getText().equals("") || cardNo.getText().equals("") || cardExY.getText().equals("") ||cardExM.getText().equals("") || cardName.getText().equals("")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error.");
-                alert.setContentText("Please fill in all the required information!");
-                alert.showAndWait();
+                views.components.errorAlert alert = new errorAlert();
+                alert.display(null,"Please fill in all the required information!");
             } else {
 
                 if(data.checkPayment(checkLogin.getAccount_id())) {
