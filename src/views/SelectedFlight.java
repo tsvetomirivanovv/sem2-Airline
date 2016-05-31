@@ -2,6 +2,7 @@ package views;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -46,15 +47,15 @@ public class SelectedFlight extends Application {
         primaryStage.setTitle("Selected flight");
 
         Label flightdetails = new Label("Flight details");
-        flightdetails.getStyleClass().add("flightdetails");
+        flightdetails.getStyleClass().add("selectedFlightSubtitle");
         flightdetails.setAlignment(Pos.CENTER);
 
         HBox layout = new HBox(2);
 
         VBox vbig = new VBox(30);
+        vbig.getStylesheets().add("assets//styles//style.css");
 
         layout.getChildren().addAll(vbig);
-        layout.getStyleClass().add("layout");
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(layout);
@@ -62,8 +63,10 @@ public class SelectedFlight extends Application {
         //setting the content for the second vbox
 
         Label outbound = new Label("Departure");
+        outbound.getStyleClass().addAll("bold", "p");
         Label labeloutbound = new Label();
         labeloutbound.setText(searchInfo.getStart_date());
+        labeloutbound.getStyleClass().addAll("bold", "p");
 
         //setting css to the outbound label, and for the value of the labeloutbound
 //        outbound.getStyleClass().add("");
@@ -77,6 +80,12 @@ public class SelectedFlight extends Application {
         Label fromto = new Label("From -> To");
         Label duration = new Label("Duration");
         Label price = new Label("Price/Person");
+
+        flightlabel.getStyleClass().addAll("bold", "p");
+        date.getStyleClass().addAll("bold", "p");
+        fromto.getStyleClass().addAll("bold", "p");
+        duration.getStyleClass().addAll("bold", "p");
+        price.getStyleClass().addAll("bold", "p");
 
         //setting css to the labels declared aboce
         flightlabel.getStyleClass().add("label");
@@ -337,12 +346,6 @@ public class SelectedFlight extends Application {
         checkedbaggage3.getStyleClass().addAll("label");
         checkedbaggage4.getStyleClass().addAll("label");
 
-        cbbaggage.getStyleClass().add("label");
-        cbbaggage2.getStyleClass().addAll("label");
-        cbbaggage3.getStyleClass().addAll("label");
-        cbbaggage4.getStyleClass().addAll("label");
-
-
 
         // Update the seats dropboxes here because declaration position issue.
         // Here all of them are declared.
@@ -451,7 +454,7 @@ public class SelectedFlight extends Application {
         vbiggg.getChildren().addAll(wejustneed);
 
         Label Payment           = new Label("Payment info");
-        Payment.getStyleClass().add("label");
+        Payment.getStyleClass().add("selectedFlightSubtitle");
         Label note1             = new Label("Note: (If you leave the fields empty you can still pay the reservation later,");
         Label note2             = new Label("but if you don't do it, the reservation will be canceled in 2 weeks from now)");
 
@@ -483,6 +486,7 @@ public class SelectedFlight extends Application {
         Label holderName        = new Label("Card holder name:");
         holderName.getStyleClass().add("label");
         TextField holderField   = new TextField();
+        holderField.getStyleClass().add("cardHolderInput");
         holderField.setPromptText("Name");
         VBox holder             = new VBox(10);
         holder.getChildren().addAll(holderName,holderField);
@@ -490,6 +494,7 @@ public class SelectedFlight extends Application {
         Label cardNo            = new Label("Card no:");
         cardNo.getStyleClass().add("label");
         TextField noField       = new TextField();
+        noField.getStyleClass().add("noInput");
         noField.setPromptText("card number");
         VBox number             = new VBox(10);
         number.getChildren().addAll(cardNo,noField);
@@ -498,11 +503,13 @@ public class SelectedFlight extends Application {
         expirationDate.getStyleClass().add("label");
         expirationDate.setAlignment(Pos.TOP_CENTER);
         TextField expirationYear= new TextField();
+        expirationYear.getStyleClass().add("expYearInput");
         expirationYear.setPromptText("YYYY");
         expirationYear.setMaxWidth(50);
         Label dash              = new Label("/");
         TextField expirationMounth = new TextField();
         expirationMounth.setPromptText("MM");
+        expirationMounth.getStyleClass().add("expMoInput");
         expirationMounth.setMaxWidth(35);
         HBox fields             = new HBox(5);
         fields.getChildren().addAll(expirationMounth,dash,expirationYear);
@@ -708,21 +715,11 @@ public class SelectedFlight extends Application {
         HBox footer = new HBox();
         footer.getChildren().addAll(vforprice, hbuttons);
 
-        //vbig.getChildren().addAll(vbiggg, vfirst, passengerDetVBox, vforprice, hbuttons);
         vbig.getChildren().addAll(vbiggg, vfirst, passengerDetVBox, vpayment, himages, hcard, footer);
 
-
-        /*
-          This is to make the stage pop-up in the exact middle of the screen
-          taken from stack overflow : /questions/29558449/javafx-center-stage-on-screen
-          exciting snippet of code material :)
-        */
-//        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-//        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-//        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-
-        Scene scene = new Scene(scrollPane, 930, 840);
-        scrollPane.getStylesheets().add("assets//styles//style.css");
+        Scene scene = new Scene(scrollPane, 950, 870);
+        scrollPane.setPadding(new Insets(20,20,20,20));
+        scrollPane.getStyleClass().addAll("SelectedFlightBlock");
         primaryStage.setScene(scene);
         primaryStage.show();
 

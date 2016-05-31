@@ -1,32 +1,32 @@
-.root {
-    -fx-background-color: burlywood;
-}
-.sidebarTitle {
-    -fx-font-size: 16px;
-    -fx-font-weight: 700;
-}
+/*.root {*/
+    /*-fx-background-color: burlywood;*/
+/*}*/
+/*.sidebarTitle {*/
+    /*-fx-font-size: 16px;*/
+    /*-fx-font-weight: 700;*/
+/*}*/
 
-.back {
-    -fx-border-radius: 4px;
-    -fx-font-size: 15px;
-    -fx-color: #ffffff;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: 200;
-    -fx-padding: 7px 13px;
-    -fx-background-color: #3498DB;
-    -fx-color: lightblue;
-}
+/*.back {*/
+    /*-fx-border-radius: 4px;*/
+    /*-fx-font-size: 15px;*/
+    /*-fx-color: #ffffff;*/
+    /*-fx-text-fill: #ffffff;*/
+    /*-fx-font-weight: 200;*/
+    /*-fx-padding: 7px 13px;*/
+    /*-fx-background-color: #3498DB;*/
+    /*-fx-color: lightblue;*/
+/*}*/
 
-.departureLocLabel {
-    -fx-font-size: 12 px;
-    -fx-font-weight: 900;
-}
+/*.departureLocLabel {*/
+    /*-fx-font-size: 12 px;*/
+    /*-fx-font-weight: 900;*/
+/*}*/
 
-.flights {
-    -fx-background-color: darkseagreen;
-    -fx-text-fill: darkblue;
-    -fx-font-weight: 900;
-    -fx-border-color: darkred;
-    -fx-border-radius: 40;
-}
+/*.flights {*/
+    /*-fx-background-color: darkseagreen;*/
+    /*-fx-text-fill: darkblue;*/
+    /*-fx-font-weight: 900;*/
+    /*-fx-border-color: darkred;*/
+    /*-fx-border-radius: 40;*/
+/*}*/
 
