@@ -16,10 +16,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import models.*;
 import services.DataController;
+import services.components.checkLogin;
 import services.components.searchInfo;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class SelectedFlight extends Application {
     Flight flight           = new Flight();
@@ -460,33 +466,48 @@ public class SelectedFlight extends Application {
         // declaring the radio buttons
         // by placing them in a ToggleGroup I make sure only one of them can be selected at a time
 
-        ToggleGroup group = new ToggleGroup();
+        ToggleGroup group           = new ToggleGroup();
 
-        RadioButton mastercard = new RadioButton("MasterCard");
+        RadioButton mastercard      = new RadioButton("MasterCard");
         mastercard.setToggleGroup(group);
-        RadioButton visa = new RadioButton("Visa");
+        RadioButton visa            = new RadioButton("Visa");
         visa.setToggleGroup(group);
-        RadioButton visa_electron = new RadioButton("Visa Electron");
+        RadioButton visa_electron   = new RadioButton("Visa Electron");
         visa_electron.setToggleGroup(group);
-        RadioButton maestro = new RadioButton("Maestro");
+        RadioButton maestro         = new RadioButton("Maestro");
         maestro.setToggleGroup(group);
-        int test = services.components.checkLogin.getAccount_id();
+
+
+
+        // Book reservation
         bookreservation.setOnAction(event -> {
-            data.createReservation("booked",flight.getFlight_id(),test);
-            String selectedBaggage = null;
-            setPassenger(cbbaggage,selectedBaggage,tfpassengername,dpbirthdate,cbseatno);
-            if (searchInfo.getPassengers()>=2) {
-                setPassenger(cbbaggage2,selectedBaggage,tfpassengername2,dpbirthdate2,cbseatno2);
+
+            ArrayList<Passenger> passengersList = new ArrayList<>();
+
+            passengersList.add(new Passenger(0, getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate.getValue().toString()), tfpassengername.getText(), Integer.parseInt(cbseatno.getValue().toString())));
+            System.out.println("Nr1" + searchInfo.getPassengers());
+            if (searchInfo.getPassengers() >= 2) {
+                System.out.println("Nr2" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage2.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate2.getValue().toString()), tfpassengername2.getText(), Integer.parseInt(cbseatno2.getValue().toString())));
             }
-            if (searchInfo.getPassengers()>=3) {
-                setPassenger(cbbaggage3,selectedBaggage,tfpassengername3,dpbirthdate3,cbseatno3);
+            if (searchInfo.getPassengers() >= 3) {
+                System.out.println("Nr3" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage3.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate3.getValue().toString()), tfpassengername3.getText(), Integer.parseInt(cbseatno3.getValue().toString())));
             }
-            if (searchInfo.getPassengers()>=4) {
-                setPassenger(cbbaggage4,selectedBaggage,tfpassengername4,dpbirthdate4,cbseatno4);
+            if (searchInfo.getPassengers() >= 4) {
+                System.out.println("Nr4" + searchInfo.getPassengers());
+                passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
             }
 
-            searchResults results = new searchResults(searchInfo);
-            results.start(primaryStage);
+
+            // Change this if we have data in payment shit!
+            String status = "booked";
+
+            // Call createReservation
+            data.createReservation(status, flight.getFlight_id(), checkLogin.getAccount_id(), passengersList);
+
+//            searchResults results = new searchResults(searchInfo);
+//            results.start(primaryStage);
         });
 
         HBox himages            = new HBox(30);
@@ -676,6 +697,32 @@ public class SelectedFlight extends Application {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         data.createPassenger(tfpassengername.getText(),dpbirthdate.getValue().format(formatter),Integer.parseInt(cbseatno.getValue().toString()), selectedBaggage);
 
+    }
+
+    public static int getBaggageType(String baggageItem) {
+        int selectedBaggage = 0;
+        if (baggageItem.equals("None - 0 DKK")) {
+            selectedBaggage = 0;
+        } else if (baggageItem.equals("Baggage, Max 15 Kg. - 50 DKK")){
+            selectedBaggage = 1;
+        }else if (baggageItem.equals("Baggage, Max 20 Kg - 90 DKK")){
+            selectedBaggage = 2;
+        }
+
+        return selectedBaggage;
+    }
+
+    public static Timestamp formatBirthDate(String birthDate) {
+        Timestamp timeStampDate = null;
+        // int id, int baggage, java.sql.Timestamp birth_date, String name, int seat_no
+
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateFormatted = formatter.parse(birthDate);
+            timeStampDate = new Timestamp(dateFormatted.getTime());
+        } catch(ParseException pe) {}
+
+        return timeStampDate;
     }
 
 }
