@@ -39,19 +39,23 @@ public class flightCell extends ListCell<Flight> {
         }
     }
     private Node getFlightCell(Flight flight) {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd \n HH:mm:ss").format(flight.getDeparture_time());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd \n\n  HH:mm:ss").format(flight.getDeparture_time());
         Label departureTime = new Label(timeStamp);
         Label departureLocation = new Label(flight.getDeparture_loc().getAirport_code());
-        VBox departureVbox = new VBox(20);
+        departureLocation.getStyleClass().add("bold");
+        VBox departureVbox = new VBox(10);
+        departureVbox.setAlignment(Pos.CENTER);
         departureVbox.getChildren().addAll(departureTime,departureLocation);
 
-        String timeStamp1 = new SimpleDateFormat("yyyy-MM-dd \n HH:mm:ss").format(flight.getArrival_time());
+        String timeStamp1 = new SimpleDateFormat("yyyy-MM-dd \n\n  HH:mm:ss").format(flight.getArrival_time());
         Label arrivalTime = new Label(timeStamp1);
         Label arrivalLocation = new Label(flight.getArrival_loc().getAirport_code());
-        VBox arrivalVbox = new VBox(20);
+        arrivalLocation.getStyleClass().add("bold");
+        VBox arrivalVbox = new VBox(10);
+        arrivalVbox.setAlignment(Pos.CENTER);
         arrivalVbox.getChildren().addAll(arrivalTime,arrivalLocation);
 
-        ImageView imageView1 = new ImageView(new Image("assets/images/arrow.png", 40, 40, false, false));
+        ImageView imageView1 = new ImageView(new Image("assets/images/arrow.png", 80, 50, false, false));
         HBox flightHbox = new HBox(20);
         flightHbox.getChildren().addAll(departureVbox,imageView1,arrivalVbox);
         flightHbox.setAlignment(Pos.CENTER);
@@ -62,9 +66,9 @@ public class flightCell extends ListCell<Flight> {
 
         Hyperlink details = new Hyperlink("See details");
         Button selectFlight = new Button("Select flight");
-        VBox flightBox = new VBox(20);
+        VBox flightBox = new VBox(10);
         String sprice = "" + flight.getFlight_price();
-        Label price = new Label(sprice + "DKK"); // will be changed to flight.getPrice
+        Label price = new Label(sprice + " DKK");
         flightBox.getChildren().addAll(price, selectFlight, details);
         flightBox.setAlignment(Pos.CENTER);
 

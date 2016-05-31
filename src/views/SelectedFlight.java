@@ -18,14 +18,11 @@ import models.*;
 import services.DataController;
 import services.components.checkLogin;
 import services.components.searchInfo;
-import views.components.errorAlert;
-
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class SelectedFlight extends Application {
@@ -64,20 +61,20 @@ public class SelectedFlight extends Application {
 
         //setting the content for the second vbox
 
-        Label outbound = new Label("OUTBOUND");
+        Label outbound = new Label("Departure");
         Label labeloutbound = new Label();
         labeloutbound.setText(searchInfo.getStart_date());
 
         //setting css to the outbound label, and for the value of the labeloutbound
-        outbound.getStyleClass().add("outbound");
-        labeloutbound.getStyleClass().add("labeloutbound");
+//        outbound.getStyleClass().add("");
+//        labeloutbound.getStyleClass().add("");
 
         HBox hout = new HBox(10);
         hout.getChildren().addAll(outbound, labeloutbound);
 
         Label flightlabel = new Label("Flight ID");
-        Label date = new Label("Date&Time");
-        Label fromto = new Label("From->To");
+        Label date = new Label("Date & Time");
+        Label fromto = new Label("From -> To");
         Label duration = new Label("Duration");
         Label price = new Label("Price/Person");
 
@@ -140,17 +137,13 @@ public class SelectedFlight extends Application {
         hbuttons.setAlignment(Pos.BASELINE_RIGHT);
 
         //asigning css to the buttons
-        bookreservation.getStyleClass().add("bookreservation");
-        back.getStyleClass().add("back");
+        bookreservation.getStyleClass().addAll("btn", "btn-info");
+        back.getStyleClass().addAll("btn", "btn-danger");
 
         // setting the content for the first vbox, vbig
         Label wejustneed = new Label("We just need a few more details. Who is traveling?");
         wejustneed.setAlignment(Pos.TOP_CENTER);
-        wejustneed.getStyleClass().add("wejustneed");
-
-        Label passengerdetails = new Label("Passenger(s) details");
-        passengerdetails.setAlignment(Pos.CENTER);
-        passengerdetails.getStyleClass().add("passengerdetails");
+        wejustneed.getStyleClass().add("selectedFlightTitle");
 
         /* =========================
                 Passenger row 1
@@ -450,8 +443,12 @@ public class SelectedFlight extends Application {
                 break;
         }
 
+        Label passengerdetails = new Label("Passenger(s) details");
+        passengerdetails.setAlignment(Pos.CENTER);
+        passengerdetails.getStyleClass().add("selectedFlightSubtitle");
+
         VBox vbiggg             = new VBox(15);
-        vbiggg.getChildren().addAll(wejustneed, passengerdetails);
+        vbiggg.getChildren().addAll(wejustneed);
 
         Label Payment           = new Label("Payment info");
         Payment.getStyleClass().add("label");
@@ -706,7 +703,7 @@ public class SelectedFlight extends Application {
         htot.getChildren().addAll(totalprice, bigvalue);
 
         VBox vforprice = new VBox(5);
-        vforprice.getChildren().addAll(pricel, hedge, choiceboxesHBox, line, htot);
+        vforprice.getChildren().addAll(pricel, hedge , choiceboxesHBox, line, htot);
 
         HBox footer = new HBox();
         footer.getChildren().addAll(vforprice, hbuttons);
@@ -720,11 +717,11 @@ public class SelectedFlight extends Application {
           taken from stack overflow : /questions/29558449/javafx-center-stage-on-screen
           exciting snippet of code material :)
         */
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+//        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+//        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+//        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 
-        Scene scene = new Scene(scrollPane, 1200, 500);
+        Scene scene = new Scene(scrollPane, 930, 840);
         scrollPane.getStylesheets().add("assets//styles//style.css");
         primaryStage.setScene(scene);
         primaryStage.show();

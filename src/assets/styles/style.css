@@ -234,3 +234,18 @@
     -fx-font-size: 16px;
     -fx-padding: 10px 0;
 }
+
+/* ================
+   Selected Flight
+  ================= */
+
+.selectedFlightTitle {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.selectedFlightSubtitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+    -fx-text-alignment: left;
+}
