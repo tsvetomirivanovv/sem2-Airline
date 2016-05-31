@@ -1,4 +1,5 @@
 .root {
+    -fx-background-color: aliceblue;
     -fx-font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -30,19 +31,8 @@
     -fx-font-size: 18px;
 }
 
-.menu {
-    -fx-background-color: #2f4154;
-    -fx-padding: 5px 10px;
-    -fx-font-size: 16px;
-    -fx-font-weight: 700;
-    -fx-line-height: 23px;
-    -fx-text-fill: #ffffff;
-    -fx-color: #ffffff;
-}
-
-.menu-label {
-    -fx-text-fill: #ffffff;
-    -fx-color: #ffffff;
+.bold {
+    -fx-font-weight: bold;
 }
 
 .btn-info {
@@ -75,24 +65,39 @@
     -fx-padding: 10px 19px;
 }
 
-.dropdown {
-    -fx-background-color: #1abc9c;
-    -fx-text-fill: #ffffff;
-    -fx-color: #ffffff;
-    -fx-padding: 7px 15px 7px 15px;
-    -fx-border-radius: 6px;
-    -fx-font-size: 14px;
-    -fx-prompt-text-fill: #ffffff;
+.btn-search {
+    -fx-min-width: 290px;
+    -fx-background-color: #244978;
+    -fx-max-width: 290px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 15px 15px 15px;
+    -webkit-fx-margin-top: 14px;
+    -moz-fx-margin-top: 50px;
+    -ms-fx-margin-top: 50px;
+    -o-fx-margin-top: 50px;
+    -fx-margin-top: 50px;
 }
 
-.arrival {
-    -fx-background-color: #1abc9c;
+/* DROPDOWNS */
+
+.dropdown {
+    -fx-background-color: #3498DB;
     -fx-text-fill: #ffffff;
     -fx-color: #ffffff;
     -fx-padding: 7px 15px 7px 15px;
     -fx-border-radius: 6px;
     -fx-font-size: 14px;
     -fx-prompt-text-fill: #ffffff;
+    -fx-min-width: 290px;
+    -fx-max-width: 290px;
+}
+
+.dropdown > .arrow-button > .arrow {
+    -fx-background-color: #ffffff;
+}
+
+.dropdown  > .list-cell {
+    -fx-text-fill: #ffffff;
 }
 
 .dropdown .list-view {
@@ -100,16 +105,50 @@
     -fx-text-fill: white;
 }
 
-.datePicker1 {
-    -fx-background-color: #bdc3c7;
+/* DATE TIME PICKER */
+
+.datepicker {
+    -fx-min-width: 290px;
+    -fx-max-width: 290px;
     -fx-text-fill: #2f4154;
     -fx-font-size: 17px;
     -fx-prompt-text-fill: #ffffff;
+    -fx-min-height: 47px;
+    -fx-show-week-numbers: false;
 }
 
-.datePicker2 {
-    -fx-background-color: #bdc3c7;
-    -fx-text-fill: #2f4154;
+.datepicker .text-field {
+    -fx-padding: 7px 15px 7px 15px;
     -fx-font-size: 17px;
     -fx-prompt-text-fill: #ffffff;
+    -fx-control-inner-background:  #3498DB;
+}
+
+.datepicker  > .arrow-button {
+    -fx-background-color: #3498DB;
+}
+
+.datepicker  > .arrow-button > .arrow {
+    -fx-background-color: #ffffff;
+}
+
+
+/* Menu */
+
+.menu-bar {
+    -fx-background-color: #244978;
+}
+
+.menu-bar .label {
+    -fx-padding: 5px 10px;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-line-height: 23px;
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
+}
+
+.menu-label {
+    -fx-text-fill: #ffffff;
+    -fx-color: #ffffff;
 }
