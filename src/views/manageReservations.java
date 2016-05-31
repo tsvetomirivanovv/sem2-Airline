@@ -91,6 +91,13 @@ public class manageReservations extends Application {
             }
         });
 
+        tableView.setOnMouseClicked(event -> {
+            if ( tableView.getSelectionModel().getSelectedItem() != null)
+                if(tableView.getSelectionModel().getSelectedItem().getStatus().equals("confirmed")){
+                    confirm.setDisable(true);
+                }
+        });
+
         back.setOnAction(event -> {
             searchFlights search = new searchFlights();
             search.start(primaryStage);
