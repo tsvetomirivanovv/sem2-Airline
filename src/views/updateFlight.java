@@ -58,13 +58,13 @@ public class updateFlight {
         primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         depBox = new ComboBox();
-        depBox.getStyleClass().addAll("dropdown");
+        depBox.getStyleClass().addAll("dropdown", "dropdown-small");
         depBox.setMinWidth(240);
         depBox.setPromptText("Select departure location");
 
 
         arrbox = new ComboBox();
-        arrbox.getStyleClass().addAll("dropdown");
+        arrbox.getStyleClass().addAll("dropdown", "dropdown-small");
         arrbox.setMinWidth(240);
         arrbox.setPromptText("Select arrival location");
 
@@ -91,7 +91,7 @@ public class updateFlight {
         });
 
         planeBox = new ComboBox();
-        planeBox.getStyleClass().addAll("dropdown");
+        planeBox.getStyleClass().addAll("dropdown", "dropdown-small");
         planeBox.setMinWidth(240);
         planeBox.setItems(data.getAllPlanes());
         String initPlane = flight.getPlane().getReg_no() + " (" + flight.getPlane().getModel() + ")";
