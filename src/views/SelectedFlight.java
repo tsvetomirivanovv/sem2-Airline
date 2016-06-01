@@ -27,15 +27,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SelectedFlight extends Application {
-    Flight flight           = new Flight();
-    searchInfo searchInfo   = new searchInfo();
-    static DataController data     = new DataController();
+    Flight flight                   = new Flight();
+    searchInfo searchInfo           = new searchInfo();
+    static DataController data      = new DataController();
     double price1 = 0, price2 = 0, price3 = 0, price4 = 0;
-
     static String cardType;
-    Label bigvalue          = new Label();
-    HBox choiceboxesHBox    = new HBox(5);
-    ArrayList<Integer> excludeSeats      = new ArrayList<>();
+    Label bigvalue                  = new Label();
+    HBox choiceboxesHBox            = new HBox(5);
+    ArrayList<Integer> excludeSeats = new ArrayList<>();
     static int ok;
 
     public SelectedFlight(Flight flightItem, searchInfo searchInfoItem) {
@@ -46,49 +45,48 @@ public class SelectedFlight extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Selected flight");
 
-        Label flightdetails = new Label("Flight details");
+        Label flightdetails         = new Label("Flight details");
         flightdetails.getStyleClass().add("selectedFlightSubtitle");
         flightdetails.setAlignment(Pos.CENTER);
 
-        HBox layout = new HBox(2);
-
-        VBox vbig = new VBox(30);
+        HBox layout                 = new HBox(2);
+        VBox vbig                   = new VBox(30);
 
         layout.getChildren().addAll(vbig);
-        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        String css                  = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
         layout.getStylesheets().add(css);
 
-        ScrollPane scrollPane = new ScrollPane();
+        ScrollPane scrollPane       = new ScrollPane();
         scrollPane.setContent(layout);
 
         //setting the content for the second vbox
 
-        Label outbound = new Label("Departure");
-        outbound.getStyleClass().addAll("bold", "p");
-        Label labeloutbound = new Label();
+        Label outbound              = new Label("Departure");
+        Label labeloutbound         = new Label();
         labeloutbound.setText(searchInfo.getStart_date());
+
+        // Apply CSS
+        outbound.getStyleClass().addAll("bold", "p");
         labeloutbound.getStyleClass().addAll("bold", "p");
 
-        //setting css to the outbound label, and for the value of the labeloutbound
-//        outbound.getStyleClass().add("");
-//        labeloutbound.getStyleClass().add("");
-
-        HBox hout = new HBox(10);
+        HBox hout                   = new HBox(10);
         hout.getChildren().addAll(outbound, labeloutbound);
 
-        Label flightlabel = new Label("Flight ID");
-        Label date = new Label("Date & Time");
-        Label fromto = new Label("From -> To");
-        Label duration = new Label("Duration");
-        Label price = new Label("Price/Person");
+        // Labels
+        Label flightlabel           = new Label("Flight ID");
+        Label date                  = new Label("Date & Time");
+        Label fromto                = new Label("From -> To");
+        Label duration              = new Label("Duration");
+        Label price                 = new Label("Price/Person");
 
+        // Apply CSS for header labels
         flightlabel.getStyleClass().addAll("bold", "p");
         date.getStyleClass().addAll("bold", "p");
         fromto.getStyleClass().addAll("bold", "p");
         duration.getStyleClass().addAll("bold", "p");
         price.getStyleClass().addAll("bold", "p");
 
-        //setting css to the labels declared aboce
+        // Apply CSS for values
         flightlabel.getStyleClass().add("label");
         date.getStyleClass().add("label");
         fromto.getStyleClass().add("label");
@@ -351,10 +349,8 @@ public class SelectedFlight extends Application {
         // Update the seats dropboxes here because declaration position issue.
         // Here all of them are declared.
 
-
         // First seats dropdown
         cbseatno.setOnAction(e -> {
-
             // Create an exclude list
             excludeSeats.clear();
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
@@ -364,13 +360,9 @@ public class SelectedFlight extends Application {
             cbseatno2.getItems().clear();
             cbseatno2.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
 
-            System.out.println("Exclude: " + excludeSeats);
         });
 
         cbseatno2.setOnAction(e -> {
-            // Clear all items
-            //cbseatno2.getItems().clear();
-
             // Add the list again but ignore the value selected in the first combobox
             excludeSeats.clear();
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
@@ -381,13 +373,9 @@ public class SelectedFlight extends Application {
             cbseatno3.getItems().clear();
             cbseatno3.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
 
-            System.out.println("Exclude: " + excludeSeats);
         });
 
         cbseatno3.setOnAction(e -> {
-            // Clear all items
-            //cbseatno2.getItems().clear();
-
             // Add the list again but ignore the value selected in the first combobox
             excludeSeats.clear();
             excludeSeats.add(Integer.parseInt(cbseatno.getValue().toString()));
@@ -400,18 +388,17 @@ public class SelectedFlight extends Application {
             cbseatno4.setItems(data.getSeatsForClass(flight.getFlight_id(), searchInfo.getClassType(), excludeSeats));
 
 
-            System.out.println("Exclude: " + excludeSeats);
         });
 
         // these are needed for the price down the scene, each of them has to be shown deppending on how many passengers were chosen
-        Label aa = new Label("Pass. 1: ");
-        Label firstpass = new Label("");
-        Label bb = new Label("Pass. 2: ");
-        Label secondpass = new Label("");
-        Label cc = new Label("Pass. 3: ");
-        Label thirdpass = new Label("");
-        Label dd = new Label("Pass. 4: ");
-        Label fourthpass = new Label("");
+        Label aa                = new Label("Pass. 1: ");
+        Label firstpass         = new Label("");
+        Label bb                = new Label("Pass. 2: ");
+        Label secondpass        = new Label("");
+        Label cc                = new Label("Pass. 3: ");
+        Label thirdpass         = new Label("");
+        Label dd                = new Label("Pass. 4: ");
+        Label fourthpass        = new Label("");
 
         VBox passengerDetVBox = new VBox(10);
 
@@ -447,7 +434,7 @@ public class SelectedFlight extends Application {
                 break;
         }
 
-        Label passengerdetails = new Label("Passenger(s) details");
+        Label passengerdetails  = new Label("Passenger(s) details");
         passengerdetails.setAlignment(Pos.CENTER);
         passengerdetails.getStyleClass().add("selectedFlightSubtitle");
 
@@ -519,21 +506,16 @@ public class SelectedFlight extends Application {
 
         // Book reservation
         bookreservation.setOnAction(event -> {
-
             ArrayList<Passenger> passengersList = new ArrayList<>();
 
             passengersList.add(new Passenger(0, getBaggageType(cbbaggage.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate.getValue().toString()), tfpassengername.getText(), Integer.parseInt(cbseatno.getValue().toString())));
-            System.out.println("Nr1" + searchInfo.getPassengers());
             if (searchInfo.getPassengers() >= 2) {
-                System.out.println("Nr2" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage2.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate2.getValue().toString()), tfpassengername2.getText(), Integer.parseInt(cbseatno2.getValue().toString())));
             }
             if (searchInfo.getPassengers() >= 3) {
-                System.out.println("Nr3" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage3.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate3.getValue().toString()), tfpassengername3.getText(), Integer.parseInt(cbseatno3.getValue().toString())));
             }
             if (searchInfo.getPassengers() >= 4) {
-                System.out.println("Nr4" + searchInfo.getPassengers());
                 passengersList.add(new Passenger(0, getBaggageType(cbbaggage4.getSelectionModel().getSelectedItem().toString()), formatBirthDate(dpbirthdate4.getValue().toString()), tfpassengername4.getText(), Integer.parseInt(cbseatno4.getValue().toString())));
             }
             String status;
@@ -564,7 +546,6 @@ public class SelectedFlight extends Application {
             results.start(primaryStage);
         });
         if(data.checkPayment(checkLogin.getAccount_id())) {
-            System.err.println("We have shit");
              Payment payment = data.getPayment(checkLogin.getAccount_id());
 
 
@@ -726,6 +707,8 @@ public class SelectedFlight extends Application {
 
     }
 
+
+    // Get baggage type based on what we selected from combobox
     public static int getBaggageType(String baggageItem) {
         int selectedBaggage = 0;
         if (baggageItem.equals("None - 0 DKK")) {
@@ -739,9 +722,10 @@ public class SelectedFlight extends Application {
         return selectedBaggage;
     }
 
+
+    // Format birth date
     public static Timestamp formatBirthDate(String birthDate) {
         Timestamp timeStampDate = null;
-        // int id, int baggage, java.sql.Timestamp birth_date, String name, int seat_no
 
         try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
