@@ -42,7 +42,8 @@ public class faq {
         pane.add(pane4,0,8);
 
         Scene scene = new Scene(pane,700,400);
-        scene.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.showAndWait();
     }

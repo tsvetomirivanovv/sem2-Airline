@@ -140,7 +140,8 @@ public class BookTicketPopUp {
         h4.setAlignment(Pos.BOTTOM_RIGHT);
 
         Scene scene = new Scene(layout, 710, 370);
-        scene.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight details");
         primaryStage.showAndWait();

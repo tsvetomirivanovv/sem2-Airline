@@ -53,9 +53,10 @@ public class SelectedFlight extends Application {
         HBox layout = new HBox(2);
 
         VBox vbig = new VBox(30);
-        vbig.getStylesheets().add("assets//styles//style.css");
 
         layout.getChildren().addAll(vbig);
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        layout.getStylesheets().add(css);
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(layout);

@@ -117,7 +117,8 @@ public class Login {
 
 
         VBox mainVbox =  new VBox(15);
-        mainVbox.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        mainVbox.getStylesheets().add(css);
         mainVbox.getChildren().addAll(title,vBox1,vBox2,ButtonHbox);
         if(!isAdmin) {
             mainVbox.getChildren().add(createAccount);

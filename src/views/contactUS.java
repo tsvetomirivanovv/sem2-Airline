@@ -32,8 +32,8 @@ public class contactUS {
        GridPane layout = new GridPane();
         //layout.getChildren().addAll(alert);
         layout.setAlignment(Pos.CENTER);
-        layout.getStylesheets().add("assets//styles//style.css");
-
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        layout.getStylesheets().add(css);
 
     }
 }

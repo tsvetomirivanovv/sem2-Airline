@@ -104,7 +104,8 @@ public class searchResults extends Application {
         layout.setTop(menu1.display(primaryStage));
 
         primaryStage.setTitle("Search Results");
-        layout.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        layout.getStylesheets().add(css);
         primaryStage.setScene(new Scene(layout, 1000, 600));
         primaryStage.show();
     }

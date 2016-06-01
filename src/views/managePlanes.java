@@ -80,7 +80,8 @@ public class managePlanes extends Application{
         layout.setBottom(vBox1);
 
         Scene scene = new Scene(layout, 1000, 600);
-        scene.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manage planes");
         primaryStage.show();

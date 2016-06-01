@@ -139,7 +139,8 @@ public class manageFlights extends Application{
 
 
         Scene scene = new Scene(layout, 1000, 600);
-        scene.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manage flights");
         primaryStage.show();

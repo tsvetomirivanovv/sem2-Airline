@@ -137,7 +137,8 @@ public class addFlight {
         mainVbox.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(mainVbox, 600, 600);
-        scene.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manage flights");
         primaryStage.show();

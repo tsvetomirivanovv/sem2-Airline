@@ -65,7 +65,8 @@ public class planeAvailability {
         layout.getChildren().addAll(regNo,Model,seatsBus,seatsCo,seatsEco,table,close);
 
         window.setScene(new Scene(layout,600,400));
-        layout.getStylesheets().add("assets//styles//style.css");
+        String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
+        layout.getStylesheets().add(css);
         window.showAndWait();
     }
 }
