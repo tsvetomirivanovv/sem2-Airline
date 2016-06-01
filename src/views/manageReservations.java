@@ -106,6 +106,8 @@ public class manageReservations extends Application {
                 }else if (tableView.getSelectionModel().getSelectedItem().getStatus().equals("booked")){
                     confirm.setDisable(false);
                     refund.setDisable(false);
+                    confirm.getStyleClass().removeAll("btn-disabled");
+                    refund.getStyleClass().removeAll("btn-disabled");
                     confirm.getStyleClass().addAll("btn","btn-info");
                     refund.getStyleClass().addAll("btn","btn-info");
                 }
