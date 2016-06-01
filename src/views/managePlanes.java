@@ -41,9 +41,8 @@ public class managePlanes extends Application{
         availability.setCellValueFactory(avb.getCallback2());
 
         availability.setCellFactory(avb.getCallback1());
-        // TO DO: We need that fucking button in here (See availability).
 
-        Button addButton = new Button("Create ");
+        Button addButton = new Button("Add plane ");
         addButton.getStyleClass().addAll("btn", "btn-info");
         Button deleteButton = new Button("Delete ");
         deleteButton.getStyleClass().addAll("btn", "btn-danger");

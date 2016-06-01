@@ -23,6 +23,7 @@ public class availabilityCell {
                         super.updateItem(plane, empty);
                         if (plane != null) {
                             button.setText("View");
+                            button.getStyleClass().addAll("btn", "btn-small", "btn-info");
 
                             setGraphic(button);
                             button.setOnAction(e -> {

@@ -2,6 +2,8 @@ package views.components;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -23,6 +25,7 @@ public class reservationsDetailsCell {
                         super.updateItem(reservation, empty);
                         if (reservation != null) {
                             button.setText("View");
+                            button.getStyleClass().addAll("btn", "btn-small", "btn-info");
 
                             setGraphic(button);
                             button.setOnAction(e -> {
