@@ -1,6 +1,5 @@
 package views;
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,26 +18,32 @@ import java.time.LocalDate;
 
 public class searchFlights extends Application {
 
-    static HBox h1,h2,h3,h4;
-    static VBox v1, v2, v3, v4, v5, v6;
-    static BorderPane layout;
+//    static HBox h1,h2,h3,h4;
+//    static VBox v1, v2, v3, v4, v5, v6;
+//    static BorderPane layout;
 
     DataController data = new DataController();
 
     public void start (Stage primaryStage) {
 
-        Label emptyLabel = new Label(" ");
+
+        // ------------------------
+        // Departure and arrival content
+        // ------------------------
         Label departureLocLabel = new Label("Leaving from:");
         Label arrivalLocLabel = new Label("Going to:");
 
         ComboBox departure = new ComboBox();
         ComboBox arrival = new ComboBox();
+
+        // Fetch data from Data base into comboboxes
         departure.getItems().addAll(data.getAllAirports(""));
         arrival.getItems().addAll(data.getAllAirports(""));
         departure.setPromptText("Search departure location");
 
+        // Make sure that we exclude the selected location on the first combobox
+        // from the second one.
         departure.setOnAction( e -> {
-
             // Clear all items
             arrival.getItems().clear();
 
@@ -48,17 +53,10 @@ public class searchFlights extends Application {
 
         arrival.setPromptText("Search arrival location");
 
+        // Custom search class. When we select a combobox we can start typing
+        // And get the search results in realtime.
         new comboBoxAutocomplete<String>(departure);
         new comboBoxAutocomplete<String>(arrival);
-
-        Label departureTimeLabel = new Label("Departure Date:");
-
-        DatePicker datePicker1 = new DatePicker();
-        datePicker1.setPromptText("mm/dd/yyyy");
-        datePicker1.getStyleClass().add("datePicker1");
-        datePicker1.setOnAction(e -> {
-            LocalDate date = datePicker1.getValue();
-        });
 
         // ------------------------
         // Class type & Passengers number
@@ -84,15 +82,31 @@ public class searchFlights extends Application {
                 "First class"
         );
 
+        // ------------------------
+        // Date picker and search btn content
+        // ------------------------
+
+
+        // Labels
+        Label departureTimeLabel = new Label("Departure Date:");
+        Label emptyLabel = new Label(" ");
+
+        // Elements
+        DatePicker datePicker1 = new DatePicker();
+        datePicker1.setPromptText("mm/dd/yyyy");
+        datePicker1.getStyleClass().add("datePicker1");
+        datePicker1.setOnAction(e -> {
+            LocalDate date = datePicker1.getValue();
+        });
+
         Button searchButton = new Button("Search");
         searchButton.getStyleClass().addAll("btn", "btn-info");
 
         // Search button - Switch the scene where you can see all the results
         searchButton.setOnAction(event -> {
-
             if(departure.getValue() == null || arrival.getValue() == null || datePicker1.getValue() == null || passengers.getValue() == null || classType.getValue() == null) {
                 views.components.errorAlert alert = new errorAlert();
-                alert.display(null,"Please fill in all the required fields!");
+                alert.display(null, "Please fill in all the required fields!");
             } else {
                 String date1 = datePicker1.getValue().toString();
                 int passengerNo = 0;
@@ -120,54 +134,73 @@ public class searchFlights extends Application {
             }
         });
 
-        v1 = new VBox(7);
-        v1.getChildren().addAll(departureLocLabel, departure);
-        v1.setAlignment(Pos.CENTER);
-
-        v2 = new VBox(7);
-        v2.getChildren().addAll(arrivalLocLabel, arrival);
-        v2.setAlignment(Pos.CENTER);
-
-        v4 = new VBox(7);
-        v4.getChildren().addAll(emptyLabel, searchButton);
-        v4.setAlignment(Pos.CENTER);
-
-        v3 = new VBox(7);
-        v3.getChildren().addAll(departureTimeLabel, datePicker1);
-        v3.setAlignment(Pos.CENTER);
-
-        v5 = new VBox(7);
-        v5.getChildren().addAll(passengersLabel, passengers);
-        v5.setAlignment(Pos.CENTER);
-
-        v6 = new VBox(7);
-        v6.getChildren().addAll(classLabel, classType);
-        v6.setAlignment(Pos.CENTER);
+        // Departure dropdown
+        VBox departureBox       = new VBox(7);
+        departureBox.getChildren().addAll(departureLocLabel, departure);
+        departureBox.setAlignment(Pos.CENTER);
 
 
-        h1 = new HBox(10);
-        h1.getChildren().addAll(v1, v2);
-        h1.setAlignment(Pos.CENTER);
-        h1.setPadding(new Insets(20, 20, 20, 20));
-        h1.setSpacing(20);
+        // Arrival dropdown
+        VBox arrivalBox         = new VBox(7);
+        arrivalBox.getChildren().addAll(arrivalLocLabel, arrival);
+        arrivalBox.setAlignment(Pos.CENTER);
 
-        h2 = new HBox(10);
-        h2.getChildren().addAll(v3, v4);
-        h2.setAlignment(Pos.CENTER);
-        h2.setPadding(new Insets(20, 20, 20, 20));
-        h2.setSpacing(20);
 
-        h3 = new HBox(10);
-        h3.getChildren().addAll(v5, v6);
-        h3.setAlignment(Pos.CENTER);
-        h3.setPadding(new Insets(20, 20, 20, 20));
-        h3.setSpacing(20);
+        // Search button + empty label to keep consistency in design
+        VBox searchBox          = new VBox(7);
+        searchBox.getChildren().addAll(emptyLabel, searchButton);
+        searchBox.setAlignment(Pos.CENTER);
 
-        v3 = new VBox(20);
-        v3.getChildren().addAll(h1, h3, h2);
-        v3.setAlignment(Pos.CENTER);
+
+        // Date picker
+        VBox departureTimeBox   = new VBox(7);
+        departureTimeBox.getChildren().addAll(departureTimeLabel, datePicker1);
+        departureTimeBox.setAlignment(Pos.CENTER);
+
+
+        // Passengers no
+        VBox passengersBox      = new VBox(7);
+        passengersBox.getChildren().addAll(passengersLabel, passengers);
+        passengersBox.setAlignment(Pos.CENTER);
+
+
+        // Class type
+        VBox classTypeBox       = new VBox(7);
+        classTypeBox.getChildren().addAll(classLabel, classType);
+        classTypeBox.setAlignment(Pos.CENTER);
+
+
+        // Departure and arrival dropdowns row
+        HBox locationBox        = new HBox(10);
+        locationBox.getChildren().addAll(departureBox, arrivalBox);
+        locationBox.setAlignment(Pos.CENTER);
+        locationBox.setPadding(new Insets(20, 20, 20, 20));
+        locationBox.setSpacing(20);
+
+
+        // Passengers and class type row
+        HBox passengersClassTypeBox = new HBox(10);
+        passengersClassTypeBox.getChildren().addAll(passengersBox, classTypeBox);
+        passengersClassTypeBox.setAlignment(Pos.CENTER);
+        passengersClassTypeBox.setPadding(new Insets(20, 20, 20, 20));
+        passengersClassTypeBox.setSpacing(20);
+
+
+        // Date picker and search button row
+        HBox timeBox            = new HBox(10);
+        timeBox.getChildren().addAll(departureTimeBox, searchBox);
+        timeBox.setAlignment(Pos.CENTER);
+        timeBox.setPadding(new Insets(20, 20, 20, 20));
+        timeBox.setSpacing(20);
+
+
+        // The wrapper for all content
+        VBox contentWrapper     = new VBox(20);
+        contentWrapper.getChildren().addAll(locationBox, passengersClassTypeBox, timeBox);
+        contentWrapper.setAlignment(Pos.CENTER);
 
         //  ----- Apply css ----- //
+        // CSS for elements
         departure.getStyleClass().add("dropdown");
         arrival.getStyleClass().add("dropdown");
         passengers.getStyleClass().add("dropdown");
@@ -175,6 +208,7 @@ public class searchFlights extends Application {
         datePicker1.getStyleClass().add("datepicker");
         searchButton.getStyleClass().add("btn-search");
 
+        // CSS for labels
         departureTimeLabel.getStyleClass().addAll("bold", "indexTitles");
         departureLocLabel.getStyleClass().addAll("bold", "indexTitles");
         arrivalLocLabel.getStyleClass().addAll("bold", "indexTitles");
@@ -182,13 +216,14 @@ public class searchFlights extends Application {
         passengersLabel.getStyleClass().addAll("bold", "indexTitles");
 
 
-        layout = new BorderPane();
+        BorderPane layout       = new BorderPane();
 
+        // Generate menu bar
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
 
         layout.setTop(menu1.display(primaryStage));
-        layout.setCenter(v3);
+        layout.setCenter(contentWrapper);
 
 
         Scene scene = new Scene(layout, 1000, 600);

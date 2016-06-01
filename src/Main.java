@@ -1,8 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import services.DataController;
 import views.searchFlights;
-import java.sql.SQLException;
 import services.components.checkLogin;
 
 
