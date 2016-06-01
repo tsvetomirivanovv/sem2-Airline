@@ -110,6 +110,10 @@
     -fx-max-width: 290px;
 }
 
+.dropdown-small {
+    -fx-padding: 4px 15px 4px 15px;
+}
+
 .smallDD {
     -fx-min-width: 40px;
     -fx-max-width: 40px;
@@ -206,11 +210,12 @@
 
 /* Inputs */
 .text-field {
-    -fx-padding: 5px 17px;
+    -fx-padding: 10px 17px;
     -fx-font-size: 16px;
     -fx-min-width: 290px;
     -fx-max-width: 290px;
     -fx-border-radius: 6px;
+    -fx-border-color: #3498DB;
 }
 
 /* =======
@@ -296,4 +301,15 @@
 
 .scroll-pane:focused {
     -fx-background: aliceblue;
+}
+
+/* Payment */
+.paymentMonth {
+    -fx-min-width: 90px;
+    -fx-max-width: 90px;
+}
+
+.paymentYear {
+    -fx-min-width: 180px;
+    -fx-max-width: 180px;
 }

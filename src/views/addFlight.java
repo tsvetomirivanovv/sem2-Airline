@@ -45,11 +45,11 @@ public class addFlight {
 
         depBox = new ComboBox();
         depBox.setMinWidth(240);
-        depBox.getStyleClass().addAll("dropdown");
+        depBox.getStyleClass().addAll("dropdown", "dropdown-small");
 
         arrbox = new ComboBox();
         arrbox.setMinWidth(240);
-        arrbox.getStyleClass().addAll("dropdown");
+        arrbox.getStyleClass().addAll("dropdown", "dropdown-small");
 
         depBox.getItems().addAll(data.getAllAirports(""));
         depBox.setPromptText("Select departure location");
@@ -63,7 +63,7 @@ public class addFlight {
 
 
         planeBox = new ComboBox();
-        planeBox.getStyleClass().addAll("dropdown");
+        planeBox.getStyleClass().addAll("dropdown", "dropdown-small");
         planeBox.setPromptText("Select plane");
         planeBox.setMinWidth(240);
 
