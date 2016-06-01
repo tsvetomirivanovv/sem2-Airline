@@ -29,6 +29,9 @@ public class creditCardPopUp {
 
         int loginid = services.components.checkLogin.getAccount_id();
 
+        Label confirmPaymentLabel = new Label("Confirm reservation & payment");
+        confirmPaymentLabel.getStyleClass().addAll("bold", "h5");
+
         TextField cardType = new TextField();
         cardType.setPromptText("card type");
         cardType.setMaxWidth(150);
@@ -39,10 +42,12 @@ public class creditCardPopUp {
 
         TextField cardExM = new TextField();
         cardExM.setPromptText("MM");
+        cardExM.getStyleClass().addAll("paymentMonth");
         cardExM.setMaxWidth(50);
 
         TextField cardExY = new TextField();
-        cardExY.setPromptText("yyyy");
+        cardExY.setPromptText("YYYY");
+        cardExY.getStyleClass().addAll("paymentYear");
         cardExY.setMaxWidth(100);
 
         HBox cardEx = new HBox(20);
@@ -54,7 +59,6 @@ public class creditCardPopUp {
         cardName.setMaxWidth(200);
 
         if(data.checkPayment(checkLogin.getAccount_id())) {
-            System.err.println("We have shit");
             payment = data.getPayment(checkLogin.getAccount_id());
             data.getPayment(checkLogin.getAccount_id());
             cardType.setText(payment.getCard_type());
@@ -64,19 +68,18 @@ public class creditCardPopUp {
             cardName.setText(payment.getCardHolder_name());
         }
 
-        HBox h1 = new HBox(5);
+        HBox h1 = new HBox(10);
         h1.setAlignment(Pos.BASELINE_CENTER);
-        Label test = new Label();
 
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(20);
         String css = this.getClass().getResource("/assets/styles/style.css").toExternalForm();
         layout.getStylesheets().add(css);
-        layout.getChildren().addAll(cardType, cardNo, cardEx, cardName, h1);
+        layout.getChildren().addAll(confirmPaymentLabel, cardType, cardNo, cardEx, cardName, h1);
         layout.setAlignment(Pos.CENTER);
 
         Button close = new Button("Close");
         close.getStyleClass().addAll("btn","btn-danger");
-        Button save = new Button("Save");
+        Button save = new Button("Confirm");
         save.getStyleClass().addAll("btn","btn-info");
 
         h1.getChildren().addAll(save, close);
