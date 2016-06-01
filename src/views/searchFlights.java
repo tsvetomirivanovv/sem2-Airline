@@ -218,7 +218,7 @@ public class searchFlights extends Application {
 
         BorderPane layout       = new BorderPane();
 
-        // Generate menu bar
+        // Import menu bar
         menu menu1 = new menu();
         layout.setTop(menu1.display(primaryStage));
 
